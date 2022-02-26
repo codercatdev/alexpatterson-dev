@@ -16,6 +16,7 @@
     "typecheck": "npx tsc --noEmit"
   },
   "devDependencies": {
+    "@builder.io/partytown": "^0.4.0",
     "@builder.io/qwik": "0.0.16",
     "@types/express": "4.17.13",
     "@types/node": "17.0.17",
