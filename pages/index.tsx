@@ -29,17 +29,21 @@ const Home: NextPage = () => {
           ],
         }}
       ></NextSeo>
-      <div className="card w-96 bg-primary text-primary-content">
-        <div className="card-body">
-          <h2 className="card-title">Alex Patterson</h2>
-          <div className="avatar">
-            <div className="w-full">
-              <Image
-                src="/main-codingcatdev-photo/authors/alex_headshot"
-                alt="Headshot of Alex Patterson"
-                layout="fill"
-                className="rounded-xl"
-              />
+      <div className="flex items-center justify-center w-screen h-screen">
+        <div>
+          <div className="card w-96 bg-primary text-primary-content">
+            <div className="card-body">
+              <h2 className="card-title">Alex Patterson</h2>
+              <div className="avatar">
+                <div className="w-full">
+                  <Image
+                    src="/main-codingcatdev-photo/authors/alex_headshot"
+                    alt="Headshot of Alex Patterson"
+                    layout="fill"
+                    className="rounded-xl"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
