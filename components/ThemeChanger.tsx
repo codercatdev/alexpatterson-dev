@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { themeChange } from 'theme-change';
 
-const ThemeChanger = () => {
+const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
   useEffect(() => {
     themeChange(false);
   }, []);
@@ -37,7 +37,12 @@ const ThemeChanger = () => {
       <div className="mt-16 overflow-y-auto shadow-2xl bg-base-100 dropdown-content text-base-content rounded-t-box rounded-b-box top-px h-96 w-52">
         <ul className="p-4 menu menu-compact" tabIndex={0}>
           <li>
-            <button data-set-theme="light" data-act-class="active" className="">
+            <button
+              data-set-theme="light"
+              data-act-class="active"
+              onClick={() => reanimate()}
+              className=""
+            >
               🌝  light
             </button>
           </li>
@@ -45,6 +50,7 @@ const ThemeChanger = () => {
             <button
               data-set-theme="dark"
               data-act-class="active"
+              onClick={() => reanimate()}
               className="active"
             >
               🌚  dark
@@ -54,6 +60,7 @@ const ThemeChanger = () => {
             <button
               data-set-theme="cupcake"
               data-act-class="active"
+              onClick={() => reanimate()}
               className=""
             >
               🧁  cupcake
@@ -63,6 +70,7 @@ const ThemeChanger = () => {
             <button
               data-set-theme="bumblebee"
               data-act-class="active"
+              onClick={() => reanimate()}
               className=""
             >
               🐝  bumblebee
@@ -72,6 +80,7 @@ const ThemeChanger = () => {
             <button
               data-set-theme="emerald"
               data-act-class="active"
+              onClick={() => reanimate()}
               className=""
             >
               ✳️  Emerald
@@ -81,18 +90,28 @@ const ThemeChanger = () => {
             <button
               data-set-theme="corporate"
               data-act-class="active"
+              onClick={() => reanimate()}
               className=""
             >
               🏢  Corporate
             </button>
           </li>
           <li>
-            <button data-set-theme="synthwave" data-act-class="active">
+            <button
+              data-set-theme="synthwave"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🌃  synthwave
             </button>
           </li>
           <li>
-            <button data-set-theme="retro" data-act-class="active" className="">
+            <button
+              data-set-theme="retro"
+              data-act-class="active"
+              onClick={() => reanimate()}
+              className=""
+            >
               👴  retro
             </button>
           </li>
@@ -100,6 +119,7 @@ const ThemeChanger = () => {
             <button
               data-set-theme="cyberpunk"
               data-act-class="active"
+              onClick={() => reanimate()}
               className=""
             >
               🤖  cyberpunk
@@ -109,88 +129,153 @@ const ThemeChanger = () => {
             <button
               data-set-theme="valentine"
               data-act-class="active"
+              onClick={() => reanimate()}
               className=""
             >
               🌸  valentine
             </button>
           </li>
           <li>
-            <button data-set-theme="halloween" data-act-class="active">
+            <button
+              data-set-theme="halloween"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🎃  halloween
             </button>
           </li>
           <li>
-            <button data-set-theme="garden" data-act-class="active">
+            <button
+              data-set-theme="garden"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🌷  garden
             </button>
           </li>
           <li>
-            <button data-set-theme="forest" data-act-class="active">
+            <button
+              data-set-theme="forest"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🌲  forest
             </button>
           </li>
           <li>
-            <button data-set-theme="aqua" data-act-class="active">
+            <button
+              data-set-theme="aqua"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🐟  aqua
             </button>
           </li>
           <li>
-            <button data-set-theme="lofi" data-act-class="active">
+            <button
+              data-set-theme="lofi"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               👓  lofi
             </button>
           </li>
           <li>
-            <button data-set-theme="pastel" data-act-class="active">
+            <button
+              data-set-theme="pastel"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🖍  pastel
             </button>
           </li>
           <li>
-            <button data-set-theme="fantasy" data-act-class="active">
+            <button
+              data-set-theme="fantasy"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🧚‍♀️  fantasy
             </button>
           </li>
           <li>
-            <button data-set-theme="wireframe" data-act-class="active">
+            <button
+              data-set-theme="wireframe"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               📝  Wireframe
             </button>
           </li>
           <li>
-            <button data-set-theme="black" data-act-class="active">
+            <button
+              data-set-theme="black"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🏴  black
             </button>
           </li>
           <li>
-            <button data-set-theme="luxury" data-act-class="active">
+            <button
+              data-set-theme="luxury"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               💎  luxury
             </button>
           </li>
           <li>
-            <button data-set-theme="dracula" data-act-class="active">
+            <button
+              data-set-theme="dracula"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🧛‍♂️  dracula
             </button>
           </li>
           <li>
-            <button data-set-theme="cmyk" data-act-class="active">
+            <button
+              data-set-theme="cmyk"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🖨  CMYK
             </button>
           </li>
           <li>
-            <button data-set-theme="autumn" data-act-class="active">
+            <button
+              data-set-theme="autumn"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🍁  Autumn
             </button>
           </li>
           <li>
-            <button data-set-theme="business" data-act-class="active">
+            <button
+              data-set-theme="business"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               💼  Business
             </button>
           </li>
           <li>
-            <button data-set-theme="acid" data-act-class="active">
+            <button
+              data-set-theme="acid"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               💊  Acid
             </button>
           </li>
           <li>
-            <button data-set-theme="lemonade" data-act-class="active">
+            <button
+              data-set-theme="lemonade"
+              data-act-class="active"
+              onClick={() => reanimate()}
+            >
               🍋  Lemonade
             </button>
           </li>
