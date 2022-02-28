@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import { NextSeo } from 'next-seo';
+import Tabs from '../components/Bio';
+import Links from '../components/Links';
 
 const Home: NextPage = () => {
   return (
@@ -29,23 +31,62 @@ const Home: NextPage = () => {
           ],
         }}
       ></NextSeo>
-      <div className="flex items-center justify-center w-screen h-screen">
-        <div>
-          <div className="card w-96 bg-primary text-primary-content">
+      <div className="flex flex-col items-center w-screen h-screen from-primary to-secondary bg-gradient-to-br">
+        <div className="flex-col max-w-lg p-2 mt-4 rounded-lg bg-base-200">
+          <div className="flex flex-col mb-4 md:flex-row">
+            <Image
+              src="/main-codingcatdev-photo/authors/alex_headshot"
+              alt="Headshot of Alex Patterson"
+              height={320}
+              width={320}
+              priority={true}
+              className="rounded-xl"
+            />
             <div className="card-body">
-              <h2 className="card-title">Alex Patterson</h2>
-              <div className="avatar">
-                <div className="w-full">
-                  <Image
-                    src="/main-codingcatdev-photo/authors/alex_headshot"
-                    alt="Headshot of Alex Patterson"
-                    layout="fill"
-                    className="rounded-xl"
-                  />
-                </div>
-              </div>
+              <h2 className="text-xl card-title md:text-3xl">Alex Patterson</h2>
+              <p className="text-md md:text-lg">Developer Advocate</p>
+              <p>
+                <a
+                  className="gap-2 btn"
+                  href="https://aws.amazon.com/developer/community/community-builders/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <svg
+                    width={103}
+                    height={120}
+                    viewBox="0 0 103 120"
+                    className="w-6 h-6"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clipPath="url(#clip0_911_286)">
+                      <path
+                        d="M2.13117 109.797L1.64331 110.296C0.853534 111.097 0.318012 112.112 0.104114 113.216C-0.109783 114.32 0.00749937 115.462 0.441202 116.499C0.874906 117.536 1.60566 118.422 2.54153 119.045C3.47741 119.668 4.5766 120 5.70082 120H69.2705C101.469 120 114.718 78.8181 88.7906 60L88.4634 60.238L2.13117 109.803"
+                        fill="#838383"
+                      />
+                      <path
+                        d="M2.13117 10.1973L88.4634 59.762L88.7906 60C114.718 41.182 101.469 1.39535e-07 69.2705 1.39535e-07H5.70082C4.5766 -0.000248566 3.47741 0.331977 2.54153 0.95489C1.60566 1.5778 0.874906 2.46359 0.441202 3.50079C0.00749937 4.53799 -0.109783 5.68028 0.104114 6.78396C0.318012 7.88765 0.853534 8.90343 1.64331 9.70352L2.13117 10.2033"
+                        fill="#838383"
+                      />
+                      <path
+                        d="M2.13116 109.803L88.4633 60.2379L88.7906 59.9999L88.4633 59.762L2.13116 10.1973C15.2148 23.4717 22.5493 41.3615 22.5493 59.9999C22.5493 78.6384 15.2148 96.5282 2.13116 109.803Z"
+                        fill="#F2F2F2"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_911_286">
+                        <rect width="102.507" height={120} fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  Builder.io
+                </a>
+              </p>
             </div>
           </div>
+          <Links />
+          <Tabs />
         </div>
       </div>
     </>
