@@ -1,10 +1,18 @@
 import { useEffect } from 'react';
 import { themeChange } from 'theme-change';
+import useSound from 'use-sound';
 
 const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
+  const [play] = useSound('/sounds/cat_purr.mp3');
   useEffect(() => {
     themeChange(false);
   }, []);
+
+  const themePicked = () => {
+    play();
+    reanimate();
+  };
+
   return (
     <div title="Change Theme" className="dropdown dropdown-end ">
       <div tabIndex={0} className="gap-2 normal-case btn btn-ghost">
@@ -40,7 +48,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="light"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className=""
             >
               🌝  light
@@ -50,7 +58,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="dark"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className="active"
             >
               🌚  dark
@@ -60,7 +68,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="cupcake"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className=""
             >
               🧁  cupcake
@@ -70,7 +78,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="bumblebee"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className=""
             >
               🐝  bumblebee
@@ -80,7 +88,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="emerald"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className=""
             >
               ✳️  Emerald
@@ -90,7 +98,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="corporate"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className=""
             >
               🏢  Corporate
@@ -100,7 +108,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="synthwave"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🌃  synthwave
             </button>
@@ -109,7 +117,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="retro"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className=""
             >
               👴  retro
@@ -119,7 +127,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="cyberpunk"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className=""
             >
               🤖  cyberpunk
@@ -129,7 +137,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="valentine"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
               className=""
             >
               🌸  valentine
@@ -139,7 +147,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="halloween"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🎃  halloween
             </button>
@@ -148,7 +156,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="garden"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🌷  garden
             </button>
@@ -157,7 +165,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="forest"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🌲  forest
             </button>
@@ -166,7 +174,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="aqua"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🐟  aqua
             </button>
@@ -175,7 +183,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="lofi"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               👓  lofi
             </button>
@@ -184,7 +192,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="pastel"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🖍  pastel
             </button>
@@ -193,7 +201,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="fantasy"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🧚‍♀️  fantasy
             </button>
@@ -202,7 +210,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="wireframe"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               📝  Wireframe
             </button>
@@ -211,7 +219,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="black"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🏴  black
             </button>
@@ -220,7 +228,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="luxury"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               💎  luxury
             </button>
@@ -229,7 +237,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="dracula"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🧛‍♂️  dracula
             </button>
@@ -238,7 +246,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="cmyk"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🖨  CMYK
             </button>
@@ -247,7 +255,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="autumn"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🍁  Autumn
             </button>
@@ -256,7 +264,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="business"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               💼  Business
             </button>
@@ -265,7 +273,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="acid"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               💊  Acid
             </button>
@@ -274,7 +282,7 @@ const ThemeChanger = ({ reanimate }: { reanimate: () => void }) => {
             <button
               data-set-theme="lemonade"
               data-act-class="active"
-              onClick={() => reanimate()}
+              onClick={() => themePicked()}
             >
               🍋  Lemonade
             </button>
