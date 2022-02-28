@@ -3,8 +3,10 @@ import Image from 'next/image';
 import { NextSeo } from 'next-seo';
 import Tabs from '../components/Bio';
 import Links from '../components/Links';
-import ThemeChanger from '../components/ThemeChanger';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+const ThemeChanger = dynamic(() => import('../components/ThemeChanger'));
 
 export async function getStaticProps() {
   return {
@@ -14,6 +16,7 @@ export async function getStaticProps() {
 
 const Home: NextPage = () => {
   const [animate, setAnimate] = useState(true);
+  useEffect(() => {}, []);
 
   const reanimate = () => {
     setAnimate(false);
