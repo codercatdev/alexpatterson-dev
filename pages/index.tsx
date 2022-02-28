@@ -5,6 +5,12 @@ import Tabs from '../components/Bio';
 import Links from '../components/Links';
 import ThemeChanger from '../components/ThemeChanger';
 
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
+}
+
 const Home: NextPage = () => {
   return (
     <>
