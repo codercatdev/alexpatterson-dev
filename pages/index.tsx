@@ -58,18 +58,20 @@ const Home: NextPage = () => {
         <div className="">
           <div
             className={`flex-col max-w-lg p-2 m-4 rounded-lg bg-base-200 ${
-              animate ? 'animate-fade-in-down' : ''
+              animate ? 'md:animate-fade-in-down' : ''
             }`}
           >
-            <div className="flex flex-col mb-4 md:flex-row">
-              <Image
-                src="/main-codingcatdev-photo/authors/alex_headshot"
-                alt="Headshot of Alex Patterson"
-                height={320}
-                width={320}
-                priority={true}
-                className="rounded-xl"
-              />
+            <div className="flex flex-col items-center mb-4 md:flex-row">
+              <div className="max-w-sm">
+                <Image
+                  src="/main-codingcatdev-photo/authors/alex_headshot"
+                  alt="Headshot of Alex Patterson"
+                  height={320}
+                  width={320}
+                  priority={true}
+                  className="rounded-xl"
+                />
+              </div>
               <div className="card-body">
                 <h2 className="text-xl card-title md:text-3xl">
                   Alex Patterson
