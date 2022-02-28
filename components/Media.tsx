@@ -1,7 +1,6 @@
-import type { NextPage } from 'next';
 import { useState } from 'react';
 
-const Media: NextPage = () => {
+const Media = () => {
   const [active, setActive] = useState(0);
 
   return (
