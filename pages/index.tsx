@@ -5,6 +5,8 @@ import Tabs from '../components/Bio';
 import Links from '../components/Links';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
 const ThemeChanger = dynamic(() => import('../components/ThemeChanger'));
 
@@ -62,17 +64,55 @@ const Home: NextPage = () => {
             }`}
           >
             <div className="flex flex-col items-center mb-4 md:flex-row">
-              <div className="max-w-sm">
-                <Image
-                  src="/main-codingcatdev-photo/authors/alex_headshot"
-                  alt="Headshot of Alex Patterson"
-                  height={320}
-                  width={320}
-                  priority={true}
-                  className="rounded-xl"
-                />
+              <div className="max-w-xs">
+                <Carousel showStatus={false} autoFocus={true}>
+                  <a href="https://media.codingcat.dev/image/upload/fl_attachment:alex_patterson_headshot_1/main-codingcatdev-photo/headshots/alex_headshot_1.jpg">
+                    <Image
+                      src="/main-codingcatdev-photo/headshots/alex_headshot_1.jpg"
+                      alt="Headshot of Alex Patterson Professional"
+                      height={320}
+                      width={320}
+                      priority={true}
+                      className="rounded-xl"
+                    />
+                  </a>
+
+                  <a href="https://media.codingcat.dev/image/upload/fl_attachment:alex_patterson_headshot_2/main-codingcatdev-photo/headshots/alex_fire.jpg">
+                    <Image
+                      src="/main-codingcatdev-photo/headshots/alex_fire.jpg"
+                      alt="Headshot of Alex Patterson Vacation with Fire Background"
+                      height={320}
+                      width={320}
+                      priority={true}
+                      className="rounded-xl"
+                    />
+                  </a>
+
+                  <a href="https://media.codingcat.dev/image/upload/fl_attachment:alex_patterson_headshot_3/main-codingcatdev-photo/headshots/alex_podcast.jpg">
+                    <Image
+                      src="/main-codingcatdev-photo/headshots/alex_podcast.jpg"
+                      alt="Headshot of Alex Patterson with glasses and stickers"
+                      height={320}
+                      width={320}
+                      priority={true}
+                      className="rounded-xl"
+                    />
+                  </a>
+
+                  <a href="https://media.codingcat.dev/image/upload/fl_attachment:alex_patterson_headshot_4/main-codingcatdev-photo/headshots/alex_casual.jpg">
+                    <Image
+                      src="/main-codingcatdev-photo/headshots/alex_casual.jpg"
+                      alt="Headshot of Alex Patterson casual in Europe"
+                      height={320}
+                      width={320}
+                      priority={true}
+                      className="rounded-xl"
+                    />
+                  </a>
+                </Carousel>
               </div>
-              <div className="card-body">
+
+              <div className="flex flex-col">
                 <h2 className="text-xl card-title md:text-3xl">
                   Alex Patterson
                 </h2>
