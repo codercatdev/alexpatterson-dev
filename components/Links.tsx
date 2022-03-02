@@ -69,7 +69,7 @@ const Links = () => {
         </a>
         <a
           className="gap-2 btn"
-          href="https://github.com/codercatdev"
+          href="https://linkedin.com/in/codercatdev"
           rel="noreferrer"
           target="_blank"
         >
