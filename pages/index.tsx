@@ -120,7 +120,7 @@ const Home: NextPage = () => {
                 <p>
                   <a
                     className="gap-2 btn"
-                    href="https://aws.amazon.com/developer/community/community-builders/"
+                    href="https://builder.io/"
                     rel="noreferrer"
                     target="_blank"
                   >
