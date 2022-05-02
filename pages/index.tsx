@@ -66,6 +66,17 @@ const Home: NextPage = () => {
             <div className="flex flex-col items-center mb-4 md:gap-2 md:flex-row">
               <div className="max-w-xs">
                 <Carousel showStatus={false} autoFocus={true}>
+                  <a href="https://media.codingcat.dev/image/upload/fl_attachment:alex_patterson_headshot_3/main-codingcatdev-photo/headshots/alex_soundproof.jpg">
+                    <Image
+                      src="/main-codingcatdev-photo/headshots/alex_soundproof.jpg"
+                      alt="Headshot of Alex Patterson with glasses and stickers"
+                      height={320}
+                      width={320}
+                      priority={true}
+                      className="rounded-xl"
+                    />
+                  </a>
+
                   <a href="https://media.codingcat.dev/image/upload/fl_attachment:alex_patterson_headshot_1/main-codingcatdev-photo/headshots/alex_headshot_1.jpg">
                     <Image
                       src="/main-codingcatdev-photo/headshots/alex_headshot_1.jpg"
@@ -81,17 +92,6 @@ const Home: NextPage = () => {
                     <Image
                       src="/main-codingcatdev-photo/headshots/alex_fire.jpg"
                       alt="Headshot of Alex Patterson Vacation with Fire Background"
-                      height={320}
-                      width={320}
-                      priority={true}
-                      className="rounded-xl"
-                    />
-                  </a>
-
-                  <a href="https://media.codingcat.dev/image/upload/fl_attachment:alex_patterson_headshot_3/main-codingcatdev-photo/headshots/alex_podcast.jpg">
-                    <Image
-                      src="/main-codingcatdev-photo/headshots/alex_podcast.jpg"
-                      alt="Headshot of Alex Patterson with glasses and stickers"
                       height={320}
                       width={320}
                       priority={true}
