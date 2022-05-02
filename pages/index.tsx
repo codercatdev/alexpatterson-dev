@@ -41,16 +41,21 @@ const Home: NextPage = () => {
           site_name: 'Alex Patterson',
           images: [
             {
-              url: `https://media.codingcat.dev/image/upload/c_fit,w_1200,h_630/main-codingcatdev-photo/authors/alex_headshot`,
+              url: `https://media.codingcat.dev/image/upload/c_fit,w_1200,h_630/main-codingcatdev-photo/headshots/alex_soundproof.jpge`,
               width: 1200,
               height: 630,
               alt: 'Alex patterson',
             },
             {
-              url: `https://media.codingcat.dev/image/upload/main-codingcatdev-photo/authors/alex_headshot`,
+              url: `https://media.codingcat.dev/image/upload/main-codingcatdev-photo/headshots/alex_soundproof.jpg`,
               alt: 'Alex patterson',
             },
           ],
+        }}
+        twitter={{
+          handle: '@codercatdev',
+          site: '@codercatdev',
+          cardType: 'summary_large_image',
         }}
       ></NextSeo>
       <div className="relative flex flex-col items-center justify-center min-h-screen from-primary to-secondary bg-gradient-to-br">
