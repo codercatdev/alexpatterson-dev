@@ -41,13 +41,7 @@ const Home: NextPage = () => {
           site_name: 'Alex Patterson',
           images: [
             {
-              url: `https://media.codingcat.dev/image/upload/c_fit,w_1200,h_630/main-codingcatdev-photo/headshots/alex_soundproof.jpge`,
-              width: 1200,
-              height: 630,
-              alt: 'Alex patterson',
-            },
-            {
-              url: `https://media.codingcat.dev/image/upload/main-codingcatdev-photo/headshots/alex_soundproof.jpg`,
+              url: `https://media.codingcat.dev/image/upload/v1651500676/alexpatterson.dev/Screen_Shot_2022-05-02_at_10.10.39_AM.png`,
               alt: 'Alex patterson',
             },
           ],
