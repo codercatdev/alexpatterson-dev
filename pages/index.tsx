@@ -63,7 +63,7 @@ const Home: NextPage = () => {
               animate ? 'md:animate-fade-in-down' : ''
             }`}
           >
-            <div className="flex flex-col items-center mb-4 md:flex-row">
+            <div className="flex flex-col items-center mb-4 md:gap-2 md:flex-row">
               <div className="max-w-xs">
                 <Carousel showStatus={false} autoFocus={true}>
                   <a href="https://media.codingcat.dev/image/upload/fl_attachment:alex_patterson_headshot_1/main-codingcatdev-photo/headshots/alex_headshot_1.jpg">
