@@ -1,34 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# alexpatterson.dev — Minimalist DevRel & Interactive Speaker Hub
 
-## Getting Started
+Minimalist, single-page developer relations portfolio and interactive speaker kit for **Alex Patterson** (Senior Solutions Engineer @ Sanity.io, Founder & Host @ CodingCat.dev, Google Developer Expert, AWS Certified Cloud Practitioner).
 
-First, run the development server:
+- **Media & Tutorials Hub:** [https://codingcat.dev](https://codingcat.dev) (`alexpatterson.dev` strictly serves executive DevRel & conference speaker kit assets; routine tutorials, blog posts, and podcast episodes live on CodingCat.dev).
+- **Programmatic Speaker Kit (JSON / MCP):** [`/speaker-kit.json`](https://alexpatterson.dev/speaker-kit.json)
+- **LLM Overview:** [`/llms.txt`](https://alexpatterson.dev/llms.txt)
+- **Sanity Project:** `hfh83o0w` (`production` dataset)
+- **Cloudflare D1 DevRel Ledger:** `devrel-mcp` (`88e72347-89a2-4ddd-9cb5-b049f93579f5`)
+
+## Architecture & Stack
+
+- **Framework:** Astro 7 SSR on Cloudflare Workers + React 19 Islands
+- **Styling:** Tailwind CSS v4 + Lucide Icons (`Geist` + `JetBrains Mono`)
+- **Content Layer:** Sanity (`@sanity/client` + `@sanity/image-url`) with declarative schemas in `/sanity/schemas/` ready for Sanity MCP (`deploy_schema` / `patch_documents`), plus optional speaking event sync from Cloudflare D1 (`DEVREL_DB`).
+
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build & Verify
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+npm run check
+npm run build
+```

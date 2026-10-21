@@ -1,31 +1,43 @@
 {
-  "name": "alexpatterson-dev",
-  "version": "0.1.0",
+  "name": "alexpatterson.dev",
+  "type": "module",
   "private": true,
+  "version": "2.0.0",
+  "engines": {
+    "node": ">=22.12"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:production": "CLOUDFLARE_ENV=production astro build",
+    "preview": "astro build && wrangler dev",
+    "check": "astro check",
+    "typecheck": "astro check",
+    "lint": "biome check .",
+    "format": "biome format . --write",
+    "cf-typegen": "CI=true wrangler types",
+    "seed:sanity": "node scripts/seed-sanity.mjs"
   },
   "dependencies": {
-    "daisyui": "^2.2.2",
-    "next": "12.1.0",
-    "next-seo": "^5.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-responsive-carousel": "^3.2.22",
-    "theme-change": "^2.0.2",
-    "use-sound": "^4.0.1"
+    "@astrojs/cloudflare": "^14.2.1",
+    "@astrojs/react": "^6.0.2",
+    "@sanity/client": "^7.26.2",
+    "@sanity/image-url": "^2.1.1",
+    "@tailwindcss/vite": "^4.2.1",
+    "astro": "^7.2.2",
+    "groq": "^6.9.2",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
-    "@types/node": "17.0.21",
-    "@types/react": "17.0.39",
-    "autoprefixer": "^10.4.2",
-    "eslint": "8.10.0",
-    "eslint-config-next": "12.1.0",
-    "postcss": "^8.4.7",
-    "tailwindcss": "^3.0.23",
-    "typescript": "4.5.5"
+    "@astrojs/check": "^0.9.10",
+    "@biomejs/biome": "2.2.4",
+    "@types/node": "^24.12.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.123.0"
   }
 }

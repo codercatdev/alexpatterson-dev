@@ -1,0 +1,74 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "alexpatterson-dev",
+  "account_id": "c46bd0f3b9ed47b8692cca098030edbf",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "workers_dev": true,
+  "preview_urls": true,
+  "d1_databases": [
+    {
+      "binding": "DEVREL_DB",
+      "database_name": "devrel-mcp",
+      "database_id": "88e72347-89a2-4ddd-9cb5-b049f93579f5"
+    },
+    {
+      "binding": "DB",
+      "database_name": "codingcat-auth",
+      "database_id": "a2f53117-5919-4224-95a2-dc3847bea540"
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "dev.alexpatterson.dev",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    "ENVIRONMENT": "dev",
+    "PUBLIC_SANITY_PROJECT_ID": "hfh83o0w",
+    "PUBLIC_SANITY_DATASET": "production",
+    "PUBLIC_SANITY_API_VERSION": "2025-09-30",
+    "PUBLIC_SANITY_STUDIO_URL": "https://codingcat-prod.sanity.studio",
+    "SITE_URL": "https://dev.alexpatterson.dev",
+    "DEVREL_LEDGER_URL": "https://devrel.codingcat.dev"
+  },
+  // Bindings are NOT inherited into `env.*` and must be repeated under env.production.
+  "env": {
+    "production": {
+      "name": "alexpatterson-prod",
+      "account_id": "c46bd0f3b9ed47b8692cca098030edbf",
+      "workers_dev": false,
+      "routes": [
+        {
+          "pattern": "alexpatterson.dev",
+          "custom_domain": true
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DEVREL_DB",
+          "database_name": "devrel-mcp",
+          "database_id": "88e72347-89a2-4ddd-9cb5-b049f93579f5"
+        },
+        {
+          "binding": "DB",
+          "database_name": "codingcat-auth",
+          "database_id": "a2f53117-5919-4224-95a2-dc3847bea540"
+        }
+      ],
+      "observability": { "enabled": true, "head_sampling_rate": 1 },
+      "vars": {
+        "ENVIRONMENT": "production",
+        "PUBLIC_SANITY_PROJECT_ID": "hfh83o0w",
+        "PUBLIC_SANITY_DATASET": "production",
+        "PUBLIC_SANITY_API_VERSION": "2025-09-30",
+        "PUBLIC_SANITY_STUDIO_URL": "https://codingcat-prod.sanity.studio",
+        "SITE_URL": "https://alexpatterson.dev",
+        "DEVREL_LEDGER_URL": "https://devrel.codingcat.dev"
+      }
+    }
+  }
+}

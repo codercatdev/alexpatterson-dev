@@ -1,0 +1,193 @@
+---
+import { Font } from "astro:assets";
+import { env } from "cloudflare:workers";
+import "@/styles/global.css";
+import HeadshotGridIsland from "@/components/HeadshotGridIsland";
+import IdentityHeader from "@/components/IdentityHeader.astro";
+import SpeakerKitIsland from "@/components/SpeakerKitIsland";
+import SpeakingLedgerIsland from "@/components/SpeakingLedgerIsland";
+import { getSpeakerKitData } from "@/lib/sanity";
+
+const runtimeEnv = env as unknown as Record<string, unknown>;
+const data = await getSpeakerKitData(runtimeEnv);
+const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
+
+const pageTitle = "Alex Patterson — DevRel & Interactive Speaker Kit";
+const pageDescription =
+	"Minimalist executive Developer Relations hub and interactive conference speaker kit for Alex Patterson (Senior Solutions Engineer @ Sanity.io, Founder & Host @ CodingCat.dev, Google Developer Expert).";
+
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "ProfilePage",
+			"@id": `${origin}/#profilepage`,
+			url: origin,
+			name: pageTitle,
+			description: pageDescription,
+			dateModified: data.meta.generatedAt,
+			mainEntity: { "@id": `${origin}/#person` },
+		},
+		{
+			"@type": "Person",
+			"@id": `${origin}/#person`,
+			name: data.profile.name,
+			url: origin,
+			image: data.profile.avatarUrl,
+			jobTitle: "Senior Solutions Engineer & Founder",
+			description: data.profile.bios.mediumThird,
+			alumniOf: {
+				"@type": "CollegeOrUniversity",
+				name: "Western Michigan University",
+			},
+			worksFor: [
+				{
+					"@type": "Organization",
+					name: "Sanity.io",
+					url: "https://www.sanity.io",
+				},
+				{
+					"@type": "Organization",
+					name: "CodingCat.dev",
+					url: "https://codingcat.dev",
+				},
+			],
+			sameAs: [
+				data.profile.socialLinks.codingcat,
+				data.profile.socialLinks.github,
+				data.profile.socialLinks.x,
+				data.profile.socialLinks.youtube,
+				data.profile.socialLinks.linkedin,
+				data.profile.socialLinks.gdeProfile,
+			],
+		},
+		{
+			"@type": "WebSite",
+			"@id": `${origin}/#website`,
+			name: "Alex Patterson — Speaker Kit & DevRel Hub",
+			url: origin,
+			publisher: { "@id": `${origin}/#person` },
+		},
+	],
+};
+---
+
+<!doctype html>
+<html lang="en" class="dark scroll-smooth bg-zinc-950 text-zinc-100">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{pageTitle}</title>
+		<meta name="description" content={pageDescription} />
+		<meta name="author" content={data.profile.name} />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href={origin} />
+
+		<Font cssVariable="--font-geist" preload />
+		<Font cssVariable="--font-jetbrains-mono" preload />
+
+		<!-- Open Graph / Twitter -->
+		<meta property="og:type" content="profile" />
+		<meta property="og:url" content={origin} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={pageDescription} />
+		<meta property="og:site_name" content="alexpatterson.dev" />
+		{data.profile.avatarUrl && (
+			<meta property="og:image" content={data.profile.avatarUrl} />
+		)}
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@codercatdev" />
+		<meta name="twitter:creator" content="@codercatdev" />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={pageDescription} />
+
+		<!-- Favicons & Feeds -->
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="icon" sizes="any" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link
+			rel="alternate"
+			type="application/json"
+			title="Alex Patterson Programmatic Speaker Kit (JSON)"
+			href="/speaker-kit.json"
+		/>
+		<link rel="llms-txt" href="/llms.txt" />
+
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify(jsonLd)}
+		></script>
+	</head>
+	<body class="min-h-dvh bg-zinc-950 text-zinc-100 antialiased selection:bg-violet-600/30 selection:text-zinc-100">
+		<main class="max-w-3xl mx-auto px-6 py-16">
+			<!-- 00 / IDENTITY -->
+			<IdentityHeader
+				profile={data.profile}
+				sanityProjectId={data.meta.sanityProjectId}
+				sanityDataset={data.meta.sanityDataset}
+			/>
+
+			<!-- 01 / SPEAKER KIT (Interactive React Island) -->
+			<SpeakerKitIsland
+				client:load
+				bios={data.profile.bios}
+				talks={data.talks}
+			/>
+
+			<!-- 02 / HEADSHOTS & MEDIA (Interactive React Island) -->
+			<HeadshotGridIsland
+				client:load
+				headshots={data.headshots}
+			/>
+
+			<!-- 03 / SPEAKING LEDGER (Interactive React Island) -->
+			<SpeakingLedgerIsland
+				client:load
+				events={data.events}
+			/>
+
+			<!-- Minimalist Editorial Colophon -->
+			<footer class="mt-20 pt-6 border-t border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-zinc-500">
+				<div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+					<span class="text-zinc-300 font-medium">alexpatterson.dev</span>
+					<span>•</span>
+					<span>Sanity ({data.meta.sanityProjectId}/{data.meta.sanityDataset})</span>
+					<span>•</span>
+					<span>Astro + Cloudflare Workers</span>
+				</div>
+				<div class="flex flex-wrap items-center gap-3">
+					<a
+						href="https://codingcat.dev"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-emerald-400 hover:text-emerald-300 transition-colors"
+					>
+						codingcat.dev →
+					</a>
+					<span class="text-zinc-800">|</span>
+					<a
+						href="/speaker-kit.json"
+						class="text-violet-400 hover:text-violet-300 transition-colors"
+					>
+						/speaker-kit.json
+					</a>
+					<span class="text-zinc-800">|</span>
+					<a
+						href="/llms.txt"
+						class="text-zinc-400 hover:text-zinc-200 transition-colors"
+					>
+						/llms.txt
+					</a>
+				</div>
+			</footer>
+		</main>
+
+		<!-- Progressive Enhancement Fallback for hidden="until-found" -->
+		<script is:inline>
+			if (typeof HTMLElement !== "undefined" && !("onbeforematch" in HTMLElement.prototype)) {
+				// Browser supports standard DOM toggling via our button listener
+			}
+		</script>
+	</body>
+</html>
