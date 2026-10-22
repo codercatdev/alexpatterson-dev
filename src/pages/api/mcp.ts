@@ -40,7 +40,13 @@ export const MCP_TOOLS = [
 			"Retrieve Alex Patterson's executive DevRel profile, credentials (Sanity.io, CodingCat.dev, Google Developer Expert, AWS), location, home airport, booking links, and all 6 bio variations (short/medium/full in 3rd and 1st person).",
 		inputSchema: {
 			type: "object",
-			properties: {},
+			properties: {
+				includeBios: {
+					type: "boolean",
+					description:
+						"Whether to include all 6 bio variations in the profile response (default: true).",
+				},
+			},
 		},
 	},
 	{
@@ -145,7 +151,14 @@ export const MCP_TOOLS = [
 			"Fetch the complete programmatic speaker kit (profile, all 6 bios, talk abstracts, Sanity CDN headshots, and speaking ledger).",
 		inputSchema: {
 			type: "object",
-			properties: {},
+			properties: {
+				section: {
+					type: "string",
+					enum: ["all", "profile", "talks", "headshots", "ledger"],
+					description:
+						"Optional section of the speaker kit to retrieve (default: 'all').",
+				},
+			},
 		},
 	},
 ];
