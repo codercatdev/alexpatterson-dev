@@ -1,0 +1,75 @@
+---
+import { Font } from "astro:assets";
+import "@/styles/global.css";
+
+const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
+---
+
+<!doctype html>
+<html lang="en" class="dark scroll-smooth bg-zinc-950 text-zinc-100">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Developers, MCP &amp; API Documentation — alexpatterson.dev</title>
+		<meta
+			name="description"
+			content="Developer documentation for Alex Patterson's unauthenticated Model Context Protocol (MCP) server, OpenAPI 3.1 endpoints, and Cloudflare Workers AI headshot remix API."
+		/>
+		<link rel="canonical" href={`${origin}/developers`} />
+		<Font cssVariable="--font-geist" preload />
+		<Font cssVariable="--font-jetbrains-mono" />
+	</head>
+	<body class="min-h-dvh bg-zinc-950 text-zinc-100 antialiased">
+		<main class="max-w-3xl mx-auto px-6 py-16 space-y-8">
+			<header role="banner" class="pb-4 border-b border-zinc-800 flex items-center justify-between">
+				<div class="font-mono text-xs uppercase tracking-wider text-zinc-400">
+					<span class="text-violet-400 font-semibold">03</span> / DEVELOPERS, MCP &amp; API DOCS
+				</div>
+				<a href="/" class="font-mono text-xs text-violet-300 hover:text-violet-200">
+					← Back to Speaker Kit
+				</a>
+			</header>
+
+			<article class="space-y-6 text-sm text-zinc-300 leading-relaxed">
+				<h1 class="text-2xl sm:text-3xl font-bold text-zinc-100">
+					Developer &amp; AI Agent API Documentation
+				</h1>
+				<p>
+					All speaker kit data on <strong>alexpatterson.dev</strong> is accessible programmatically with <strong>zero authentication required</strong> (<code class="font-mono text-emerald-400">auth: none</code>). Agents and conference automation pipelines can query our Model Context Protocol (MCP) server, REST JSON endpoints, or negotiate Markdown directly via <code class="font-mono text-violet-300">Accept: text/markdown</code>.
+				</p>
+
+				<section class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-3">
+					<h2 class="font-mono text-xs uppercase tracking-wider text-violet-300">
+						1. Unauthenticated MCP Server (<code class="text-zinc-100">POST /mcp</code>)
+					</h2>
+					<p>
+						Connect any Streamable HTTP MCP client (`2026-07-28`, `2025-11-25`, `2024-11-05`) to <a href="/mcp" class="text-violet-300 underline">{origin}/mcp</a>. Available tools: <code class="font-mono text-xs">get_speaker_profile</code>, <code class="font-mono text-xs">get_speaker_bio</code>, <code class="font-mono text-xs">list_talk_abstracts</code>, <code class="font-mono text-xs">list_headshots</code>, <code class="font-mono text-xs">list_speaking_ledger</code>, and <code class="font-mono text-xs">get_full_speaker_kit</code>.
+					</p>
+				</section>
+
+				<section class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-3">
+					<h2 class="font-mono text-xs uppercase tracking-wider text-violet-300">
+						2. Discovery &amp; Specification Endpoints
+					</h2>
+					<ul class="space-y-1.5 font-mono text-xs">
+						<li>• <a href="/speaker-kit.json" class="text-violet-300 underline">/speaker-kit.json</a> — Complete Speaker Kit JSON bundle</li>
+						<li>• <a href="/.well-known/openapi.json" class="text-violet-300 underline">/.well-known/openapi.json</a> — OpenAPI 3.1.0 specification</li>
+						<li>• <a href="/.well-known/mcp/server-card.json" class="text-violet-300 underline">/.well-known/mcp/server-card.json</a> — MCP Server Card</li>
+						<li>• <a href="/.well-known/api-catalog" class="text-violet-300 underline">/.well-known/api-catalog</a> — RFC 9727 API Catalog Linkset</li>
+						<li>• <a href="/.well-known/agent-skills/index.json" class="text-violet-300 underline">/.well-known/agent-skills/index.json</a> — Agent Skills Index (v0.2.0)</li>
+						<li>• <a href="/AGENTS.md" class="text-violet-300 underline">/AGENTS.md</a>, <a href="/auth.md" class="text-violet-300 underline">/auth.md</a>, <a href="/pricing.md" class="text-violet-300 underline">/pricing.md</a>, <a href="/llms.txt" class="text-violet-300 underline">/llms.txt</a></li>
+					</ul>
+				</section>
+			</article>
+
+			<footer role="contentinfo" class="pt-6 border-t border-zinc-800 font-mono text-xs text-zinc-400 flex flex-wrap justify-between gap-3">
+				<a href="/" class="text-zinc-300 hover:text-zinc-100">Home</a>
+				<div class="flex gap-4">
+					<a href="/about" class="hover:text-zinc-200">About</a>
+					<a href="/contact" class="hover:text-zinc-200">Contact</a>
+					<a href="/privacy" class="hover:text-zinc-200">Privacy</a>
+				</div>
+			</footer>
+		</main>
+	</body>
+</html>

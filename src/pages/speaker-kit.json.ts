@@ -21,9 +21,12 @@ export const GET: APIRoute = async ({ locals }) => {
 			url: "https://devrel.codingcat.dev",
 			mcpEndpoint: "https://devrel.codingcat.dev/mcp",
 		},
-		sanity: {
-			projectId: data.meta.sanityProjectId,
-			dataset: data.meta.sanityDataset,
+		mcpServer: {
+			endpoint: `${origin}/mcp`,
+			serverCard: `${origin}/.well-known/mcp/server-card.json`,
+			auth: "none",
+		},
+		contentLayer: {
 			source: data.meta.source,
 			d1SyncedCount: data.meta.d1SyncedCount,
 			generatedAt: data.meta.generatedAt,

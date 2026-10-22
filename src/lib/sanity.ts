@@ -130,8 +130,6 @@ export interface SpeakerKitBundle {
 	talks: TalkAbstract[];
 	events: SpeakingEvent[];
 	meta: {
-		sanityProjectId: string;
-		sanityDataset: string;
 		source: "sanity-live" | "sanity-hybrid-seed";
 		d1SyncedCount: number;
 		generatedAt: string;
@@ -870,8 +868,6 @@ export async function getSpeakerKitData(
 		talks,
 		events: mergedEvents,
 		meta: {
-			sanityProjectId: config.projectId,
-			sanityDataset: config.dataset,
 			source: hasLiveSpeakerDocs ? "sanity-live" : "sanity-hybrid-seed",
 			d1SyncedCount: d1Events.length,
 			generatedAt: new Date().toISOString(),

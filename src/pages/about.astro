@@ -1,0 +1,72 @@
+---
+import { env } from "cloudflare:workers";
+import { Font } from "astro:assets";
+import { getSpeakerKitData } from "@/lib/sanity";
+import "@/styles/global.css";
+
+const runtimeEnv = env as unknown as Record<string, unknown>;
+const data = await getSpeakerKitData(runtimeEnv);
+const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
+---
+
+<!doctype html>
+<html lang="en" class="dark scroll-smooth bg-zinc-950 text-zinc-100">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>About Alex Patterson — Executive DevRel &amp; Speaker Hub</title>
+		<meta
+			name="description"
+			content="About Alex Patterson: Senior Solutions Engineer at Sanity.io, Founder & Host of CodingCat.dev, Google Developer Expert (GDE), and international technical conference speaker."
+		/>
+		<link rel="canonical" href={`${origin}/about`} />
+		<Font cssVariable="--font-geist" preload />
+		<Font cssVariable="--font-jetbrains-mono" />
+	</head>
+	<body class="min-h-dvh bg-zinc-950 text-zinc-100 antialiased">
+		<main class="max-w-3xl mx-auto px-6 py-16 space-y-8">
+			<header role="banner" class="pb-4 border-b border-zinc-800 flex items-center justify-between">
+				<div class="font-mono text-xs uppercase tracking-wider text-zinc-400">
+					<span class="text-violet-400 font-semibold">00</span> / ABOUT ALEX PATTERSON
+				</div>
+				<a href="/" class="font-mono text-xs text-violet-300 hover:text-violet-200">
+					← Back to Speaker Kit
+				</a>
+			</header>
+
+			<article class="space-y-6">
+				<h1 class="text-2xl sm:text-3xl font-bold text-zinc-100">
+					About {data.profile.name}
+				</h1>
+				<p class="text-sm sm:text-base text-zinc-300 leading-relaxed">
+					{data.profile.bios.fullThird}
+				</p>
+
+				<section class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-3">
+					<h2 class="font-mono text-xs uppercase tracking-wider text-violet-300">
+						Executive Credentials &amp; Background
+					</h2>
+					<ul class="space-y-2 text-sm text-zinc-300">
+						{data.profile.credentials.map((c) => (
+							<li>
+								• <strong>{c.label}</strong>
+							</li>
+						))}
+						<li>• <strong>Location:</strong> {data.profile.location} ({data.profile.homeAirport})</li>
+						<li>• <strong>Education:</strong> {data.profile.education}</li>
+						<li>• <strong>Media &amp; Tutorials:</strong> All educational tutorials, blog posts, and podcast episodes are published exclusively at <a href="https://codingcat.dev" class="text-emerald-400 underline">codingcat.dev</a>.</li>
+					</ul>
+				</section>
+			</article>
+
+			<footer role="contentinfo" class="pt-6 border-t border-zinc-800 font-mono text-xs text-zinc-400 flex flex-wrap justify-between gap-3">
+				<a href="/" class="text-zinc-300 hover:text-zinc-100">Home</a>
+				<div class="flex gap-4">
+					<a href="/contact" class="hover:text-zinc-200">Contact</a>
+					<a href="/privacy" class="hover:text-zinc-200">Privacy</a>
+					<a href="/developers" class="text-violet-300 hover:text-violet-200">Developers &amp; API</a>
+				</div>
+			</footer>
+		</main>
+	</body>
+</html>

@@ -17,23 +17,21 @@ import type { SpeakerProfile } from "@/lib/sanity";
 
 interface Props {
 	profile: SpeakerProfile;
-	sanityProjectId: string;
-	sanityDataset: string;
 }
 
-const { profile, sanityProjectId, sanityDataset } = Astro.props;
+const { profile } = Astro.props;
 
 const avatarSrc = profile.avatarUrl
 	? `${profile.avatarUrl.split("?")[0]}?w=240&h=240&fit=crop&crop=focalpoint&fm=webp`
 	: "/headshots/alex_headshot_1.jpg";
 ---
 
-<header id="identity" class="scroll-mt-12">
+<header id="identity" role="banner" aria-label="Speaker identity" class="scroll-mt-12">
 	<!-- Section 00 Index Header -->
 	<div class="flex items-center justify-between gap-4 pb-3 border-b border-zinc-800">
 		<div class="flex items-center gap-2.5 font-mono text-xs tracking-wider uppercase text-zinc-400">
 			<span class="text-violet-400 font-semibold">00</span>
-			<span class="text-zinc-700">/</span>
+			<span class="text-zinc-600" aria-hidden="true">/</span>
 			<span>IDENTITY</span>
 		</div>
 		<div class="flex items-center gap-3 font-mono text-[11px] text-zinc-400">
@@ -43,10 +41,13 @@ const avatarSrc = profile.avatarUrl
 					Booking Keynotes &amp; Workshops
 				</span>
 			)}
-			<span class="hidden sm:inline-flex items-center gap-1 text-zinc-500">
+			<a
+				href="/mcp"
+				class="hidden sm:inline-flex items-center gap-1 text-zinc-400 hover:text-violet-300 transition-colors"
+			>
 				<Terminal className="w-3 h-3 text-violet-400" />
-				sanity:{sanityProjectId}/{sanityDataset}
-			</span>
+				<span>/mcp</span>
+			</a>
 		</div>
 	</div>
 
@@ -148,7 +149,7 @@ const avatarSrc = profile.avatarUrl
 	</div>
 
 	<!-- CodingCat.dev Referral Banner (Strictly Emerald Accent, No Routine Posts Ingested) -->
-	<div class="mt-6 rounded-xl border border-emerald-500/30 bg-zinc-900/60 p-4 sm:p-5 relative overflow-hidden">
+	<aside aria-label="CodingCat.dev media referral" class="mt-6 rounded-xl border border-emerald-500/30 bg-zinc-900/60 p-4 sm:p-5 relative overflow-hidden">
 		<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 			<div class="space-y-1">
 				<div class="flex items-center gap-2">
@@ -156,7 +157,7 @@ const avatarSrc = profile.avatarUrl
 						<Radio className="w-3 h-3" />
 						MEDIA, TUTORIALS &amp; PODCAST HUB
 					</span>
-					<span class="font-mono text-[11px] text-zinc-500">
+					<span class="font-mono text-[11px] text-zinc-400">
 						codingcat.dev
 					</span>
 				</div>
@@ -178,7 +179,7 @@ const avatarSrc = profile.avatarUrl
 				<ExternalLink className="w-3.5 h-3.5" />
 			</a>
 		</div>
-	</div>
+	</aside>
 
 	<!-- Primary Action Bar + Expandable Booking/Calendar Drawer -->
 	<div class="mt-5 space-y-3">
@@ -190,6 +191,10 @@ const avatarSrc = profile.avatarUrl
 					id="booking-drawer-toggle"
 					aria-expanded="false"
 					aria-controls="booking-drawer-panel"
+					toolname="toggle_booking_drawer"
+					tooldescription="Open direct speaker booking calendar and inquiry contact options"
+					tool-name="toggle_booking_drawer"
+					tool-description="Open direct speaker booking calendar and inquiry contact options"
 					class="inline-flex items-center gap-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-zinc-100 font-medium text-xs sm:text-sm px-4 py-2.5 shadow-sm shadow-violet-950/50 transition-colors cursor-pointer"
 				>
 					<Calendar className="w-4 h-4" />
@@ -213,37 +218,37 @@ const avatarSrc = profile.avatarUrl
 					href={profile.socialLinks.github}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-400 transition-colors"
+					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-300 transition-colors"
 				>
 					<span>GitHub</span>
-					<span class="text-zinc-500">@codercatdev</span>
+					<span class="text-zinc-400">@codercatdev</span>
 				</a>
 				<a
 					href={profile.socialLinks.x}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-400 transition-colors"
+					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-300 transition-colors"
 				>
 					<span>X</span>
-					<span class="text-zinc-500">@codercatdev</span>
+					<span class="text-zinc-400">@codercatdev</span>
 				</a>
 				<a
 					href={profile.socialLinks.youtube}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-400 transition-colors"
+					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-300 transition-colors"
 				>
 					<span>YouTube</span>
-					<span class="text-zinc-500">@CodingCatDev</span>
+					<span class="text-zinc-400">@CodingCatDev</span>
 				</a>
 				<a
 					href={profile.socialLinks.linkedin}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-400 transition-colors"
+					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-300 transition-colors"
 				>
 					<span>LinkedIn</span>
-					<span class="text-zinc-500">/in/alexpatterson</span>
+					<span class="text-zinc-400">/in/alexpatterson</span>
 				</a>
 			</nav>
 		</div>

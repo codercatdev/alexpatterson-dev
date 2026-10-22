@@ -23,31 +23,46 @@ const REMIX_PRESETS = [
 		id: "Cyberpunk Keynote",
 		label: "Cyberpunk Keynote",
 		prompt:
-			"Transform into a neon-lit cyberpunk conference keynote stage portrait with royal violet and emerald holographic rim lighting, dark zinc background, sharp editorial photography.",
+			"Neon-lit cyberpunk conference keynote stage portrait with royal violet and emerald holographic rim lighting, dark zinc background, sharp editorial photography.",
 	},
 	{
 		id: "8-Bit Retro",
 		label: "8-Bit Retro",
 		prompt:
-			"Transform into a crisp 16-bit/8-bit retro pixel art developer avatar with deep zinc and royal purple palette suitable for a retro game conference badge.",
+			"Crisp 16-bit/8-bit retro pixel art developer avatar with deep zinc and royal purple palette suitable for a retro game conference badge.",
 	},
 	{
 		id: "Conference Sketch",
 		label: "Conference Sketch",
 		prompt:
-			"Transform into an editorial ink-and-charcoal technical illustration portrait on dark blueprint paper with subtle violet grid lines.",
+			"Editorial ink-and-charcoal technical illustration portrait on dark blueprint paper with subtle violet grid lines.",
 	},
 	{
 		id: "Synthwave",
 		label: "Synthwave",
 		prompt:
-			"Transform into a synthwave outrun conference poster portrait with deep purple wireframe horizon and emerald laser accents.",
+			"Synthwave outrun conference poster portrait with deep purple wireframe horizon and emerald laser accents.",
+	},
+] as const;
+
+const CLOUDFLARE_OPEN_MODELS = [
+	{
+		id: "@cf/black-forest-labs/flux-1-schnell",
+		label: "FLUX.1 [schnell] + LLaVA Vision (Recommended)",
+	},
+	{
+		id: "@cf/runwayml/stable-diffusion-v1-5-img2img",
+		label: "Stable Diffusion v1.5 (Direct Img2Img)",
+	},
+	{
+		id: "@cf/bytedance/stable-diffusion-xl-lightning",
+		label: "SDXL-Lightning (Fast 4-Step Open Model)",
 	},
 ] as const;
 
 interface RemixResponse {
 	ok: boolean;
-	mode: "gemini-live" | "worker-stub";
+	mode: "workers-ai-live" | "worker-fallback";
 	model: string;
 	stylePreset: string;
 	promptUsed: string;
@@ -72,6 +87,9 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 	);
 	const [selectedPreset, setSelectedPreset] = useState<string>(
 		REMIX_PRESETS[0].id,
+	);
+	const [selectedModel, setSelectedModel] = useState<string>(
+		CLOUDFLARE_OPEN_MODELS[0].id,
 	);
 	const [customPrompt, setCustomPrompt] = useState<string>("");
 	const [isRemixing, setIsRemixing] = useState(false);
@@ -152,6 +170,7 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 					headshotUrl: fullUrl,
 					fallbackLocalUrl: chosenHeadshot.fallbackLocalUrl,
 					stylePreset: selectedPreset,
+					model: selectedModel,
 					prompt: promptToUse,
 				}),
 			});
@@ -175,11 +194,13 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 			<div className="flex items-center justify-between gap-4 pb-3 border-b border-zinc-800">
 				<div className="flex items-center gap-2.5 font-mono text-xs tracking-wider uppercase text-zinc-400">
 					<span className="text-violet-400 font-semibold">02</span>
-					<span className="text-zinc-700">/</span>
+					<span className="text-zinc-600" aria-hidden="true">
+						/
+					</span>
 					<span>HEADSHOTS &amp; MEDIA</span>
 				</div>
 				<span className="font-mono text-[11px] text-violet-300">
-					cdn.sanity.io/images/hfh83o0w/production
+					cdn.sanity.io • Sanity Image Pipeline
 				</span>
 			</div>
 
@@ -190,7 +211,7 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 						<div className="flex items-center gap-2">
 							<ImageIcon className="w-4 h-4 text-violet-400" />
 							<h2 className="text-sm font-semibold text-zinc-100">
-								Sanity CDN Image Pipeline Controls
+								How Do I Download High-Res Headshots or Remix via AI?
 							</h2>
 						</div>
 						<p className="text-xs text-zinc-400">
@@ -268,7 +289,7 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 
 				{/* Live Pipeline Query String Banner */}
 				<div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 rounded-lg bg-zinc-950 border border-zinc-800/90 px-3 py-2 font-mono text-xs">
-					<span className="text-zinc-500">ACTIVE PIPELINE PARAMS:</span>
+					<span className="text-zinc-400">ACTIVE PIPELINE PARAMS:</span>
 					<code className="text-violet-300 break-all">
 						{activeQueryPreview}
 					</code>
@@ -307,6 +328,9 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 										src={displaySrc}
 										alt={item.alt}
 										loading="lazy"
+										decoding="async"
+										width={aspect === "1:1" ? 600 : 640}
+										height={aspect === "1:1" ? 600 : 360}
 										onError={() => {
 											if (item.fallbackLocalUrl && !fallbackActive[item._id]) {
 												setFallbackActive((prev) => ({
@@ -341,7 +365,7 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 									)}
 
 									<div className="rounded-md bg-zinc-950 border border-zinc-800/90 p-2 font-mono text-[11px] text-zinc-400 overflow-x-auto">
-										<div className="text-zinc-500 text-[10px] uppercase mb-0.5">
+										<div className="text-zinc-400 text-[10px] uppercase mb-0.5">
 											Sanity CDN Query String
 										</div>
 										<code className="text-violet-300 whitespace-nowrap">
@@ -389,12 +413,17 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 				})}
 			</div>
 
-			{/* Phase 2 Stub: Collapsible "Try AI Headshot Remix" (Gemini Flash Image Preview) */}
+			{/* Collapsible "Try AI Headshot Remix" (Cloudflare Workers AI Open Models) */}
 			<div className="mt-6 rounded-xl border border-violet-500/30 bg-zinc-900/40 overflow-hidden">
 				<button
 					type="button"
 					onClick={() => setRemixOpen((prev) => !prev)}
 					aria-expanded={remixOpen}
+					aria-controls="remix-headshot-form"
+					toolname="toggle_ai_headshot_remix"
+					tooldescription="Toggle the Cloudflare Workers AI speaker headshot remix drawer"
+					tool-name="toggle_ai_headshot_remix"
+					tool-description="Toggle the Cloudflare Workers AI speaker headshot remix drawer"
 					className="w-full flex items-center justify-between gap-4 p-4 sm:p-5 text-left hover:bg-zinc-900/80 transition-colors cursor-pointer"
 				>
 					<div className="flex items-center gap-3">
@@ -407,12 +436,13 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 									Try AI Headshot Remix
 								</span>
 								<span className="rounded-full bg-violet-500/15 border border-violet-500/30 px-2 py-0.5 font-mono text-[10px] uppercase text-violet-300">
-									Gemini Flash Image Preview • /api/remix-headshot
+									Cloudflare Workers AI • Open Models
 								</span>
 							</div>
 							<p className="text-xs text-zinc-400 mt-0.5">
 								Generate themed speaker artwork for custom conference badges,
-								retro events, or synthwave flyers.
+								retro events, or synthwave flyers using open models on
+								Cloudflare Workers AI.
 							</p>
 						</div>
 					</div>
@@ -424,139 +454,200 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 					/>
 				</button>
 
-				{remixOpen && (
-					<form
-						onSubmit={handleRunRemix}
-						className="p-4 sm:p-5 pt-0 border-t border-zinc-800/80 space-y-4"
-					>
-						<div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-							{/* Base Headshot Selector */}
-							<div>
-								<label
-									htmlFor="remix-base-headshot"
-									className="block font-mono text-[11px] uppercase tracking-wider text-zinc-400 mb-1.5"
-								>
-									1. Base Sanity Headshot
-								</label>
-								<select
-									id="remix-base-headshot"
-									value={selectedHeadshotId}
-									onChange={(e) => setSelectedHeadshotId(e.target.value)}
-									className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-violet-500"
-								>
-									{headshots.map((h) => (
-										<option key={h._id} value={h._id}>
-											{h.title} ({h.primaryFocalTag})
-										</option>
-									))}
-								</select>
-							</div>
-
-							{/* Preset Style Pills */}
-							<div>
-								<span className="block font-mono text-[11px] uppercase tracking-wider text-zinc-400 mb-1.5">
-									2. Preset Style Pill
-								</span>
-								<div className="flex flex-wrap gap-1.5">
-									{REMIX_PRESETS.map((preset) => {
-										const active = selectedPreset === preset.id;
-										return (
-											<button
-												key={preset.id}
-												type="button"
-												onClick={() => {
-													setSelectedPreset(preset.id);
-													setCustomPrompt(preset.prompt);
-												}}
-												className={`rounded-md border px-2.5 py-1 font-mono text-xs transition-all cursor-pointer ${
-													active
-														? "bg-violet-600 border-violet-500 text-zinc-100"
-														: "bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-zinc-200"
-												}`}
-											>
-												{preset.label}
-											</button>
-										);
-									})}
-								</div>
-							</div>
-						</div>
-
-						{/* Custom Prompt Input */}
+				<form
+					id="remix-headshot-form"
+					hidden={!remixOpen}
+					onSubmit={handleRunRemix}
+					action="/api/remix-headshot"
+					method="post"
+					toolname="remix_speaker_headshot"
+					tooldescription="Generate an AI-remixed speaker headshot using Cloudflare Workers AI open models"
+					tool-name="remix_speaker_headshot"
+					tool-description="Generate an AI-remixed speaker headshot using Cloudflare Workers AI open models"
+					className={
+						remixOpen
+							? "p-4 sm:p-5 pt-0 border-t border-zinc-800/80 space-y-4"
+							: "hidden"
+					}
+				>
+					<div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+						{/* Base Headshot Selector */}
 						<div>
 							<label
-								htmlFor="remix-custom-prompt"
+								htmlFor="remix-base-headshot"
 								className="block font-mono text-[11px] uppercase tracking-wider text-zinc-400 mb-1.5"
 							>
-								3. Custom Gemini Prompt (Optional Override)
+								1. Base Sanity Headshot
 							</label>
-							<div className="flex flex-col sm:flex-row gap-2">
-								<input
-									id="remix-custom-prompt"
-									type="text"
-									value={customPrompt}
-									onChange={(e) => setCustomPrompt(e.target.value)}
-									placeholder={
-										REMIX_PRESETS.find((p) => p.id === selectedPreset)?.prompt
-									}
-									className="flex-1 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-violet-500"
-								/>
-								<button
-									type="submit"
-									disabled={isRemixing}
-									className="inline-flex items-center justify-center gap-2 rounded-lg bg-violet-600 hover:bg-violet-500 disabled:opacity-60 px-4 py-2 font-mono text-xs font-medium text-zinc-100 transition-colors cursor-pointer shrink-0"
-								>
-									{isRemixing ? (
-										<>
-											<Loader2 className="w-3.5 h-3.5 animate-spin" />
-											<span>Remixing via Worker...</span>
-										</>
-									) : (
-										<>
-											<Sparkles className="w-3.5 h-3.5" />
-											<span>Run Remix (/api/remix-headshot)</span>
-										</>
-									)}
-								</button>
-							</div>
+							<select
+								id="remix-base-headshot"
+								name="headshotId"
+								toolparamdescription="Base Sanity speaker headshot ID to transform"
+								tool-param-description="Base Sanity speaker headshot ID to transform"
+								value={selectedHeadshotId}
+								onChange={(e) => setSelectedHeadshotId(e.target.value)}
+								className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-violet-500"
+							>
+								{headshots.map((h) => (
+									<option key={h._id} value={h._id}>
+										{h.title} ({h.primaryFocalTag})
+									</option>
+								))}
+							</select>
 						</div>
 
-						{remixError && (
-							<div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 font-mono text-xs text-red-300">
-								{remixError}
-							</div>
-						)}
+						{/* Open Model Selector */}
+						<div>
+							<label
+								htmlFor="remix-open-model"
+								className="block font-mono text-[11px] uppercase tracking-wider text-zinc-400 mb-1.5"
+							>
+								2. Cloudflare Open AI Model
+							</label>
+							<select
+								id="remix-open-model"
+								name="model"
+								toolparamdescription="Cloudflare Workers AI open model identifier (FLUX.1 schnell, SD 1.5 img2img, or SDXL Lightning)"
+								tool-param-description="Cloudflare Workers AI open model identifier (FLUX.1 schnell, SD 1.5 img2img, or SDXL Lightning)"
+								value={selectedModel}
+								onChange={(e) => setSelectedModel(e.target.value)}
+								className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-violet-500"
+							>
+								{CLOUDFLARE_OPEN_MODELS.map((m) => (
+									<option key={m.id} value={m.id}>
+										{m.label}
+									</option>
+								))}
+							</select>
+						</div>
+					</div>
 
-						{remixResult && (
-							<div className="rounded-lg border border-violet-500/30 bg-zinc-950 p-4 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
-								<div className="sm:col-span-1">
-									<img
-										src={remixResult.previewDataUrl}
-										alt={`AI Remix: ${remixResult.stylePreset}`}
-										className="w-full aspect-square rounded-lg border border-zinc-800 object-cover"
-									/>
+					{/* Preset Style Pills */}
+					<div>
+						<span className="block font-mono text-[11px] uppercase tracking-wider text-zinc-400 mb-1.5">
+							3. Preset Style Pill
+						</span>
+						<div className="flex flex-wrap gap-1.5">
+							{REMIX_PRESETS.map((preset) => {
+								const active = selectedPreset === preset.id;
+								return (
+									<button
+										key={preset.id}
+										type="button"
+										aria-pressed={active}
+										onClick={() => {
+											setSelectedPreset(preset.id);
+											setCustomPrompt(preset.prompt);
+										}}
+										className={`rounded-md border px-2.5 py-1 font-mono text-xs transition-all cursor-pointer ${
+											active
+												? "bg-violet-600 border-violet-500 text-zinc-100"
+												: "bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-zinc-200"
+										}`}
+									>
+										{preset.label}
+									</button>
+								);
+							})}
+						</div>
+					</div>
+
+					{/* Custom Prompt Input */}
+					<div>
+						<label
+							htmlFor="remix-custom-prompt"
+							className="block font-mono text-[11px] uppercase tracking-wider text-zinc-400 mb-1.5"
+						>
+							4. Custom Style Prompt (Optional Override)
+						</label>
+						<div className="flex flex-col sm:flex-row gap-2">
+							<input
+								id="remix-custom-prompt"
+								name="prompt"
+								type="text"
+								autoComplete="off"
+								toolparamdescription="Custom visual style prompt for AI headshot generation"
+								tool-param-description="Custom visual style prompt for AI headshot generation"
+								value={customPrompt}
+								onChange={(e) => setCustomPrompt(e.target.value)}
+								placeholder={
+									REMIX_PRESETS.find((p) => p.id === selectedPreset)?.prompt
+								}
+								className="flex-1 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-xs text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-violet-500"
+							/>
+							<button
+								type="submit"
+								disabled={isRemixing}
+								className="inline-flex items-center justify-center gap-2 rounded-lg bg-violet-600 hover:bg-violet-500 disabled:opacity-60 px-4 py-2 font-mono text-xs font-medium text-zinc-100 transition-colors cursor-pointer shrink-0"
+							>
+								{isRemixing ? (
+									<>
+										<Loader2 className="w-3.5 h-3.5 animate-spin" />
+										<span>Generating via Workers AI...</span>
+									</>
+								) : (
+									<>
+										<Sparkles className="w-3.5 h-3.5" />
+										<span>Run Workers AI Remix</span>
+									</>
+								)}
+							</button>
+						</div>
+					</div>
+
+					<output aria-live="polite" className="sr-only">
+						{isRemixing
+							? "Generating AI headshot remix via Cloudflare Workers AI..."
+							: remixResult
+								? `Generated ${remixResult.stylePreset} headshot remix using ${remixResult.model}`
+								: ""}
+					</output>
+
+					{remixError && (
+						<div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 font-mono text-xs text-red-300">
+							{remixError}
+						</div>
+					)}
+
+					{remixResult && (
+						<div className="rounded-lg border border-violet-500/30 bg-zinc-950 p-4 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+							<div className="sm:col-span-1 space-y-2">
+								<img
+									src={remixResult.previewDataUrl}
+									alt={`AI Remix: ${remixResult.stylePreset}`}
+									width="512"
+									height="512"
+									className="w-full aspect-square rounded-lg border border-zinc-800 object-cover"
+								/>
+								<a
+									href={remixResult.previewDataUrl}
+									download={`alex-patterson-remix-${remixResult.stylePreset.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.png`}
+									className="w-full inline-flex items-center justify-center gap-1.5 rounded-md bg-violet-600 hover:bg-violet-500 px-3 py-1.5 font-mono text-xs text-zinc-100 transition-colors"
+								>
+									<Download className="w-3.5 h-3.5" />
+									<span>Download Remix</span>
+								</a>
+							</div>
+							<div className="sm:col-span-2 space-y-2 font-mono text-xs">
+								<div className="flex flex-wrap items-center justify-between gap-2">
+									<span className="text-violet-300 font-semibold">
+										STYLE: {remixResult.stylePreset}
+									</span>
+									<span className="rounded bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-[11px] text-emerald-400">
+										{remixResult.mode} ({remixResult.model})
+									</span>
 								</div>
-								<div className="sm:col-span-2 space-y-2 font-mono text-xs">
-									<div className="flex flex-wrap items-center justify-between gap-2">
-										<span className="text-violet-300 font-semibold">
-											STYLE: {remixResult.stylePreset}
-										</span>
-										<span className="rounded bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-[11px] text-emerald-400">
-											{remixResult.mode} ({remixResult.model})
-										</span>
-									</div>
-									<p className="text-zinc-400 font-sans text-xs leading-relaxed">
-										{remixResult.message}
-									</p>
-									<div className="rounded bg-zinc-900/90 border border-zinc-800 p-2 text-[11px] text-zinc-400 break-all">
-										<span className="text-zinc-500">PROMPT: </span>
-										{remixResult.promptUsed}
-									</div>
+								<p className="text-zinc-400 font-sans text-xs leading-relaxed">
+									{remixResult.message}
+								</p>
+								<div className="rounded bg-zinc-900/90 border border-zinc-800 p-2 text-[11px] text-zinc-400 break-all">
+									<span className="text-zinc-400">PROMPT: </span>
+									{remixResult.promptUsed}
 								</div>
 							</div>
-						)}
-					</form>
-				)}
+						</div>
+					)}
+				</form>
 			</div>
 		</section>
 	);

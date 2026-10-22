@@ -86,8 +86,12 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 			<div className="flex items-center justify-between gap-4 pb-3 border-b border-zinc-800">
 				<div className="flex items-center gap-2.5 font-mono text-xs tracking-wider uppercase text-zinc-400">
 					<span className="text-violet-400 font-semibold">03</span>
-					<span className="text-zinc-700">/</span>
-					<span>SPEAKING LEDGER</span>
+					<span className="text-zinc-600" aria-hidden="true">
+						/
+					</span>
+					<h2 className="font-mono text-xs tracking-wider uppercase text-zinc-400 font-normal">
+						Where Has Alex Patterson Spoken Recently?
+					</h2>
 				</div>
 				<a
 					href="/speaker-kit.json"
@@ -99,12 +103,39 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 			</div>
 
 			{/* Filter Bar */}
-			<div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+			<form
+				action="#speaking-ledger"
+				method="get"
+				onSubmit={(e) => e.preventDefault()}
+				toolname="filter_speaking_ledger"
+				tooldescription="Filter Alex Patterson's chronological conference speaking ledger by event format or role"
+				tool-name="filter_speaking_ledger"
+				tool-description="Filter Alex Patterson's chronological conference speaking ledger by event format or role"
+				className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+			>
 				<div className="flex items-center gap-2 flex-wrap">
-					<span className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-500 mr-1">
+					<label
+						htmlFor="speaking-ledger-filter-select"
+						className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400 mr-1"
+					>
 						<Filter className="w-3.5 h-3.5 text-violet-400" />
 						FILTER:
-					</span>
+					</label>
+					<select
+						id="speaking-ledger-filter-select"
+						name="filter"
+						value={activeFilter}
+						onChange={(e) => setActiveFilter(e.target.value as FilterOption)}
+						toolparamdescription="Speaking engagement filter category: All, In-Person, Virtual, Workshop, or Keynote"
+						tool-param-description="Speaking engagement filter category: All, In-Person, Virtual, Workshop, or Keynote"
+						className="sr-only"
+					>
+						{FILTER_PILLS.map((pill) => (
+							<option key={pill} value={pill}>
+								{pill}
+							</option>
+						))}
+					</select>
 					{FILTER_PILLS.map((pill) => {
 						const isActive = activeFilter === pill;
 						return (
@@ -122,7 +153,7 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 								<span>{pill}</span>
 								<span
 									className={`text-[10px] ${
-										isActive ? "text-violet-200" : "text-zinc-500"
+										isActive ? "text-violet-200" : "text-zinc-400"
 									}`}
 								>
 									({counts[pill]})
@@ -132,11 +163,11 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 					})}
 				</div>
 
-				<div className="font-mono text-xs text-zinc-500">
+				<output aria-live="polite" className="font-mono text-xs text-zinc-400">
 					Showing <span className="text-zinc-200">{filteredEvents.length}</span>{" "}
 					of {events.length} engagements
-				</div>
-			</div>
+				</output>
+			</form>
 
 			{/* Chronological Ledger Table */}
 			<div className="mt-4 rounded-xl border border-zinc-800/80 bg-zinc-900/50 overflow-hidden">

@@ -129,16 +129,21 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 			<div className="flex items-center justify-between gap-4 pb-3 border-b border-zinc-800">
 				<div className="flex items-center gap-2.5 font-mono text-xs tracking-wider uppercase text-zinc-400">
 					<span className="text-violet-400 font-semibold">01</span>
-					<span className="text-zinc-700">/</span>
+					<span className="text-zinc-600" aria-hidden="true">
+						/
+					</span>
 					<span>SPEAKER KIT</span>
 				</div>
-				<span className="font-mono text-[11px] text-zinc-500">
+				<span className="font-mono text-[11px] text-zinc-400">
 					speakerProfile.bios.{activeKeyName}
 				</span>
 			</div>
 
 			{/* 1. Interactive Bio Matrix */}
 			<div className="mt-6 rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-5">
+				<h2 className="sr-only">
+					What Bio Variations Are Available for Alex Patterson?
+				</h2>
 				<div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-zinc-800/80">
 					{/* Length Toggle Group */}
 					<div className="space-y-1.5">
@@ -214,18 +219,18 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 				<div className="mt-4 flex flex-wrap items-center justify-between gap-3">
 					<div className="flex flex-wrap items-center gap-3 font-mono text-xs text-zinc-400">
 						<span className="inline-flex items-center gap-1.5 rounded-md bg-zinc-950 border border-zinc-800 px-2.5 py-1">
-							<span className="text-zinc-500">WORDS:</span>
+							<span className="text-zinc-400">WORDS:</span>
 							<span className="text-violet-300 font-semibold">
 								{stats.words}
 							</span>
 						</span>
 						<span className="inline-flex items-center gap-1.5 rounded-md bg-zinc-950 border border-zinc-800 px-2.5 py-1">
-							<span className="text-zinc-500">CHARS:</span>
+							<span className="text-zinc-400">CHARS:</span>
 							<span className="text-violet-300 font-semibold">
 								{stats.chars}
 							</span>
 						</span>
-						<span className="hidden sm:inline text-zinc-500">
+						<span className="hidden sm:inline text-zinc-400">
 							Ready for CFP &amp; Event Programs
 						</span>
 					</div>
@@ -233,6 +238,10 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 					<button
 						type="button"
 						onClick={handleCopyBio}
+						toolname="copy_speaker_bio"
+						tooldescription="Copy Alex Patterson's selected speaker bio variation to the clipboard"
+						tool-name="copy_speaker_bio"
+						tool-description="Copy Alex Patterson's selected speaker bio variation to the clipboard"
 						className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 font-mono text-xs font-medium transition-all cursor-pointer border ${
 							copiedBio
 								? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300"
@@ -251,6 +260,11 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 							</>
 						)}
 					</button>
+					<output aria-live="polite" className="sr-only">
+						{copiedBio
+							? `Copied ${length} ${perspective} person bio (${stats.words} words)`
+							: `Active bio: ${length} ${perspective} person (${stats.words} words, ${stats.chars} characters)`}
+					</output>
 				</div>
 			</div>
 
@@ -260,7 +274,7 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 					<div className="flex items-center gap-2">
 						<Mic className="w-4 h-4 text-violet-400" />
 						<h2 className="text-sm font-semibold uppercase tracking-wider font-mono text-zinc-200">
-							Ready-to-Run Talk Abstracts ({talks.length})
+							What Ready-to-Run Talk Abstracts Are Available? ({talks.length})
 						</h2>
 					</div>
 					<span className="font-mono text-xs text-zinc-400">

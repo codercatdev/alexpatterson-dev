@@ -1,0 +1,70 @@
+---
+import { Font } from "astro:assets";
+import "@/styles/global.css";
+
+const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
+---
+
+<!doctype html>
+<html lang="en" class="dark scroll-smooth bg-zinc-950 text-zinc-100">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Privacy &amp; AI Content Usage Policy — alexpatterson.dev</title>
+		<meta
+			name="description"
+			content="Privacy policy, zero-tracking posture, and AI agent content usage policy for alexpatterson.dev."
+		/>
+		<link rel="canonical" href={`${origin}/privacy`} />
+		<Font cssVariable="--font-geist" preload />
+		<Font cssVariable="--font-jetbrains-mono" />
+	</head>
+	<body class="min-h-dvh bg-zinc-950 text-zinc-100 antialiased">
+		<main class="max-w-3xl mx-auto px-6 py-16 space-y-8">
+			<header role="banner" class="pb-4 border-b border-zinc-800 flex items-center justify-between">
+				<div class="font-mono text-xs uppercase tracking-wider text-zinc-400">
+					<span class="text-violet-400 font-semibold">02</span> / PRIVACY &amp; DATA POLICY
+				</div>
+				<a href="/" class="font-mono text-xs text-violet-300 hover:text-violet-200">
+					← Back to Speaker Kit
+				</a>
+			</header>
+
+			<article class="space-y-6 text-sm text-zinc-300 leading-relaxed">
+				<h1 class="text-2xl sm:text-3xl font-bold text-zinc-100">
+					Privacy &amp; AI Agent Usage Policy
+				</h1>
+				<p>
+					<strong>alexpatterson.dev</strong> is a public, read-only executive developer relations portfolio and conference speaker kit operated by Alex Patterson. We do not require user accounts, do not sell personal data, and do not set third-party advertising cookies.
+				</p>
+
+				<section class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-3">
+					<h2 class="font-mono text-xs uppercase tracking-wider text-violet-300">
+						1. Data Collection &amp; Edge Infrastructure
+					</h2>
+					<p>
+						This site is served globally on Cloudflare Workers. Standard HTTP request metadata (IP address, user-agent, and requested path) is processed transiently at the Cloudflare edge for security, DDoS mitigation, and operational observability. When you use the optional interactive AI Headshot Remix widget, your style prompt and selected public Sanity headshot reference are processed by Cloudflare Workers AI solely to return the generated preview image in real time.
+					</p>
+				</section>
+
+				<section class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-3">
+					<h2 class="font-mono text-xs uppercase tracking-wider text-violet-300">
+						2. AI Content Signal &amp; Agent Access
+					</h2>
+					<p>
+						In accordance with our <code class="font-mono text-violet-300">Content-Usage: train-ai=n, search=y</code> HTTP header and <code class="font-mono text-violet-300">/robots.txt</code> directives (<code class="font-mono text-violet-300">Content-Signal: ai-train=no, search=yes, ai-input=yes</code>), AI search engines, conference organizers, and autonomous MCP agents are explicitly permitted to retrieve, index, and cite this speaker kit in real time. Contact <a href="mailto:alex@codingcat.dev" class="text-violet-300 underline">alex@codingcat.dev</a> with any privacy questions.
+					</p>
+				</section>
+			</article>
+
+			<footer role="contentinfo" class="pt-6 border-t border-zinc-800 font-mono text-xs text-zinc-400 flex flex-wrap justify-between gap-3">
+				<a href="/" class="text-zinc-300 hover:text-zinc-100">Home</a>
+				<div class="flex gap-4">
+					<a href="/about" class="hover:text-zinc-200">About</a>
+					<a href="/contact" class="hover:text-zinc-200">Contact</a>
+					<a href="/developers" class="text-violet-300 hover:text-violet-200">Developers &amp; API</a>
+				</div>
+			</footer>
+		</main>
+	</body>
+</html>
