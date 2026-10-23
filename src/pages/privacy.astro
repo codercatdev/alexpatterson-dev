@@ -1,15 +1,18 @@
 ---
 import { Font } from "astro:assets";
+import ThemeScript from "@/components/ThemeScript.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
 import "@/styles/global.css";
 
 const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 ---
 
 <!doctype html>
-<html lang="en" class="dark scroll-smooth bg-zinc-950 text-zinc-100">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<ThemeScript />
 		<title>Privacy &amp; AI Content Usage Policy — alexpatterson.dev</title>
 		<meta
 			name="description"
@@ -19,27 +22,25 @@ const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 		<Font cssVariable="--font-geist" preload />
 		<Font cssVariable="--font-jetbrains-mono" />
 	</head>
-	<body class="min-h-dvh bg-zinc-950 text-zinc-100 antialiased">
-		<main class="max-w-3xl mx-auto px-6 py-16 space-y-8">
-			<header role="banner" class="pb-4 border-b border-zinc-800 flex items-center justify-between">
-				<div class="font-mono text-xs uppercase tracking-wider text-zinc-400">
-					<span class="text-violet-400 font-semibold">02</span> / PRIVACY &amp; DATA POLICY
-				</div>
-				<a href="/" class="font-mono text-xs text-violet-300 hover:text-violet-200">
-					← Back to Speaker Kit
+	<body class="min-h-dvh bg-[#faf9f6] dark:bg-[#13151a] text-slate-900 dark:text-slate-100 antialiased">
+		<main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+			<header role="banner" class="pb-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
+				<a href="/" class="text-sm font-semibold text-indigo-600 dark:text-indigo-300 hover:underline">
+					← Back to Alex Patterson Hub
 				</a>
+				<ThemeToggle />
 			</header>
 
-			<article class="space-y-6 text-sm text-zinc-300 leading-relaxed">
-				<h1 class="text-2xl sm:text-3xl font-bold text-zinc-100">
+			<article class="space-y-6 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+				<h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">
 					Privacy &amp; AI Agent Usage Policy
 				</h1>
 				<p>
-					<strong>alexpatterson.dev</strong> is a public, read-only executive developer relations portfolio and conference speaker kit operated by Alex Patterson. We do not require user accounts, do not sell personal data, and do not set third-party advertising cookies.
+					<strong class="text-slate-900 dark:text-slate-100">alexpatterson.dev</strong> is a public executive developer relations portfolio, media partnership hub, and conference speaker kit operated by Alex Patterson. We do not require user accounts, do not sell personal data, and do not set third-party advertising cookies.
 				</p>
 
-				<section class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-3">
-					<h2 class="font-mono text-xs uppercase tracking-wider text-violet-300">
+				<section class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] p-6 space-y-3 shadow-xs">
+					<h2 class="text-base font-bold text-slate-900 dark:text-slate-100">
 						1. Data Collection &amp; Edge Infrastructure
 					</h2>
 					<p>
@@ -47,22 +48,22 @@ const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 					</p>
 				</section>
 
-				<section class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-3">
-					<h2 class="font-mono text-xs uppercase tracking-wider text-violet-300">
+				<section class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] p-6 space-y-3 shadow-xs">
+					<h2 class="text-base font-bold text-slate-900 dark:text-slate-100">
 						2. AI Content Signal &amp; Agent Access
 					</h2>
 					<p>
-						In accordance with our <code class="font-mono text-violet-300">Content-Usage: train-ai=n, search=y</code> HTTP header and <code class="font-mono text-violet-300">/robots.txt</code> directives (<code class="font-mono text-violet-300">Content-Signal: ai-train=no, search=yes, ai-input=yes</code>), AI search engines, conference organizers, and autonomous MCP agents are explicitly permitted to retrieve, index, and cite this speaker kit in real time. Contact <a href="mailto:alex@codingcat.dev" class="text-violet-300 underline">alex@codingcat.dev</a> with any privacy questions.
+						In accordance with our <code class="font-mono text-xs text-indigo-600 dark:text-indigo-300">Content-Usage: train-ai=n, search=y</code> HTTP header and <code class="font-mono text-xs text-indigo-600 dark:text-indigo-300">/robots.txt</code> directives (<code class="font-mono text-xs text-indigo-600 dark:text-indigo-300">Content-Signal: ai-train=no, search=yes, ai-input=yes</code>), AI search engines, conference organizers, and autonomous MCP agents are explicitly permitted to retrieve, index, and cite this speaker kit in real time. Contact <a href="mailto:alex@codingcat.dev" class="text-indigo-600 dark:text-indigo-300 underline">alex@codingcat.dev</a> with any privacy questions.
 					</p>
 				</section>
 			</article>
 
-			<footer role="contentinfo" class="pt-6 border-t border-zinc-800 font-mono text-xs text-zinc-400 flex flex-wrap justify-between gap-3">
-				<a href="/" class="text-zinc-300 hover:text-zinc-100">Home</a>
+			<footer role="contentinfo" class="pt-6 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex flex-wrap justify-between gap-3">
+				<a href="/" class="font-semibold text-slate-700 dark:text-slate-200 hover:underline">Home</a>
 				<div class="flex gap-4">
-					<a href="/about" class="hover:text-zinc-200">About</a>
-					<a href="/contact" class="hover:text-zinc-200">Contact</a>
-					<a href="/developers" class="text-violet-300 hover:text-violet-200">Developers &amp; API</a>
+					<a href="/about" class="hover:underline">About</a>
+					<a href="/contact" class="hover:underline">Contact</a>
+					<a href="/developers" class="text-indigo-600 dark:text-indigo-300 hover:underline">Developers &amp; API</a>
 				</div>
 			</footer>
 		</main>

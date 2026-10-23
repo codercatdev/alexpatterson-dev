@@ -1,6 +1,10 @@
 ---
 import { env } from "cloudflare:workers";
 import { Font } from "astro:assets";
+import AjHeadphones from "@/components/icons/AjHeadphones.astro";
+import AjPrimaryAlt from "@/components/icons/AjPrimaryAlt.astro";
+import ThemeScript from "@/components/ThemeScript.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
 import { getSpeakerKitData } from "@/lib/sanity";
 import "@/styles/global.css";
 
@@ -10,67 +14,84 @@ const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 ---
 
 <!doctype html>
-<html lang="en" class="dark scroll-smooth bg-zinc-950 text-zinc-100">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Contact &amp; Book Alex Patterson — Speaking &amp; Advisory Inquiries</title>
+		<ThemeScript />
+		<title>Contact &amp; Book Alex Patterson — Speaking, Podcast &amp; Sponsorship Inquiries</title>
 		<meta
 			name="description"
-			content="Contact Alex Patterson for conference keynotes, technical workshops, Google Developer Expert briefings, and enterprise architecture advisory."
+			content="Contact Alex Patterson for conference keynotes, technical workshops, CodingCat.dev sponsorships, YouTube video creation, and custom podcast hosting."
 		/>
 		<link rel="canonical" href={`${origin}/contact`} />
 		<Font cssVariable="--font-geist" preload />
 		<Font cssVariable="--font-jetbrains-mono" />
 	</head>
-	<body class="min-h-dvh bg-zinc-950 text-zinc-100 antialiased">
-		<main class="max-w-3xl mx-auto px-6 py-16 space-y-8">
-			<header role="banner" class="pb-4 border-b border-zinc-800 flex items-center justify-between">
-				<div class="font-mono text-xs uppercase tracking-wider text-zinc-400">
-					<span class="text-violet-400 font-semibold">01</span> / CONTACT &amp; SPEAKER BOOKING
-				</div>
-				<a href="/" class="font-mono text-xs text-violet-300 hover:text-violet-200">
-					← Back to Speaker Kit
+	<body class="min-h-dvh bg-[#faf9f6] dark:bg-[#13151a] text-slate-900 dark:text-slate-100 antialiased">
+		<main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+			<header role="banner" class="pb-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
+				<a href="/" class="text-sm font-semibold text-indigo-600 dark:text-indigo-300 hover:underline">
+					← Back to Alex Patterson Hub
 				</a>
+				<ThemeToggle />
 			</header>
 
 			<article class="space-y-6">
-				<h1 class="text-2xl sm:text-3xl font-bold text-zinc-100">
-					Contact &amp; Invite {data.profile.name} to Speak
+				<h1 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">
+					Partner With or Book {data.profile.name}
 				</h1>
-				<p class="text-sm sm:text-base text-zinc-300 leading-relaxed">
-					Conference organizers, event producers, and engineering leaders can reach {data.profile.name} directly for keynote invitations, hands-on workshops, panel moderation, and architecture briefings. Based in {data.profile.location} and flying out of {data.profile.homeAirport}, Alex is available for both in-person international events and broadcast-grade virtual sessions from the CodingCat.dev studio.
+				<p class="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+					CMOs, DevRel leads, podcast producers, and conference organizers can reach {data.profile.name} directly for CodingCat.dev sponsorships, dedicated YouTube videos, custom podcast hosting, and keynote or workshop invitations. Based in {data.profile.location} ({data.profile.homeAirport}).
 				</p>
 
-				<section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					<div class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-2">
-						<h2 class="font-mono text-xs uppercase text-violet-300">Direct Speaker Email</h2>
-						<p class="text-xs text-zinc-400">
-							Include event dates, city/venue or virtual platform, audience profile, and session format.
+				<section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+					<div class="rounded-2xl border border-emerald-200 dark:border-emerald-500/30 bg-white dark:bg-[#1b1e26] p-5 space-y-2.5 shadow-xs">
+						<div class="flex items-center gap-2 text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">
+							<AjPrimaryAlt cls="w-5 h-5" />
+							<span>CodingCat.dev Sponsorships</span>
+						</div>
+						<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+							Explore dedicated YouTube videos, podcast sponsorships, and multi-channel launch bundles.
 						</p>
-						<a href={`mailto:${data.profile.speakerEmail}`} class="inline-block font-mono text-sm text-zinc-100 underline">
-							{data.profile.speakerEmail}
+						<a href="https://codingcat.dev/sponsorships" target="_blank" rel="noopener noreferrer" class="inline-block text-sm font-semibold text-emerald-700 dark:text-emerald-300 underline">
+							codingcat.dev/sponsorships
 						</a>
 					</div>
 
-					<div class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 space-y-2">
-						<h2 class="font-mono text-xs uppercase text-emerald-400">Online Booking Calendar</h2>
-						<p class="text-xs text-zinc-400">
-							Schedule a direct 30-minute coordination call or podcast/media booking slot.
+					<div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] p-5 space-y-2.5 shadow-xs">
+						<div class="flex items-center gap-2 text-xs font-bold uppercase text-indigo-600 dark:text-indigo-300">
+							<AjHeadphones cls="w-5 h-5" />
+							<span>Live Booking Calendar</span>
+						</div>
+						<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+							Schedule a live 30-minute coordination call for speaking, podcast hosting, or campaign planning.
 						</p>
-						<a href={data.profile.bookingUrl} target="_blank" rel="noopener noreferrer" class="inline-block font-mono text-sm text-emerald-300 underline">
+						<a href={data.profile.bookingUrl} target="_blank" rel="noopener noreferrer" class="inline-block text-sm font-semibold text-indigo-600 dark:text-indigo-300 underline">
 							{data.profile.bookingUrl}
+						</a>
+					</div>
+
+					<div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] p-5 space-y-2.5 shadow-xs">
+						<div class="text-xs font-bold uppercase text-indigo-600 dark:text-indigo-300">
+							Direct Email Inquiry
+						</div>
+						<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+							Send event dates, venue or virtual details, podcast topic, or sponsorship timeline directly.
+						</p>
+						<a href={`mailto:${data.profile.speakerEmail}`} class="inline-block text-sm font-semibold text-slate-900 dark:text-slate-100 underline">
+							{data.profile.speakerEmail}
 						</a>
 					</div>
 				</section>
 			</article>
 
-			<footer role="contentinfo" class="pt-6 border-t border-zinc-800 font-mono text-xs text-zinc-400 flex flex-wrap justify-between gap-3">
-				<a href="/" class="text-zinc-300 hover:text-zinc-100">Home</a>
+			<footer role="contentinfo" class="pt-6 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex flex-wrap justify-between gap-3">
+				<a href="/" class="font-semibold text-slate-700 dark:text-slate-200 hover:underline">Home</a>
 				<div class="flex gap-4">
-					<a href="/about" class="hover:text-zinc-200">About</a>
-					<a href="/privacy" class="hover:text-zinc-200">Privacy</a>
-					<a href="/developers" class="text-violet-300 hover:text-violet-200">Developers &amp; API</a>
+					<a href="/about" class="hover:underline">About</a>
+					<a href="/privacy" class="hover:underline">Privacy</a>
+					<a href="/developers" class="text-indigo-600 dark:text-indigo-300 hover:underline">Developers &amp; API</a>
 				</div>
 			</footer>
 		</main>

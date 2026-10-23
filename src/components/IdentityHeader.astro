@@ -2,17 +2,19 @@
 import {
 	ArrowUpRight,
 	Calendar,
-	CheckCircle2,
 	ExternalLink,
-	FileJson,
 	GraduationCap,
 	Mail,
 	MapPin,
+	Mic,
 	Plane,
-	Radio,
+	Presentation,
 	Sparkles,
-	Terminal,
+	Video,
 } from "lucide-react";
+import AjHeadphones from "@/components/icons/AjHeadphones.astro";
+import AjPrimaryAlt from "@/components/icons/AjPrimaryAlt.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
 import type { SpeakerProfile } from "@/lib/sanity";
 
 interface Props {
@@ -21,330 +23,618 @@ interface Props {
 
 const { profile } = Astro.props;
 
-const avatarSrc = profile.avatarUrl
-	? `${profile.avatarUrl.split("?")[0]}?w=240&h=240&fit=crop&crop=focalpoint&fm=webp`
+const heroPortraitSrc = profile.avatarUrl
+	? `${profile.avatarUrl.split("?")[0]}?w=720&h=840&fit=crop&crop=focalpoint&fm=webp`
 	: "/headshots/alex_headshot_1.jpg";
 ---
 
-<header id="identity" role="banner" aria-label="Speaker identity" class="scroll-mt-12">
-	<!-- Section 00 Index Header -->
-	<div class="flex items-center justify-between gap-4 pb-3 border-b border-zinc-800">
-		<div class="flex items-center gap-2.5 font-mono text-xs tracking-wider uppercase text-zinc-400">
-			<span class="text-violet-400 font-semibold">00</span>
-			<span class="text-zinc-600" aria-hidden="true">/</span>
-			<span>IDENTITY</span>
-		</div>
-		<div class="flex items-center gap-3 font-mono text-[11px] text-zinc-400">
+<!-- Sticky Glassmorphic Executive Top Navigation -->
+<div class="sticky top-4 z-40 mb-10">
+	<div class="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/85 dark:bg-[#1b1e26]/85 backdrop-blur-md px-4 sm:px-6 py-3 shadow-sm shadow-slate-900/[0.04] dark:shadow-black/25 flex items-center justify-between gap-3">
+		<div class="flex items-center gap-3 min-w-0">
+			<a
+				href="#identity"
+				class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors truncate"
+			>
+				{profile.name}
+			</a>
 			{profile.availableForSpeaking && (
-				<span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 text-emerald-400">
-					<span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-					Booking Keynotes &amp; Workshops
+				<span class="hidden lg:inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/25 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-300">
+					<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
+					Open for Keynotes &amp; Sponsorships
 				</span>
 			)}
-			<a
-				href="/mcp"
-				class="hidden sm:inline-flex items-center gap-1 text-zinc-400 hover:text-violet-300 transition-colors"
-			>
-				<Terminal className="w-3 h-3 text-violet-400" />
-				<span>/mcp</span>
+		</div>
+
+		<nav aria-label="Primary section navigation" class="hidden md:flex items-center gap-5 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">
+			<a href="#partner" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+				Ways to Partner
 			</a>
-		</div>
-	</div>
-
-	<!-- Executive Identity Block -->
-	<div class="mt-7 flex flex-col sm:flex-row items-start gap-5">
-		<div class="relative shrink-0">
-			<img
-				src={avatarSrc}
-				alt={`${profile.name} headshot`}
-				width="88"
-				height="88"
-				fetchpriority="high"
-				class="w-20 h-20 sm:w-22 sm:h-22 rounded-xl object-cover border border-zinc-800 bg-zinc-900 shadow-lg shadow-violet-950/20"
-			/>
-			<span
-				title="MCP-Synced Speaker Profile"
-				class="absolute -bottom-1.5 -right-1.5 inline-flex items-center gap-1 rounded-md bg-zinc-950 border border-violet-500/40 px-1.5 py-0.5 font-mono text-[10px] text-violet-300 shadow"
-			>
-				<Sparkles className="w-2.5 h-2.5 text-violet-400" />
-				MCP
-			</span>
-		</div>
-
-		<div class="flex-1 min-w-0">
-			<div class="flex flex-wrap items-baseline justify-between gap-2">
-				<h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-100">
-					{profile.name}
-				</h1>
-				<a
-					href="/speaker-kit.json"
-					class="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400 hover:text-violet-300 transition-colors border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 rounded-md px-2.5 py-1"
-				>
-					<FileJson className="w-3.5 h-3.5 text-violet-400" />
-					/speaker-kit.json
-				</a>
-			</div>
-
-			<p class="mt-2 text-sm sm:text-base text-zinc-400 leading-relaxed">
-				{profile.headline}
-			</p>
-
-			<!-- Education & Location Metadata -->
-			<div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-xs text-zinc-400">
-				<span class="inline-flex items-center gap-1.5">
-					<MapPin className="w-3.5 h-3.5 text-violet-400 shrink-0" />
-					{profile.location}
-				</span>
-				<span class="text-zinc-700" aria-hidden="true">•</span>
-				<span class="inline-flex items-center gap-1.5">
-					<Plane className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
-					{profile.homeAirport}
-				</span>
-				<span class="text-zinc-700" aria-hidden="true">•</span>
-				<span class="inline-flex items-center gap-1.5">
-					<GraduationCap className="w-3.5 h-3.5 text-violet-400 shrink-0" />
-					{profile.education}
-				</span>
-			</div>
-		</div>
-	</div>
-
-	<!-- Role & Credential Badges (Monospace) -->
-	<div class="mt-5 flex flex-wrap gap-2" aria-label="Role and Credential Badges">
-		{profile.credentials.map((cred) => {
-			const badgeClasses =
-				cred.accent === "violet"
-					? "bg-violet-500/10 border-violet-500/30 text-violet-200 hover:border-violet-400/60"
-					: cred.accent === "emerald"
-						? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300 hover:border-emerald-400/60"
-						: "bg-zinc-900/70 border-zinc-800 text-zinc-300 hover:border-zinc-700";
-
-			const dotClasses =
-				cred.accent === "violet"
-					? "bg-violet-400"
-					: cred.accent === "emerald"
-						? "bg-emerald-400"
-						: "bg-zinc-500";
-
-			return cred.url ? (
-				<a
-					href={cred.url}
-					target="_blank"
-					rel="noopener noreferrer"
-					class={`inline-flex items-center gap-2 rounded-md border px-2.5 py-1 font-mono text-xs transition-colors ${badgeClasses}`}
-				>
-					<span class={`h-1.5 w-1.5 rounded-full ${dotClasses}`}></span>
-					<span>{cred.label}</span>
-					<ArrowUpRight className="w-3 h-3 opacity-60" />
-				</a>
-			) : (
-				<span
-					class={`inline-flex items-center gap-2 rounded-md border px-2.5 py-1 font-mono text-xs ${badgeClasses}`}
-				>
-					<span class={`h-1.5 w-1.5 rounded-full ${dotClasses}`}></span>
-					<span>{cred.label}</span>
-				</span>
-			);
-		})}
-	</div>
-
-	<!-- CodingCat.dev Referral Banner (Strictly Emerald Accent, No Routine Posts Ingested) -->
-	<aside aria-label="CodingCat.dev media referral" class="mt-6 rounded-xl border border-emerald-500/30 bg-zinc-900/60 p-4 sm:p-5 relative overflow-hidden">
-		<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-			<div class="space-y-1">
-				<div class="flex items-center gap-2">
-					<span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 font-mono text-[11px] font-medium text-emerald-400">
-						<Radio className="w-3 h-3" />
-						MEDIA, TUTORIALS &amp; PODCAST HUB
-					</span>
-					<span class="font-mono text-[11px] text-zinc-400">
-						codingcat.dev
-					</span>
-				</div>
-				<p class="text-sm text-zinc-200 font-medium">
-					Looking for tutorials, full-stack articles, or the CodingCat.dev Podcast?
-				</p>
-				<p class="text-xs text-zinc-400 leading-relaxed">
-					This site is strictly my executive DevRel &amp; conference speaker kit. All video tutorials, courses, blog posts, and podcast episodes live exclusively on <span class="text-emerald-400 font-mono">codingcat.dev</span>.
-				</p>
-			</div>
-
 			<a
-				href={profile.socialLinks.codingcat}
+				href="https://codingcat.dev/sponsorships"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="shrink-0 inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-400/40 px-4 py-2.5 font-mono text-xs font-semibold text-emerald-300 transition-all"
+				class="inline-flex items-center gap-1.5 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
 			>
-				<span>Visit CodingCat.dev</span>
-				<ExternalLink className="w-3.5 h-3.5" />
+				<AjPrimaryAlt cls="w-4 h-4 shrink-0" />
+				<span>Sponsorships</span>
+			</a>
+			<a href="#speaker-kit" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+				Speaker Kit
+			</a>
+			<a href="#headshots" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+				Headshots
+			</a>
+			<a href="#speaking-ledger" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+				Speaking
+			</a>
+		</nav>
+
+		<div class="flex items-center gap-2 shrink-0">
+			<ThemeToggle />
+			<a
+				href="#partner"
+				class="inline-flex items-center gap-1.5 rounded-full bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold text-white shadow-xs transition-colors"
+			>
+				<span>Partner / Book Alex</span>
 			</a>
 		</div>
-	</aside>
+	</div>
+</div>
 
-	<!-- Primary Action Bar + Expandable Booking/Calendar Drawer -->
-	<div class="mt-5 space-y-3">
-		<div class="flex flex-wrap items-center justify-between gap-3">
-			<!-- Expandable Booking Trigger -->
-			<div class="flex flex-wrap items-center gap-2.5">
-				<button
-					type="button"
-					id="booking-drawer-toggle"
-					aria-expanded="false"
-					aria-controls="booking-drawer-panel"
-					toolname="toggle_booking_drawer"
-					tooldescription="Open direct speaker booking calendar and inquiry contact options"
-					tool-name="toggle_booking_drawer"
-					tool-description="Open direct speaker booking calendar and inquiry contact options"
-					class="inline-flex items-center gap-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-zinc-100 font-medium text-xs sm:text-sm px-4 py-2.5 shadow-sm shadow-violet-950/50 transition-colors cursor-pointer"
-				>
-					<Calendar className="w-4 h-4" />
-					<span>Book Time / Invite to Speak</span>
-					<span id="booking-drawer-chevron" class="font-mono text-xs text-violet-200 transition-transform duration-200">
-						↓
-					</span>
-				</button>
-
-				<a
-					href="#speaker-kit"
-					class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900 hover:border-zinc-700 px-3 py-2 font-mono text-xs text-zinc-300 transition-colors"
-				>
-					<span>Grab Bio &amp; Headshots</span>
-				</a>
-			</div>
-
-			<!-- Quick Social Links -->
-			<nav aria-label="Direct social profiles" class="flex flex-wrap items-center gap-1.5 font-mono text-xs">
-				<a
-					href={profile.socialLinks.github}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-300 transition-colors"
-				>
-					<span>GitHub</span>
-					<span class="text-zinc-400">@codercatdev</span>
-				</a>
-				<a
-					href={profile.socialLinks.x}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-300 transition-colors"
-				>
-					<span>X</span>
-					<span class="text-zinc-400">@codercatdev</span>
-				</a>
-				<a
-					href={profile.socialLinks.youtube}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-300 transition-colors"
-				>
-					<span>YouTube</span>
-					<span class="text-zinc-400">@CodingCatDev</span>
-				</a>
-				<a
-					href={profile.socialLinks.linkedin}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 rounded-md border border-zinc-800/80 bg-zinc-900/50 hover:border-violet-500/40 hover:text-zinc-100 px-2.5 py-1.5 text-zinc-300 transition-colors"
-				>
-					<span>LinkedIn</span>
-					<span class="text-zinc-400">/in/alexpatterson</span>
-				</a>
-			</nav>
-		</div>
-
-		<!-- Inline Expandable Booking / Calendar Drawer (uses hidden="until-found" for Find-in-Page accessibility) -->
-		<div
-			id="booking-drawer-panel"
-			hidden="until-found"
-		>
-			<div class="rounded-xl border border-violet-500/30 bg-zinc-900/80 p-5 space-y-4">
-				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-3">
-					<div>
-						<h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
-							<Calendar className="w-4 h-4 text-violet-400" />
-							Direct Booking &amp; Conference Speaker Inquiry
-						</h2>
-						<p class="text-xs text-zinc-400 mt-0.5">
-							Select a channel below to book executive architecture time, invite Alex to keynote, or coordinate a hands-on workshop.
-						</p>
-					</div>
-					<span class="font-mono text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded px-2 py-0.5">
-						Typical response &lt; 24h
-					</span>
+<header id="identity" role="banner" aria-label="Alex Patterson Executive Overview" class="scroll-mt-24">
+	<!-- 2-Column Executive Hero Section -->
+	<div class="rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1b1e26] p-6 sm:p-10 shadow-sm shadow-slate-900/[0.03] dark:shadow-black/20">
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+			<!-- Left Column: Positioning, Credentials & Primary CTAs -->
+			<div class="lg:col-span-7 space-y-5">
+				<div class="inline-flex flex-wrap items-center gap-2 rounded-full bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/80 dark:border-indigo-400/30 px-3.5 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300">
+					<Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+					<span>Keynote Speaker • Podcast Host • YouTube Creator</span>
 				</div>
 
-				<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+				<div class="space-y-3">
+					<p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+						{profile.name} — Developer Relations &amp; Media Partnerships
+					</p>
+					<h1 class="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-slate-900 dark:text-slate-50 leading-[1.12]">
+						Helping developer brands tell authentic stories that convert.
+					</h1>
+				</div>
+
+				<p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+					Whether you’re a <strong>CMO or DevRel lead</strong> launching a developer product through dedicated YouTube videos and podcasts, or a <strong>conference organizer</strong> booking a high-energy keynote or workshop—let’s build something developers genuinely trust.
+				</p>
+
+				<!-- Clean Role & Credential Pills (Featuring AJ's Tag Logo for CodingCat.dev) -->
+				<div class="flex flex-wrap items-center gap-2 pt-1" aria-label="Executive Credentials">
 					<a
-						href={profile.bookingUrl}
+						href="https://www.sanity.io"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="group rounded-lg border border-zinc-800 bg-zinc-950/70 hover:border-violet-500/50 p-3.5 transition-all flex flex-col justify-between gap-2"
+						class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-[#151820] hover:border-indigo-300 dark:hover:border-indigo-500/50 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors"
 					>
-						<div>
-							<div class="flex items-center justify-between text-xs font-mono text-violet-400">
-								<span>01 / CALENDAR</span>
-								<ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-							</div>
-							<p class="mt-1.5 text-sm font-medium text-zinc-100">
-								CodingCat.dev Booking Calendar
-							</p>
-							<p class="mt-1 text-xs text-zinc-400">
-								Book a live slot for conference coordination, podcast guesting, or advisory sessions.
-							</p>
-						</div>
-						<span class="font-mono text-[11px] text-violet-300">
-							codingcat.dev/book →
-						</span>
+						<span class="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
+						<span>Senior Solutions Engineer @ Sanity</span>
 					</a>
 
 					<a
-						href={`mailto:${profile.speakerEmail}?subject=${encodeURIComponent("Speaking Inquiry — Alex Patterson (alexpatterson.dev)")}`}
-						class="group rounded-lg border border-zinc-800 bg-zinc-950/70 hover:border-violet-500/50 p-3.5 transition-all flex flex-col justify-between gap-2"
+						href="https://codingcat.dev/sponsorships"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-1.5 rounded-full border border-emerald-200/90 dark:border-emerald-500/30 bg-emerald-50/80 dark:bg-emerald-500/10 hover:border-emerald-400 px-3 py-1 text-xs font-medium text-emerald-800 dark:text-emerald-300 transition-colors"
 					>
-						<div>
-							<div class="flex items-center justify-between text-xs font-mono text-violet-400">
-								<span>02 / DIRECT EMAIL</span>
-								<Mail className="w-3.5 h-3.5" />
-							</div>
-							<p class="mt-1.5 text-sm font-medium text-zinc-100">
-								Direct Speaker Inquiry
-							</p>
-							<p class="mt-1 text-xs text-zinc-400">
-								Send event dates, location (or virtual setup), and travel/honorarium details directly.
-							</p>
-						</div>
-						<span class="font-mono text-[11px] text-violet-300">
-							{profile.speakerEmail} →
-						</span>
+						<AjPrimaryAlt cls="w-4 h-4 shrink-0" />
+						<span>Founder &amp; Host @ CodingCat.dev</span>
 					</a>
 
 					<a
 						href={profile.socialLinks.gdeProfile}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="group rounded-lg border border-zinc-800 bg-zinc-950/70 hover:border-emerald-500/40 p-3.5 transition-all flex flex-col justify-between gap-2"
+						class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-[#151820] hover:border-indigo-300 dark:hover:border-indigo-500/50 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors"
+					>
+						<span class="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
+						<span>Google Developer Expert (GDE)</span>
+					</a>
+
+					<span class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-[#151820] px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200">
+						<GraduationCap className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+						<span>{profile.education}</span>
+					</span>
+				</div>
+
+				<!-- Location & Travel Metadata -->
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+					<span class="inline-flex items-center gap-1.5">
+						<MapPin className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" />
+						Based in {profile.location}
+					</span>
+					<span aria-hidden="true">•</span>
+					<span class="inline-flex items-center gap-1.5">
+						<Plane className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+						Flying from {profile.homeAirport}
+					</span>
+					<span aria-hidden="true">•</span>
+					<span>Broadcast-Grade Studio Available</span>
+				</div>
+
+				<!-- Primary CTA Buttons -->
+				<div class="pt-2 flex flex-wrap items-center gap-3">
+					<a
+						href="https://codingcat.dev/sponsorships"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-indigo-500/20 transition-all"
+					>
+						<AjPrimaryAlt cls="w-5 h-5 shrink-0" />
+						<span>Explore CodingCat.dev Sponsorships</span>
+						<ArrowUpRight className="w-4 h-4" />
+					</a>
+
+					<button
+						type="button"
+						id="booking-drawer-toggle"
+						aria-expanded="false"
+						aria-controls="booking-drawer-panel"
+						toolname="toggle_booking_drawer"
+						tooldescription="Open direct speaker booking calendar and inquiry contact options"
+						tool-name="toggle_booking_drawer"
+						tool-description="Open direct speaker booking calendar and inquiry contact options"
+						class="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#151820] hover:bg-slate-50 dark:hover:bg-slate-800/80 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-100 transition-colors cursor-pointer"
+					>
+						<Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+						<span>Book for Speaking / Podcast</span>
+						<span id="booking-drawer-chevron" class="text-xs text-slate-400 transition-transform duration-200">
+							↓
+						</span>
+					</button>
+				</div>
+
+				<!-- Quick Social & Speaker Kit Bar -->
+				<div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400">
+					<div class="flex flex-wrap items-center gap-3">
+						<a href={profile.socialLinks.youtube} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
+							YouTube (@CodingCatDev)
+						</a>
+						<span aria-hidden="true">•</span>
+						<a href={profile.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
+							LinkedIn (/in/alexpatterson)
+						</a>
+						<span aria-hidden="true">•</span>
+						<a href={profile.socialLinks.x} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
+							X (@codercatdev)
+						</a>
+						<span aria-hidden="true">•</span>
+						<a href={profile.socialLinks.github} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
+							GitHub
+						</a>
+					</div>
+
+					<a
+						href="#speaker-kit"
+						class="inline-flex items-center gap-1 font-medium text-indigo-600 dark:text-indigo-300 hover:underline"
+					>
+						<span>Jump to Organizer Speaker Kit ↓</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- Right Column: Studio Portrait + Floating Proof Badges -->
+			<div class="lg:col-span-5">
+				<div class="relative mx-auto max-w-sm lg:max-w-none">
+					<!-- Soft decorative backdrop glow -->
+					<div
+						aria-hidden="true"
+						class="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-indigo-500/15 via-purple-500/10 to-emerald-500/15 blur-xl"
+					></div>
+
+					<div class="relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-700/80 bg-slate-100 dark:bg-[#151820] shadow-md aspect-[4/4.4]">
+						<img
+							src={heroPortraitSrc}
+							alt={`${profile.name} — Keynote Speaker, Podcast Host, and Founder of CodingCat.dev`}
+							width="480"
+							height="528"
+							fetchpriority="high"
+							class="w-full h-full object-cover object-center"
+						/>
+					</div>
+
+					<!-- Floating Proof Badge 1: 61.2K+ YouTube Subscribers (with AJ Tag Logo) -->
+					<a
+						href="https://codingcat.dev/sponsorships"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="absolute -top-3 -left-3 sm:-left-5 rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/95 dark:bg-[#1b1e26]/95 backdrop-blur-md px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 hover:scale-[1.02] transition-transform"
+					>
+						<AjPrimaryAlt cls="w-8 h-8 shrink-0" />
+						<div>
+							<div class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
+								61.2K+
+							</div>
+							<div class="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+								YouTube Subscribers
+							</div>
+						</div>
+					</a>
+
+					<!-- Floating Proof Badge 2: 405K+ Video Views (with AJ Headphones Logo) -->
+					<a
+						href="https://codingcat.dev"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="absolute top-1/2 -translate-y-1/2 -right-3 sm:-right-5 rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/95 dark:bg-[#1b1e26]/95 backdrop-blur-md px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 hover:scale-[1.02] transition-transform"
+					>
+						<AjHeadphones cls="w-8 h-8 shrink-0" />
+						<div>
+							<div class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
+								405K+
+							</div>
+							<div class="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+								Video &amp; Podcast Views
+							</div>
+						</div>
+					</a>
+
+					<!-- Floating Proof Badge 3: Global Stages -->
+					<a
+						href="#speaking-ledger"
+						class="absolute -bottom-3 left-4 sm:left-6 rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/95 dark:bg-[#1b1e26]/95 backdrop-blur-md px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 hover:scale-[1.02] transition-transform"
+					>
+						<span class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300">
+							<Mic className="w-4 h-4" />
+						</span>
+						<div>
+							<div class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
+								25+ Stages
+							</div>
+							<div class="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+								Keynotes &amp; Workshops
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Inline Expandable Booking / Calendar Drawer (hidden="until-found" for Find-in-Page accessibility) -->
+		<div id="booking-drawer-panel" hidden="until-found" class="mt-6">
+			<div class="rounded-2xl border border-indigo-200/90 dark:border-indigo-500/30 bg-indigo-50/50 dark:bg-[#151820] p-5 sm:p-6 space-y-4">
+				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 dark:border-slate-800 pb-3">
+					<div>
+						<h2 class="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+							<Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+							Book Alex or Start a CodingCat.dev Sponsorship
+						</h2>
+						<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+							Choose the fastest path for your team—whether you’re planning a product launch, podcast tour, or developer conference.
+						</p>
+					</div>
+					<span class="text-xs font-medium text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 py-1">
+						Typical response &lt; 24 hours
+					</span>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<a
+						href="https://codingcat.dev/sponsorships"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] hover:border-emerald-400 dark:hover:border-emerald-500/50 p-4 transition-all flex flex-col justify-between gap-3 shadow-xs"
 					>
 						<div>
-							<div class="flex items-center justify-between text-xs font-mono text-emerald-400">
-								<span>03 / GDE &amp; SANITY</span>
-								<CheckCircle2 className="w-3.5 h-3.5" />
+							<div class="flex items-center justify-between text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+								<span class="inline-flex items-center gap-1.5">
+									<AjPrimaryAlt cls="w-5 h-5" />
+									<span>SPONSORSHIPS &amp; VIDEO</span>
+								</span>
+								<ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
 							</div>
-							<p class="mt-1.5 text-sm font-medium text-zinc-100">
-								GDE &amp; Enterprise Briefings
+							<p class="mt-2 text-sm font-bold text-slate-900 dark:text-slate-100">
+								CodingCat.dev Sponsorships
 							</p>
-							<p class="mt-1 text-xs text-zinc-400">
-								Eligible for Google Developer Expert travel support &amp; Sanity architecture workshops.
+							<p class="mt-1 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+								Dedicated YouTube product videos, podcast sponsorships, and multi-channel launch bundles.
 							</p>
 						</div>
-						<span class="font-mono text-[11px] text-emerald-300">
-							View GDE Profile →
+						<span class="text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+							codingcat.dev/sponsorships →
+						</span>
+					</a>
+
+					<a
+						href={profile.bookingUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] hover:border-indigo-400 dark:hover:border-indigo-500/50 p-4 transition-all flex flex-col justify-between gap-3 shadow-xs"
+					>
+						<div>
+							<div class="flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-indigo-300">
+								<span class="inline-flex items-center gap-1.5">
+									<AjHeadphones cls="w-5 h-5" />
+									<span>LIVE CALENDAR</span>
+								</span>
+								<ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+							</div>
+							<p class="mt-2 text-sm font-bold text-slate-900 dark:text-slate-100">
+								Book a Discovery Call
+							</p>
+							<p class="mt-1 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+								Grab a live slot on Alex’s calendar to discuss conference keynotes, podcast hosting, or campaign goals.
+							</p>
+						</div>
+						<span class="text-xs font-semibold text-indigo-600 dark:text-indigo-300">
+							codingcat.dev/book →
+						</span>
+					</a>
+
+					<a
+						href={`mailto:${profile.speakerEmail}?subject=${encodeURIComponent("Speaking & Partnership Inquiry — Alex Patterson")}`}
+						class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] hover:border-indigo-400 dark:hover:border-indigo-500/50 p-4 transition-all flex flex-col justify-between gap-3 shadow-xs"
+					>
+						<div>
+							<div class="flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-indigo-300">
+								<span>DIRECT EMAIL</span>
+								<Mail className="w-4 h-4" />
+							</div>
+							<p class="mt-2 text-sm font-bold text-slate-900 dark:text-slate-100">
+								Direct Speaker &amp; Brand Inquiry
+							</p>
+							<p class="mt-1 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+								Send event dates, location, podcast topic, or sponsorship timeline directly to Alex’s inbox.
+							</p>
+						</div>
+						<span class="text-xs font-semibold text-indigo-600 dark:text-indigo-300">
+							{profile.speakerEmail} →
 						</span>
 					</a>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- 4-Pillar "Ways to Partner" Bento Grid (Designed for CMOs, Marketing Leads & Event Organizers) -->
+	<section id="partner" aria-labelledby="partner-heading" class="mt-12 scroll-mt-24">
+		<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+			<div>
+				<p class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+					For CMOs, DevRel Leads &amp; Event Organizers
+				</p>
+				<h2 id="partner-heading" class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 mt-1">
+					How We Can Partner Together
+				</h2>
+			</div>
+			<a
+				href="https://codingcat.dev/sponsorships"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-indigo-600 dark:text-indigo-300 hover:underline"
+			>
+				<AjPrimaryAlt cls="w-5 h-5" />
+				<span>View Full Media Kit &amp; Sponsorship Bundles</span>
+				<ArrowUpRight className="w-4 h-4" />
+			</a>
+		</div>
+
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+			<!-- Card 1: Conference Keynotes & Workshops -->
+			<article class="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1b1e26] p-5 shadow-xs flex flex-col justify-between gap-4 hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-all">
+				<div class="space-y-3">
+					<div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/70 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-300">
+						<Presentation className="w-5 h-5" />
+					</div>
+					<span class="block text-[11px] font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+						Flagship Events &amp; Summits
+					</span>
+					<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
+						Conference Keynotes &amp; Workshops
+					</h3>
+					<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+						High-energy mainstage keynotes, hands-on architecture workshops, and MC hosting that leave developers inspired and ready to build.
+					</p>
+				</div>
+				<a
+					href="#speaker-kit"
+					class="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-300 hover:underline pt-2 border-t border-slate-100 dark:border-slate-800/80"
+				>
+					<span>Browse Ready-to-Run Talks</span>
+					<span aria-hidden="true">↓</span>
+				</a>
+			</article>
+
+			<!-- Card 2: Dedicated YouTube Video Creation (Uses AJ's Tag Logo) -->
+			<article class="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1b1e26] p-5 shadow-xs flex flex-col justify-between gap-4 hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-all">
+				<div class="space-y-3">
+					<div class="inline-flex items-center gap-2">
+						<div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/70 dark:border-indigo-500/30">
+							<AjPrimaryAlt cls="w-7 h-7" />
+						</div>
+						<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-[#151820] px-2.5 py-0.5 text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+							<Video className="w-3 h-3 text-indigo-500" />
+							61.2K+ Subs
+						</span>
+					</div>
+					<span class="block text-[11px] font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+						Product Launches &amp; Tutorials
+					</span>
+					<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
+						Dedicated YouTube Video Creation
+					</h3>
+					<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+						End-to-end technical deep dives, real-world builds, and product walkthroughs on <strong>CodingCat.dev</strong> that turn complex features into developer adoption.
+					</p>
+				</div>
+				<a
+					href="https://codingcat.dev/sponsorships"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-300 hover:underline pt-2 border-t border-slate-100 dark:border-slate-800/80"
+				>
+					<span>Commission a Dedicated Video</span>
+					<ArrowUpRight className="w-3.5 h-3.5" />
+				</a>
+			</article>
+
+			<!-- Card 3: Podcast Guest & Custom Product Host (Uses AJ's Headphones Logo) -->
+			<article class="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1b1e26] p-5 shadow-xs flex flex-col justify-between gap-4 hover:border-emerald-300 dark:hover:border-emerald-500/50 transition-all">
+				<div class="space-y-3">
+					<div class="inline-flex items-center gap-2">
+						<div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-500/15 border border-emerald-200/70 dark:border-emerald-500/30">
+							<AjHeadphones cls="w-7 h-7" />
+						</div>
+						<span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">
+							Host or Guest
+						</span>
+					</div>
+					<span class="block text-[11px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+						CodingCat.dev Podcast &amp; Brand Shows
+					</span>
+					<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
+						Podcast Guest &amp; Custom Product Host
+					</h3>
+					<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+						Invite Alex as a guest on your show, bring your leaders onto the <strong>CodingCat.dev Podcast</strong>, or hire Alex to host a branded podcast series for your product.
+					</p>
+				</div>
+				<a
+					href={profile.bookingUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300 hover:underline pt-2 border-t border-slate-100 dark:border-slate-800/80"
+				>
+					<span>Book Podcast Appearance / Hosting</span>
+					<ArrowUpRight className="w-3.5 h-3.5" />
+				</a>
+			</article>
+
+			<!-- Card 4: Full-Funnel CodingCat.dev Sponsorships (Highlighted Card with AJ's Tag Logo & Headphones Logo) -->
+			<article class="rounded-2xl border-2 border-indigo-500/70 dark:border-emerald-400/60 bg-gradient-to-b from-indigo-50/60 via-white to-emerald-50/40 dark:from-[#1f2433] dark:via-[#1b1e26] dark:to-[#162624] p-5 shadow-sm flex flex-col justify-between gap-4">
+				<div class="space-y-3">
+					<div class="flex items-center justify-between gap-2">
+						<div class="inline-flex items-center gap-1.5">
+							<div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white dark:bg-[#151820] border border-slate-200 dark:border-slate-700 shadow-2xs">
+								<AjPrimaryAlt cls="w-7 h-7" />
+							</div>
+							<div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white dark:bg-[#151820] border border-slate-200 dark:border-slate-700 shadow-2xs">
+								<AjHeadphones cls="w-7 h-7" />
+							</div>
+						</div>
+						<span class="rounded-full bg-indigo-600 dark:bg-emerald-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white dark:text-slate-950">
+							Most Popular
+						</span>
+					</div>
+					<span class="block text-[11px] font-semibold uppercase tracking-wider text-indigo-700 dark:text-emerald-300">
+						Multi-Channel DevTool Bundles
+					</span>
+					<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
+						Full-Funnel CodingCat.dev Sponsorships
+					</h3>
+					<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+						Combine long-form YouTube, podcast mid-rolls, 7-platform short-form syndication, and verified first-party ROI Deal Room telemetry.
+					</p>
+				</div>
+				<a
+					href="https://codingcat.dev/sponsorships"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 px-3.5 py-2.5 text-xs font-bold text-white dark:text-slate-950 shadow-xs transition-colors"
+				>
+					<span>See Packages on CodingCat.dev</span>
+					<ArrowUpRight className="w-4 h-4" />
+				</a>
+			</article>
+		</div>
+	</section>
+
+	<!-- CodingCat.dev Sponsorships & Audience Reach Showcase Banner -->
+	<aside
+		id="sponsorships"
+		aria-label="CodingCat.dev Sponsorships and Media Network"
+		class="mt-8 rounded-3xl border border-emerald-300/80 dark:border-emerald-500/30 bg-gradient-to-r from-emerald-50/80 via-white to-indigo-50/70 dark:from-[#162222] dark:via-[#1b1e26] dark:to-[#1d1f2e] p-6 sm:p-8 shadow-xs scroll-mt-24"
+	>
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+			<div class="lg:col-span-7 space-y-3">
+				<div class="flex flex-wrap items-center gap-2.5">
+					<span class="inline-flex items-center gap-2 rounded-full bg-white dark:bg-[#151820] border border-emerald-300/80 dark:border-emerald-500/30 px-3 py-1 text-xs font-semibold text-emerald-800 dark:text-emerald-300 shadow-2xs">
+						<AjPrimaryAlt cls="w-5 h-5" />
+						<span>CodingCat.dev Media Network</span>
+					</span>
+					<span class="inline-flex items-center gap-2 rounded-full bg-white dark:bg-[#151820] border border-indigo-200 dark:border-indigo-500/30 px-3 py-1 text-xs font-semibold text-indigo-700 dark:text-indigo-300 shadow-2xs">
+						<AjHeadphones cls="w-5 h-5" />
+						<span>CodingCat.dev Podcast</span>
+					</span>
+				</div>
+
+				<h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">
+					Looking to put your developer product in front of 61,200+ engineers?
+				</h2>
+
+				<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+					All of our tutorials, deep-dive product reviews, blog articles, and podcast episodes live on <strong>CodingCat.dev</strong>. Sponsors get transparent, first-party YouTube Analytics and Umami Deal Room telemetry—never inflated agency estimates.
+				</p>
+
+				<div class="pt-1 flex flex-wrap items-center gap-3">
+					<a
+						href="https://codingcat.dev/sponsorships"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 px-4 py-2.5 text-xs sm:text-sm font-bold text-white dark:text-slate-950 shadow-xs transition-colors"
+					>
+						<AjPrimaryAlt cls="w-5 h-5" />
+						<span>Explore CodingCat.dev Sponsorships</span>
+						<ExternalLink className="w-3.5 h-3.5" />
+					</a>
+
+					<a
+						href="https://codingcat.dev"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#151820] hover:bg-slate-50 dark:hover:bg-slate-800 px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 transition-colors"
+					>
+						<AjHeadphones cls="w-5 h-5" />
+						<span>Watch Tutorials &amp; Podcast</span>
+						<ArrowUpRight className="w-3.5 h-3.5" />
+					</a>
+				</div>
+			</div>
+
+			<!-- Verified Reach Metrics Grid -->
+			<div class="lg:col-span-5 grid grid-cols-2 gap-3">
+				<div class="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#151820]/90 p-4">
+					<div class="text-2xl font-extrabold text-slate-900 dark:text-white">
+						61.2K+
+					</div>
+					<div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+						YouTube Subscribers
+					</div>
+				</div>
+				<div class="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#151820]/90 p-4">
+					<div class="text-2xl font-extrabold text-slate-900 dark:text-white">
+						405K+
+					</div>
+					<div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+						Verified Video Views
+					</div>
+				</div>
+				<div class="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#151820]/90 p-4">
+					<div class="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300">
+						21.1%
+					</div>
+					<div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+						US / UK / CA / AU Tier-1
+					</div>
+				</div>
+				<div class="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-[#151820]/90 p-4">
+					<div class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-300">
+						7 Platforms
+					</div>
+					<div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+						Short-Form Syndication
+					</div>
+				</div>
+			</div>
+		</div>
+	</aside>
 </header>
 
 <script>
@@ -371,7 +661,6 @@ const avatarSrc = profile.avatarUrl
 			}
 		});
 
-		// Synchronize ARIA state if browser Find-in-Page reveals the drawer via beforematch
 		panel.addEventListener("beforematch", () => {
 			syncState(true);
 		});

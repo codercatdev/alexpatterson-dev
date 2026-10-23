@@ -1,0 +1,37 @@
+---
+/**
+ * Runs inline in <head> before first paint to set `.dark` and `color-scheme`
+ * based on saved preference in localStorage ("light" | "dark"), falling back
+ * to the visitor's system preference (`prefers-color-scheme: dark`).
+ */
+---
+
+<script is:inline>
+	(function () {
+		const applyTheme = (isDark) => {
+			const root = document.documentElement;
+			root.classList.toggle("dark", isDark);
+			root.style.colorScheme = isDark ? "dark" : "light";
+		};
+
+		try {
+			const stored = localStorage.getItem("theme");
+			const media = window.matchMedia("(prefers-color-scheme: dark)");
+			const isDark =
+				stored === "dark" ||
+				(stored !== "light" && media.matches);
+			applyTheme(isDark);
+
+			media.addEventListener("change", (event) => {
+				const currentStored = localStorage.getItem("theme");
+				if (currentStored !== "light" && currentStored !== "dark") {
+					applyTheme(event.matches);
+				}
+			});
+		} catch {
+			// Fallback if localStorage is blocked
+			const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			applyTheme(prefersDark);
+		}
+	})();
+</script>

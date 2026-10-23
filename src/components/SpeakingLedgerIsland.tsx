@@ -1,7 +1,6 @@
 import {
 	Calendar,
 	ExternalLink,
-	FileJson,
 	Filter,
 	MapPin,
 	Presentation,
@@ -27,22 +26,22 @@ const FILTER_PILLS: FilterOption[] = [
 function roleBadgeClasses(role: SpeakingEvent["role"]): string {
 	switch (role) {
 		case "Keynote":
-			return "bg-violet-500/15 text-violet-300 border-violet-500/40";
+			return "bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/35";
 		case "Workshop Host":
-			return "bg-emerald-500/15 text-emerald-300 border-emerald-500/40";
+			return "bg-emerald-50 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/35";
 		default:
-			return "bg-zinc-800/80 text-zinc-300 border-zinc-700";
+			return "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700";
 	}
 }
 
 function formatBadgeClasses(format: SpeakingEvent["eventFormat"]): string {
 	switch (format) {
 		case "In-Person":
-			return "bg-zinc-900 text-zinc-200 border-zinc-700";
+			return "bg-slate-100 dark:bg-[#151820] text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700";
 		case "Virtual":
-			return "bg-zinc-900/60 text-zinc-400 border-zinc-800";
+			return "bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 border-slate-200/80 dark:border-slate-800";
 		case "Hybrid":
-			return "bg-violet-500/10 text-violet-300 border-violet-500/30";
+			return "bg-indigo-50/70 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/30";
 	}
 }
 
@@ -81,25 +80,27 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 	}, [events]);
 
 	return (
-		<section id="speaking-ledger" className="mt-16 scroll-mt-12">
-			{/* Section 03 Header */}
-			<div className="flex items-center justify-between gap-4 pb-3 border-b border-zinc-800">
-				<div className="flex items-center gap-2.5 font-mono text-xs tracking-wider uppercase text-zinc-400">
-					<span className="text-violet-400 font-semibold">03</span>
-					<span className="text-zinc-600" aria-hidden="true">
-						/
-					</span>
-					<h2 className="font-mono text-xs tracking-wider uppercase text-zinc-400 font-normal">
+		<section id="speaking-ledger" className="mt-14 scroll-mt-24">
+			{/* Clean Executive Section Header */}
+			<div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+				<div>
+					<p className="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+						Global Conferences, Summits &amp; Workshops
+					</p>
+					<h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 mt-1">
 						Where Has Alex Patterson Spoken Recently?
 					</h2>
 				</div>
-				<a
-					href="/speaker-kit.json"
-					className="inline-flex items-center gap-1.5 font-mono text-[11px] text-violet-300 hover:text-violet-200 transition-colors"
+				<output
+					aria-live="polite"
+					className="text-xs font-medium text-slate-500 dark:text-slate-400"
 				>
-					<FileJson className="w-3.5 h-3.5" />
-					<span>Export JSON / MCP</span>
-				</a>
+					Showing{" "}
+					<strong className="text-slate-900 dark:text-slate-100">
+						{filteredEvents.length}
+					</strong>{" "}
+					of {events.length} engagements
+				</output>
 			</div>
 
 			{/* Filter Bar */}
@@ -111,122 +112,119 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 				tooldescription="Filter Alex Patterson's chronological conference speaking ledger by event format or role"
 				tool-name="filter_speaking_ledger"
 				tool-description="Filter Alex Patterson's chronological conference speaking ledger by event format or role"
-				className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+				className="flex flex-wrap items-center gap-2 mb-4"
 			>
-				<div className="flex items-center gap-2 flex-wrap">
-					<label
-						htmlFor="speaking-ledger-filter-select"
-						className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400 mr-1"
-					>
-						<Filter className="w-3.5 h-3.5 text-violet-400" />
-						FILTER:
-					</label>
-					<select
-						id="speaking-ledger-filter-select"
-						name="filter"
-						value={activeFilter}
-						onChange={(e) => setActiveFilter(e.target.value as FilterOption)}
-						toolparamdescription="Speaking engagement filter category: All, In-Person, Virtual, Workshop, or Keynote"
-						tool-param-description="Speaking engagement filter category: All, In-Person, Virtual, Workshop, or Keynote"
-						className="sr-only"
-					>
-						{FILTER_PILLS.map((pill) => (
-							<option key={pill} value={pill}>
-								{pill}
-							</option>
-						))}
-					</select>
-					{FILTER_PILLS.map((pill) => {
-						const isActive = activeFilter === pill;
-						return (
-							<button
-								key={pill}
-								type="button"
-								onClick={() => setActiveFilter(pill)}
-								aria-pressed={isActive}
-								className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-xs transition-all cursor-pointer ${
+				<label
+					htmlFor="speaking-ledger-filter-select"
+					className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 mr-1"
+				>
+					<Filter className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+					<span>Filter:</span>
+				</label>
+				<select
+					id="speaking-ledger-filter-select"
+					name="filter"
+					value={activeFilter}
+					onChange={(e) => setActiveFilter(e.target.value as FilterOption)}
+					toolparamdescription="Speaking engagement filter category: All, In-Person, Virtual, Workshop, or Keynote"
+					tool-param-description="Speaking engagement filter category: All, In-Person, Virtual, Workshop, or Keynote"
+					className="sr-only"
+				>
+					{FILTER_PILLS.map((pill) => (
+						<option key={pill} value={pill}>
+							{pill}
+						</option>
+					))}
+				</select>
+				{FILTER_PILLS.map((pill) => {
+					const isActive = activeFilter === pill;
+					return (
+						<button
+							key={pill}
+							type="button"
+							onClick={() => setActiveFilter(pill)}
+							aria-pressed={isActive}
+							className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all cursor-pointer ${
+								isActive
+									? "bg-indigo-600 dark:bg-indigo-500 border-indigo-600 dark:border-indigo-500 text-white shadow-xs"
+									: "bg-white dark:bg-[#1b1e26] border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-300 dark:hover:border-slate-700"
+							}`}
+						>
+							<span>{pill}</span>
+							<span
+								className={`text-[11px] ${
 									isActive
-										? "bg-violet-600 border-violet-500 text-zinc-100 font-medium shadow-sm"
-										: "bg-zinc-900/50 border-zinc-800/80 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700"
+										? "text-indigo-100"
+										: "text-slate-400 dark:text-slate-500"
 								}`}
 							>
-								<span>{pill}</span>
-								<span
-									className={`text-[10px] ${
-										isActive ? "text-violet-200" : "text-zinc-400"
-									}`}
-								>
-									({counts[pill]})
-								</span>
-							</button>
-						);
-					})}
-				</div>
-
-				<output aria-live="polite" className="font-mono text-xs text-zinc-400">
-					Showing <span className="text-zinc-200">{filteredEvents.length}</span>{" "}
-					of {events.length} engagements
-				</output>
+								({counts[pill]})
+							</span>
+						</button>
+					);
+				})}
 			</form>
 
 			{/* Chronological Ledger Table */}
-			<div className="mt-4 rounded-xl border border-zinc-800/80 bg-zinc-900/50 overflow-hidden">
+			<div className="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1b1e26] overflow-hidden shadow-xs">
 				<div className="overflow-x-auto">
 					<table className="w-full text-left border-collapse">
 						<thead>
-							<tr className="border-b border-zinc-800 bg-zinc-950/70 font-mono text-[11px] uppercase tracking-wider text-zinc-400">
-								<th className="py-3 px-4 whitespace-nowrap">Date</th>
-								<th className="py-3 px-4">Event &amp; Talk Title</th>
-								<th className="py-3 px-4 whitespace-nowrap">Format Badge</th>
-								<th className="py-3 px-4 whitespace-nowrap">Location</th>
-								<th className="py-3 px-4 text-right whitespace-nowrap">
-									Links
+							<tr className="border-b border-slate-200/80 dark:border-slate-800 bg-slate-50/80 dark:bg-[#151820] text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+								<th className="py-3.5 px-4 whitespace-nowrap">Date</th>
+								<th className="py-3.5 px-4">Conference &amp; Session</th>
+								<th className="py-3.5 px-4 whitespace-nowrap">
+									Role &amp; Format
+								</th>
+								<th className="py-3.5 px-4 whitespace-nowrap">Location</th>
+								<th className="py-3.5 px-4 text-right whitespace-nowrap">
+									Resources
 								</th>
 							</tr>
 						</thead>
-						<tbody className="divide-y divide-zinc-800/70 text-sm">
+						<tbody className="divide-y divide-slate-200/70 dark:divide-slate-800/80 text-sm">
 							{filteredEvents.map((ev) => (
 								<tr
 									key={ev._id}
-									className="hover:bg-zinc-900/90 transition-colors group"
+									className="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors group"
 								>
-									{/* Date (YYYY-MM-DD in mono) */}
-									<td className="py-3.5 px-4 align-top whitespace-nowrap font-mono text-xs text-zinc-400">
+									{/* Date */}
+									<td className="py-4 px-4 align-top whitespace-nowrap font-mono text-xs text-slate-600 dark:text-slate-400">
 										<div className="inline-flex items-center gap-1.5">
-											<Calendar className="w-3.5 h-3.5 text-violet-400/80 shrink-0" />
+											<Calendar className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" />
 											<time dateTime={ev.date}>{ev.date}</time>
 										</div>
 										{ev.featured && (
-											<div className="mt-1">
-												<span className="inline-block rounded bg-emerald-500/10 border border-emerald-500/30 px-1.5 py-0.5 font-mono text-[10px] text-emerald-400">
-													FEATURED
+											<div className="mt-1.5">
+												<span className="inline-block rounded-full bg-emerald-50 dark:bg-emerald-500/15 border border-emerald-200 dark:border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-700 dark:text-emerald-300">
+													Featured
 												</span>
 											</div>
 										)}
 									</td>
 
 									{/* Event & Talk Title */}
-									<td className="py-3.5 px-4 align-top">
-										<div className="font-semibold text-zinc-100 group-hover:text-violet-200 transition-colors">
+									<td className="py-4 px-4 align-top">
+										<div className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">
 											{ev.eventName}
 										</div>
-										<div className="mt-0.5 text-xs text-zinc-400 leading-relaxed">
+										<div className="mt-0.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
 											{ev.talkTitle}
 										</div>
 									</td>
 
 									{/* Format & Role Badges */}
-									<td className="py-3.5 px-4 align-top whitespace-nowrap">
-										<div className="flex flex-col items-start gap-1.5 font-mono text-[11px]">
+									<td className="py-4 px-4 align-top whitespace-nowrap">
+										<div className="flex flex-col items-start gap-1.5 text-xs font-medium">
 											<span
-												className={`inline-flex items-center rounded border px-2 py-0.5 ${roleBadgeClasses(
+												className={`inline-flex items-center rounded-full border px-2.5 py-0.5 ${roleBadgeClasses(
 													ev.role,
 												)}`}
 											>
 												{ev.role}
 											</span>
 											<span
-												className={`inline-flex items-center rounded border px-2 py-0.5 ${formatBadgeClasses(
+												className={`inline-flex items-center rounded-full border px-2.5 py-0.5 ${formatBadgeClasses(
 													ev.eventFormat,
 												)}`}
 											>
@@ -236,9 +234,9 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 									</td>
 
 									{/* Location */}
-									<td className="py-3.5 px-4 align-top whitespace-nowrap font-mono text-xs text-zinc-300">
+									<td className="py-4 px-4 align-top whitespace-nowrap text-xs font-medium text-slate-600 dark:text-slate-300">
 										<div className="inline-flex items-center gap-1.5">
-											<MapPin className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+											<MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
 											<span>
 												{ev.city}
 												{ev.country && ev.city !== "Remote"
@@ -248,18 +246,18 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 										</div>
 									</td>
 
-									{/* Links (Slides / Recording / Event URL) */}
-									<td className="py-3.5 px-4 align-top text-right whitespace-nowrap font-mono text-xs">
+									{/* Links */}
+									<td className="py-4 px-4 align-top text-right whitespace-nowrap text-xs font-medium">
 										<div className="inline-flex items-center justify-end gap-1.5">
 											{ev.slidesUrl && (
 												<a
 													href={ev.slidesUrl}
 													target="_blank"
 													rel="noopener noreferrer"
-													title="View Slides / Technical Writeup"
-													className="inline-flex items-center gap-1 rounded border border-zinc-800 bg-zinc-950 hover:border-violet-500/50 hover:text-violet-300 px-2 py-1 text-zinc-300 transition-colors"
+													title="View Slides / Writeup"
+													className="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#151820] hover:border-indigo-400 px-2.5 py-1.5 text-slate-700 dark:text-slate-200 transition-colors"
 												>
-													<Presentation className="w-3 h-3 text-violet-400" />
+													<Presentation className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
 													<span>Slides</span>
 												</a>
 											)}
@@ -269,9 +267,9 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 													target="_blank"
 													rel="noopener noreferrer"
 													title="Watch Recording"
-													className="inline-flex items-center gap-1 rounded border border-zinc-800 bg-zinc-950 hover:border-violet-500/50 hover:text-violet-300 px-2 py-1 text-zinc-300 transition-colors"
+													className="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#151820] hover:border-emerald-400 px-2.5 py-1.5 text-slate-700 dark:text-slate-200 transition-colors"
 												>
-													<Video className="w-3 h-3 text-emerald-400" />
+													<Video className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
 													<span>Video</span>
 												</a>
 											)}
@@ -281,7 +279,7 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 													target="_blank"
 													rel="noopener noreferrer"
 													title="Event Website"
-													className="inline-flex items-center gap-1 rounded border border-zinc-800 bg-zinc-950 hover:border-zinc-700 hover:text-zinc-100 px-2 py-1 text-zinc-400 transition-colors"
+													className="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#151820] hover:border-slate-400 px-2.5 py-1.5 text-slate-600 dark:text-slate-300 transition-colors"
 												>
 													<span>Event</span>
 													<ExternalLink className="w-3 h-3" />
@@ -294,29 +292,6 @@ export default function SpeakingLedgerIsland({ events }: Props) {
 						</tbody>
 					</table>
 				</div>
-			</div>
-
-			{/* Programmatic Speaker Kit / MCP Footer Note */}
-			<div className="mt-4 rounded-lg border border-zinc-800/80 bg-zinc-900/30 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono text-xs text-zinc-400">
-				<div>
-					<span className="text-violet-400">MCP / AUTOMATION:</span> Fetch full
-					bios, Sanity headshot URLs, talk abstracts, and ledger via{" "}
-					<a
-						href="/speaker-kit.json"
-						className="text-zinc-200 underline decoration-violet-500/50 hover:text-violet-300"
-					>
-						GET /speaker-kit.json
-					</a>
-				</div>
-				<a
-					href="https://devrel.codingcat.dev"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1"
-				>
-					<span>devrel.codingcat.dev</span>
-					<ExternalLink className="w-3 h-3" />
-				</a>
 			</div>
 		</section>
 	);

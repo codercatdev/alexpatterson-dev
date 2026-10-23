@@ -1,0 +1,59 @@
+---
+/**
+ * Accessible Light / Dark mode switcher that defaults to system preference
+ * via ThemeScript.astro and allows 1-click switching.
+ */
+---
+
+<button
+	type="button"
+	id="theme-toggle"
+	class="inline-flex items-center justify-center gap-1.5 rounded-full border border-slate-200/90 dark:border-slate-700/80 bg-white/80 dark:bg-slate-800/70 hover:bg-slate-100 dark:hover:bg-slate-800 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 shadow-xs transition-all cursor-pointer"
+	aria-label="Toggle light or dark theme"
+	title="Switch between Light and Dark theme"
+>
+	<!-- Sun icon (visible in Light mode) -->
+	<svg
+		class="size-4 text-amber-500 dark:hidden"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<circle cx="12" cy="12" r="4"></circle>
+		<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+	</svg>
+	<!-- Moon icon (visible in Dark mode) -->
+	<svg
+		class="size-4 text-indigo-300 hidden dark:block"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+	</svg>
+	<span class="hidden sm:inline dark:hidden">Light</span>
+	<span class="hidden dark:sm:inline">Dark</span>
+</button>
+
+<script>
+	const buttons = document.querySelectorAll("#theme-toggle");
+	buttons.forEach((button) => {
+		button.addEventListener("click", () => {
+			const dark = document.documentElement.classList.toggle("dark");
+			document.documentElement.style.colorScheme = dark ? "dark" : "light";
+			try {
+				localStorage.setItem("theme", dark ? "dark" : "light");
+			} catch {
+				// Private browsing mode — applies for current page view
+			}
+		});
+	});
+</script>

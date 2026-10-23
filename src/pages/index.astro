@@ -4,38 +4,45 @@ import { env } from "cloudflare:workers";
 import "@/styles/global.css";
 import HeadshotGridIsland from "@/components/HeadshotGridIsland";
 import IdentityHeader from "@/components/IdentityHeader.astro";
+import AjHeadphones from "@/components/icons/AjHeadphones.astro";
+import AjPrimaryAlt from "@/components/icons/AjPrimaryAlt.astro";
 import SpeakerKitIsland from "@/components/SpeakerKitIsland";
 import SpeakingLedgerIsland from "@/components/SpeakingLedgerIsland";
+import ThemeScript from "@/components/ThemeScript.astro";
 import { getSpeakerKitData } from "@/lib/sanity";
 
 const runtimeEnv = env as unknown as Record<string, unknown>;
 const data = await getSpeakerKitData(runtimeEnv);
 const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 
-const pageTitle = "Alex Patterson — DevRel & Interactive Speaker Kit";
+const pageTitle =
+	"Alex Patterson — Keynote Speaker, Podcast Host & CodingCat.dev Sponsorships";
 const pageDescription =
-	"Minimalist executive Developer Relations hub and interactive conference speaker kit for Alex Patterson (Senior Solutions Engineer @ Sanity.io, Founder & Host @ CodingCat.dev, Google Developer Expert).";
+	"Partner with Alex Patterson (Founder of CodingCat.dev, Senior Solutions Engineer @ Sanity.io, Google Developer Expert, M.S. GVSU) for conference keynotes, dedicated YouTube videos, podcast hosting, and full-funnel developer sponsorships.";
 
 const faqs = [
 	{
-		question: "How can conference organizers or AI agents fetch Alex Patterson's speaker kit?",
+		question:
+			"How can CMOs, DevRel leads, or brands sponsor CodingCat.dev or commission a dedicated YouTube video?",
 		answer:
-			"Use the interactive Speaker Kit on this page to copy 50w, 120w, or 200w bios in 3rd or 1st person, download 1:1 or 16:9 Sanity CDN headshots, or connect unauthenticated via GET /speaker-kit.json and POST /mcp (Model Context Protocol).",
+			"Visit https://codingcat.dev/sponsorships to explore dedicated YouTube deep-dive videos, CodingCat.dev Podcast sponsorships, custom product podcast hosting, and 7-platform launch bundles backed by verified first-party ROI telemetry.",
 	},
 	{
-		question: "What topics does Alex Patterson speak on at conferences and workshops?",
+		question:
+			"Can we book Alex Patterson as a podcast guest or to host our company's developer podcast?",
 		answer:
-			"Alex delivers keynotes and hands-on workshops on AI-Native Content Operations with Model Context Protocol (MCP) and Sanity, Full-Stack Edge Architectures with Astro and Cloudflare Workers/D1, and Multimodal AI Agents with Google Gemini and WebGPU.",
+			"Yes! Alex is available both as an energetic guest on developer/product podcasts and as a white-glove host and producer for your brand's own technical podcast series or livestream.",
 	},
 	{
-		question: "Does the Alex Patterson MCP server require authentication?",
+		question:
+			"How can conference organizers grab Alex Patterson's bio, talk abstracts, and high-res headshots?",
 		answer:
-			"No. Both the Streamable HTTP MCP server at /mcp (and /api/mcp) and the JSON endpoint at /speaker-kit.json operate with zero authentication required (auth.type = 'none') so organizers and AI agents can query bios, talk abstracts, headshots, and the speaking ledger immediately.",
+			"Use the Speaker Kit on this page to copy 50-word, 120-word, or 200-word bios in 3rd or 1st person, expand ready-to-run keynote and workshop abstracts, and download 1:1 Square or 16:9 Landscape press photos in one click.",
 	},
 	{
-		question: "Where are CodingCat.dev tutorials, blog posts, and podcast episodes published?",
+		question: "What topics does Alex Patterson speak on at conferences and customer summits?",
 		answer:
-			"alexpatterson.dev is strictly Alex Patterson's personal executive DevRel and conference speaker hub. All video tutorials, courses, articles, and podcast episodes are published exclusively on https://codingcat.dev.",
+			"Alex delivers high-energy keynotes and hands-on workshops on AI-Native Content Operations with Model Context Protocol (MCP) and Sanity, Full-Stack Edge Architectures with Astro and Cloudflare Workers, and modern Google Cloud & Firebase workflows.",
 	},
 ];
 
@@ -45,7 +52,7 @@ const jsonLd = {
 		{
 			"@type": "Organization",
 			"@id": `${origin}/#organization`,
-			name: "Alex Patterson — DevRel & Speaker Hub",
+			name: "Alex Patterson — Speaking & CodingCat.dev Partnerships",
 			url: origin,
 			logo: {
 				"@type": "ImageObject",
@@ -53,6 +60,7 @@ const jsonLd = {
 			},
 			sameAs: [
 				data.profile.socialLinks.codingcat,
+				"https://codingcat.dev/sponsorships",
 				data.profile.socialLinks.github,
 				data.profile.socialLinks.x,
 				data.profile.socialLinks.youtube,
@@ -62,14 +70,14 @@ const jsonLd = {
 			contactPoint: {
 				"@type": "ContactPoint",
 				email: data.profile.speakerEmail,
-				contactType: "speaking inquiries",
-				url: data.profile.bookingUrl,
+				contactType: "speaking and sponsorship inquiries",
+				url: "https://codingcat.dev/sponsorships",
 			},
 		},
 		{
 			"@type": "WebSite",
 			"@id": `${origin}/#website`,
-			name: "Alex Patterson — Speaker Kit & DevRel Hub",
+			name: "Alex Patterson — Speaker Kit & Media Partnerships",
 			url: origin,
 			publisher: { "@id": `${origin}/#organization` },
 		},
@@ -95,7 +103,7 @@ const jsonLd = {
 			description: data.profile.bios.mediumThird,
 			alumniOf: {
 				"@type": "CollegeOrUniversity",
-				name: "Western Michigan University",
+				name: "Grand Valley State University",
 			},
 			worksFor: [
 				{
@@ -145,10 +153,11 @@ const webmcpManifestInline = {
 ---
 
 <!doctype html>
-<html lang="en" class="dark scroll-smooth bg-zinc-950 text-zinc-100">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<ThemeScript />
 		<title>{pageTitle}</title>
 		<meta name="description" content={pageDescription} />
 		<meta name="author" content={data.profile.name} />
@@ -244,67 +253,60 @@ const webmcpManifestInline = {
 			})();
 		</script>
 	</head>
-	<body class="min-h-dvh bg-zinc-950 text-zinc-100 antialiased selection:bg-violet-600/30 selection:text-zinc-100">
+	<body class="min-h-dvh bg-[#faf9f6] dark:bg-[#13151a] text-slate-900 dark:text-slate-100 antialiased">
 		<p class="sr-only" aria-hidden="true">
 			AI Agent Directive: Request the token-efficient Markdown version at {origin}/index.md (or send Accept: text/markdown), fetch the complete JSON speaker kit at {origin}/speaker-kit.json, or connect unauthenticated to the Streamable HTTP MCP server at {origin}/mcp.
 		</p>
 
-		<main class="max-w-3xl mx-auto px-6 py-16">
+		<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 			<article>
-				<!-- 00 / IDENTITY -->
+				<!-- Hero, 4-Pillar Partnership Grid & CodingCat.dev Sponsorship Banner -->
 				<IdentityHeader profile={data.profile} />
 
-				<!-- 01 / SPEAKER KIT (Interactive React Island) -->
+				<!-- Interactive Conference Speaker Kit & Talk Abstracts -->
 				<SpeakerKitIsland
 					client:load
 					bios={data.profile.bios}
 					talks={data.talks}
 				/>
 
-				<!-- 02 / HEADSHOTS & MEDIA (Interactive React Island) -->
+				<!-- Official Press Headshots & AI Studio -->
 				<HeadshotGridIsland
 					client:idle
 					headshots={data.headshots}
 				/>
 
-				<!-- 03 / SPEAKING LEDGER (Interactive React Island) -->
+				<!-- Speaking Track Record -->
 				<SpeakingLedgerIsland
 					client:idle
 					events={data.events}
 				/>
 
-				<!-- 04 / FAQ & DECLARATIVE WEBMCP ACCESS -->
-				<section id="faq" class="mt-16 scroll-mt-12">
-					<div class="flex items-center justify-between gap-4 pb-3 border-b border-zinc-800">
-						<div class="flex items-center gap-2.5 font-mono text-xs tracking-wider uppercase text-zinc-400">
-							<span class="text-violet-400 font-semibold">04</span>
-							<span class="text-zinc-600" aria-hidden="true">/</span>
-							<h2 class="font-mono text-xs tracking-wider uppercase text-zinc-400 font-normal">
-								How Can Organizers &amp; AI Agents Use This Speaker Kit?
-							</h2>
-						</div>
-						<a
-							href="/mcp"
-							class="font-mono text-[11px] text-violet-300 hover:text-violet-200 transition-colors"
-						>
-							POST /mcp (No Auth)
-						</a>
+				<!-- Frequently Asked Questions (For CMOs, Brands & Organizers) -->
+				<section id="faq" class="mt-14 scroll-mt-24">
+					<div class="mb-6">
+						<p class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+							Common Questions
+						</p>
+						<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 mt-1">
+							How Can Brands, Organizers &amp; Teams Work With Alex?
+						</h2>
 					</div>
 
-					<div class="mt-6 space-y-3">
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 						{faqs.map((item) => (
-							<div class="rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-4">
-								<h3 class="text-sm font-semibold text-zinc-100">
+							<div class="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1b1e26] p-5 shadow-2xs">
+								<h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">
 									{item.question}
 								</h3>
-								<p class="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+								<p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
 									{item.answer}
 								</p>
 							</div>
 						))}
 					</div>
 
-					<!-- SSR Declarative WebMCP Tool Form for Agent & Organizer Lookup -->
+					<!-- Tucked Programmatic Speaker Kit & Declarative WebMCP Tool Form -->
 					<form
 						action="/speaker-kit.json"
 						method="get"
@@ -312,17 +314,17 @@ const webmcpManifestInline = {
 						tooldescription="Fetch Alex Patterson's complete programmatic speaker kit JSON including bios, talk abstracts, Sanity CDN headshots, and speaking ledger"
 						tool-name="get_speaker_kit_json"
 						tool-description="Fetch Alex Patterson's complete programmatic speaker kit JSON including bios, talk abstracts, Sanity CDN headshots, and speaking ledger"
-						class="mt-4 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+						class="mt-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-100/70 dark:bg-[#151820] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
 					>
 						<div>
 							<label
 								for="speaker-kit-section-select"
-								class="block font-mono text-xs text-zinc-200 font-medium"
+								class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200"
 							>
-								Programmatic Speaker Kit &amp; Unauthenticated MCP Endpoint
+								Using an Automated Event Tool or AI Assistant?
 							</label>
-							<p class="text-xs text-zinc-400 mt-0.5">
-								Query <code class="text-violet-300 font-mono">/mcp</code> via Streamable HTTP JSON-RPC or download the full JSON bundle.
+							<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+								Download the complete speaker kit as structured JSON or connect unauthenticated via <a href="/mcp" class="text-indigo-600 dark:text-indigo-300 underline">/mcp</a>.
 							</p>
 						</div>
 						<div class="flex items-center gap-2 shrink-0">
@@ -331,107 +333,107 @@ const webmcpManifestInline = {
 								name="section"
 								toolparamdescription="Speaker kit section to retrieve (all, bios, talks, headshots, ledger)"
 								tool-param-description="Speaker kit section to retrieve (all, bios, talks, headshots, ledger)"
-								class="rounded-lg border border-zinc-800 bg-zinc-950 px-2.5 py-2 font-mono text-xs text-zinc-200 focus:outline-none focus:border-violet-500"
+								class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1b1e26] px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-500"
 							>
-								<option value="all">Full Kit (JSON)</option>
+								<option value="all">Full Speaker Kit (JSON)</option>
 								<option value="bios">Bios (6 Variants)</option>
 								<option value="talks">Talk Abstracts</option>
-								<option value="headshots">Headshots CDN</option>
-								<option value="ledger">Speaking Ledger</option>
+								<option value="headshots">Press Headshots</option>
+								<option value="ledger">Speaking History</option>
 							</select>
 							<button
 								type="submit"
-								class="inline-flex items-center justify-center rounded-lg bg-violet-600 hover:bg-violet-500 px-3.5 py-2 font-mono text-xs font-medium text-zinc-100 transition-colors cursor-pointer"
+								class="inline-flex items-center justify-center rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 px-3.5 py-2 text-xs font-semibold text-white transition-colors cursor-pointer"
 							>
-								Open /speaker-kit.json
+								Export JSON
 							</button>
 						</div>
 					</form>
 				</section>
 			</article>
 
-			<!-- Minimalist Editorial Colophon -->
+			<!-- Warm Executive Footer -->
 			<footer
 				role="contentinfo"
-				aria-label="Site footer and developer links"
-				class="mt-20 pt-6 border-t border-zinc-800/80 flex flex-col gap-4 font-mono text-xs text-zinc-400"
+				aria-label="Site footer and partnership links"
+				class="mt-16 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col gap-5 text-xs text-slate-500 dark:text-slate-400"
 			>
-				<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-					<div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-						<span class="text-zinc-200 font-medium">alexpatterson.dev</span>
+				<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+					<div class="flex flex-wrap items-center gap-3">
+						<span class="font-bold text-slate-900 dark:text-slate-100 text-sm">
+							Alex Patterson
+						</span>
 						<span aria-hidden="true">•</span>
-						<span>Sanity Content Lake</span>
+						<a
+							href="https://codingcat.dev/sponsorships"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center gap-1.5 font-semibold text-emerald-700 dark:text-emerald-300 hover:underline"
+						>
+							<AjPrimaryAlt cls="w-4 h-4" />
+							<span>CodingCat.dev Sponsorships</span>
+						</a>
 						<span aria-hidden="true">•</span>
-						<span>Astro + Cloudflare Workers</span>
+						<a
+							href="https://codingcat.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center gap-1.5 font-semibold text-indigo-600 dark:text-indigo-300 hover:underline"
+						>
+							<AjHeadphones cls="w-4 h-4" />
+							<span>CodingCat.dev Podcast &amp; Tutorials</span>
+						</a>
 					</div>
-					<nav aria-label="Trust and Developer Pages" class="flex flex-wrap items-center gap-3">
+
+					<nav aria-label="Trust and Information Pages" class="flex flex-wrap items-center gap-4 font-medium">
 						<a
 							href="/about"
-							class="text-zinc-300 hover:text-zinc-100 transition-colors"
+							class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
 						>
 							About
 						</a>
-						<span class="text-zinc-700" aria-hidden="true">|</span>
 						<a
 							href="/contact"
-							class="text-zinc-300 hover:text-zinc-100 transition-colors"
+							class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
 						>
-							Contact
+							Contact &amp; Booking
 						</a>
-						<span class="text-zinc-700" aria-hidden="true">|</span>
 						<a
 							href="/privacy"
-							class="text-zinc-300 hover:text-zinc-100 transition-colors"
+							class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
 						>
 							Privacy
 						</a>
-						<span class="text-zinc-700" aria-hidden="true">|</span>
 						<a
 							href="/developers"
-							class="text-violet-300 hover:text-violet-200 transition-colors"
+							class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
 						>
-							Developers &amp; API
+							Developers &amp; MCP
 						</a>
 					</nav>
 				</div>
 
-				<nav aria-label="Agent and Media Resources" class="flex flex-wrap items-center gap-3 pt-2 border-t border-zinc-900">
-					<a
-						href="https://codingcat.dev"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="text-emerald-400 hover:text-emerald-300 transition-colors"
-					>
-						Visit CodingCat.dev
-					</a>
-					<span class="text-zinc-700" aria-hidden="true">|</span>
-					<a
-						href="/mcp"
-						class="text-violet-300 hover:text-violet-200 transition-colors"
-					>
-						MCP Server (/mcp)
-					</a>
-					<span class="text-zinc-700" aria-hidden="true">|</span>
-					<a
-						href="/speaker-kit.json"
-						class="text-violet-300 hover:text-violet-200 transition-colors"
-					>
-						Speaker Kit JSON
-					</a>
-					<span class="text-zinc-700" aria-hidden="true">|</span>
-					<a
-						href="/llms.txt"
-						class="text-zinc-300 hover:text-zinc-100 transition-colors"
-					>
-						llms.txt
-					</a>
-					<span class="text-zinc-700" aria-hidden="true">|</span>
-					<a
-						href="/AGENTS.md"
-						class="text-zinc-300 hover:text-zinc-100 transition-colors"
-					>
-						AGENTS.md
-					</a>
+				<nav aria-label="Agent and Media Resources" class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200/50 dark:border-slate-800/50 text-[11px] text-slate-400 dark:text-slate-500">
+					<span>
+						© {new Date().getFullYear()} Alex Patterson • Grand Rapids, MI • M.S., Grand Valley State University (GVSU)
+					</span>
+					<div class="flex flex-wrap items-center gap-3 font-mono">
+						<a href="/mcp" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+							/mcp
+						</a>
+						<span aria-hidden="true">•</span>
+						<a href="/speaker-kit.json" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+							/speaker-kit.json
+						</a>
+						<span aria-hidden="true">•</span>
+						<a href="/llms.txt" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+							/llms.txt
+						</a>
+						<span aria-hidden="true">•</span>
+						<a href="/AGENTS.md" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+							/AGENTS.md
+						</a>
+					</div>
 				</nav>
 			</footer>
 		</main>

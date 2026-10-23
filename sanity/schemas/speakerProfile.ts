@@ -74,7 +74,7 @@ export const speakerProfile = defineType({
 			name: "education",
 			title: "Education",
 			type: "string",
-			initialValue: "WMU CS & Business",
+			initialValue: "M.S., Grand Valley State University (GVSU)",
 		}),
 		defineField({
 			name: "bookingUrl",
