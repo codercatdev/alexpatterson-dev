@@ -381,8 +381,7 @@ export const SEED_SPEAKER_PROFILE: SpeakerProfile = {
 		linkedin: "https://www.linkedin.com/in/alexpatterson",
 		gdeProfile: "https://developers.google.com/profile/u/codercatdev",
 	},
-	avatarUrl:
-		"https://cdn.sanity.io/images/hfh83o0w/production/a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-400x400.jpg",
+	avatarUrl: "https://alexpatterson.dev/headshots/alex_studio_mic.jpg",
 	bios: {
 		shortThird:
 			"Alex Patterson is a Senior Solutions Engineer at Sanity.io, Founder and Host of CodingCat.dev, and a Google Developer Expert (GDE). Holding a Master of Science from Grand Valley State University (GVSU) and based in Grand Rapids, Michigan, he helps developer brands and enterprise teams tell authentic technical stories through keynotes, podcasts, and YouTube deep-dives.",
@@ -405,29 +404,29 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		_type: "headshot",
 		title: "Studio Portrait (Conference Default)",
 		caption:
-			"High-contrast portrait optimized for dark conference schedules, speaker grids, and social cards.",
+			"Broadcast studio portrait with Shure SM7B mic and purple/black acoustic backdrop—optimized for dark conference schedules, speaker grids, and social cards.",
 		primaryFocalTag: "Studio Dark",
-		alt: "Alex Patterson — Official Speaker Portrait",
+		alt: "Alex Patterson — Official Studio Dark Broadcast Portrait",
 		sanityBaseUrl:
-			"https://cdn.sanity.io/images/hfh83o0w/production/a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-400x400.jpg",
-		fallbackLocalUrl: "/headshots/alex_headshot_1.webp",
-		assetId: "image-a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-400x400-jpg",
-		hotspot: { x: 0.5, y: 0.42, height: 0.8, width: 0.8 },
+			"https://cdn.sanity.io/images/hfh83o0w/production/f7dfae4f12674b2f16f75c90b24a42f85ae98109-1000x1000.jpg",
+		fallbackLocalUrl: "/headshots/alex_studio_mic.webp",
+		assetId: "image-f7dfae4f12674b2f16f75c90b24a42f85ae98109-1000x1000-jpg",
+		hotspot: { x: 0.5, y: 0.38, height: 0.85, width: 0.85 },
 		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },
 	},
 	{
 		_id: "headshot-keynote-stage",
 		_type: "headshot",
-		title: "Warm Keynote & Podcast Glow",
+		title: "Executive Keynote & Stage Portrait",
 		caption:
-			"Warm ambient lighting backdrop suited for keynote announcements, fireside chats, and hero banners.",
+			"Formal blazer portrait suited for keynote announcements, executive panels, and conference programs.",
 		primaryFocalTag: "Keynote Stage",
-		alt: "Alex Patterson — Warm Keynote Backdrop Headshot",
+		alt: "Alex Patterson — Executive Keynote Speaker Portrait",
 		sanityBaseUrl:
-			"https://cdn.sanity.io/images/hfh83o0w/production/e4c3255612674b2f16f75c90b24a42f85ae98109-1000x1000.jpg",
-		fallbackLocalUrl: "/headshots/alex_fire.webp",
-		assetId: "image-e4c3255612674b2f16f75c90b24a42f85ae98109-1000x1000-jpg",
-		hotspot: { x: 0.5, y: 0.45, height: 0.85, width: 0.85 },
+			"https://cdn.sanity.io/images/hfh83o0w/production/a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-1000x1000.jpg",
+		fallbackLocalUrl: "/headshots/alex_headshot_1.webp",
+		assetId: "image-a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-1000x1000-jpg",
+		hotspot: { x: 0.5, y: 0.42, height: 0.8, width: 0.8 },
 		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },
 	},
 	{
@@ -435,7 +434,7 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		_type: "headshot",
 		title: "CodingCat.dev Studio Booth",
 		caption:
-			"In-studio shot with acoustic paneling and laptop stickers—ideal for developer workshops and podcasts.",
+			"In-studio shot with acoustic paneling—ideal for developer workshops, livestreams, and podcasts.",
 		primaryFocalTag: "Studio Soundproof",
 		alt: "Alex Patterson — Recording Studio Headshot",
 		sanityBaseUrl:
@@ -448,16 +447,16 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 	{
 		_id: "headshot-casual-outdoor",
 		_type: "headshot",
-		title: "Casual Outdoor Portrait",
+		title: "Warm Fireside & Casual Portrait",
 		caption:
-			"Natural daylight portrait in Europe—great for community events, panels, and editorial profiles.",
+			"Warm ambient fireplace backdrop—great for fireside chats, community events, panels, and editorial profiles.",
 		primaryFocalTag: "Casual",
-		alt: "Alex Patterson — Casual Outdoor Headshot",
+		alt: "Alex Patterson — Warm Casual Fireside Headshot",
 		sanityBaseUrl:
-			"https://cdn.sanity.io/images/hfh83o0w/production/de0f6fd275173866f415dea4def74a391620ce60-1000x1000.jpg",
-		fallbackLocalUrl: "/headshots/alex_casual.webp",
-		assetId: "image-de0f6fd275173866f415dea4def74a391620ce60-1000x1000-jpg",
-		hotspot: { x: 0.5, y: 0.4, height: 0.85, width: 0.85 },
+			"https://cdn.sanity.io/images/hfh83o0w/production/e4c3255612674b2f16f75c90b24a42f85ae98109-1000x1000.jpg",
+		fallbackLocalUrl: "/headshots/alex_fire.webp",
+		assetId: "image-e4c3255612674b2f16f75c90b24a42f85ae98109-1000x1000-jpg",
+		hotspot: { x: 0.5, y: 0.45, height: 0.85, width: 0.85 },
 		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },
 	},
 ];
@@ -765,28 +764,14 @@ export async function getSpeakerKitData(
 	const client = getSanityClient(config);
 
 	let sanityProfile: SpeakerProfile | null = null;
-	let authorDoc: {
-		_id?: string;
-		title?: string;
-		avatarUrl?: string;
-		socials?: Record<string, string>;
-	} | null = null;
 	let sanityHeadshots: HeadshotItem[] = [];
 	let sanityTalks: TalkAbstract[] = [];
 	let sanityEvents: SpeakingEvent[] = [];
 
-	const [profileRes, authorRes, headshotsRes, talksRes, eventsRes, d1Events] =
+	const [profileRes, headshotsRes, talksRes, eventsRes, d1Events] =
 		await Promise.all([
 			client
 				.fetch<SpeakerProfile | null>(SPEAKER_PROFILE_QUERY)
-				.catch(() => null),
-			client
-				.fetch<{
-					_id?: string;
-					title?: string;
-					avatarUrl?: string;
-					socials?: Record<string, string>;
-				} | null>(AUTHOR_FALLBACK_QUERY)
 				.catch(() => null),
 			client.fetch<HeadshotItem[]>(HEADSHOTS_QUERY).catch(() => []),
 			client.fetch<TalkAbstract[]>(TALK_ABSTRACTS_QUERY).catch(() => []),
@@ -795,7 +780,6 @@ export async function getSpeakerKitData(
 		]);
 
 	sanityProfile = profileRes;
-	authorDoc = authorRes;
 	sanityHeadshots = Array.isArray(headshotsRes)
 		? headshotsRes.filter((h) => Boolean(h?.sanityBaseUrl))
 		: [];
@@ -821,26 +805,14 @@ export async function getSpeakerKitData(
 					...SEED_SPEAKER_PROFILE.bios,
 					...(sanityProfile.bios ?? {}),
 				},
-				avatarUrl:
-					sanityProfile.avatarUrl ??
-					authorDoc?.avatarUrl ??
-					SEED_SPEAKER_PROFILE.avatarUrl,
+				avatarUrl: sanityProfile.avatarUrl ?? SEED_SPEAKER_PROFILE.avatarUrl,
 			}
 		: {
 				...SEED_SPEAKER_PROFILE,
-				avatarUrl: authorDoc?.avatarUrl
-					? stegaClean(authorDoc.avatarUrl)
-					: SEED_SPEAKER_PROFILE.avatarUrl,
 			};
 
 	const headshots =
-		sanityHeadshots.length > 0
-			? sanityHeadshots
-			: SEED_HEADSHOTS.map((h, idx) =>
-					idx === 0 && authorDoc?.avatarUrl
-						? { ...h, sanityBaseUrl: stegaClean(authorDoc.avatarUrl) }
-						: h,
-				);
+		sanityHeadshots.length > 0 ? sanityHeadshots : SEED_HEADSHOTS;
 
 	const talks = sanityTalks.length > 0 ? sanityTalks : SEED_TALK_ABSTRACTS;
 

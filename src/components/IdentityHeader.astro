@@ -25,8 +25,8 @@ interface Props {
 
 const { profile } = Astro.props;
 
-// Use optimized WebP portrait (29 KB @ 640w, 59 KB @ 1000w) for ultra-fast LCP
-const heroPortraitSrc = "/headshots/alex_fire-640.webp";
+// Use optimized WebP portrait (32 KB @ 640w, 73 KB @ 1000w) for ultra-fast LCP
+const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 ---
 
 <!-- Sticky Glassmorphic Executive Top Navigation -->
@@ -313,7 +313,7 @@ const heroPortraitSrc = "/headshots/alex_fire-640.webp";
 					<div class="relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-700/80 bg-slate-100 dark:bg-[#151820] shadow-md aspect-[4/3.8]">
 						<img
 							src={heroPortraitSrc}
-							srcset="/headshots/alex_fire-640.webp 640w, /headshots/alex_fire.webp 1000w"
+							srcset="/headshots/alex_studio_mic-640.webp 640w, /headshots/alex_studio_mic.webp 1000w"
 							sizes="(max-width: 1024px) 100vw, 380px"
 							alt={`${profile.name} — Keynote Speaker, Podcast Host, and Founder of CodingCat.dev`}
 							width="600"
