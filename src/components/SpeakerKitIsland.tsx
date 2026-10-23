@@ -135,7 +135,7 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 						What Bio Variations Are Available for Alex Patterson?
 					</h2>
 				</div>
-				<span className="text-xs text-slate-500 dark:text-slate-400">
+				<span className="text-xs text-slate-600 dark:text-slate-300">
 					Ready-to-paste bios &amp; session abstracts
 				</span>
 			</div>
@@ -215,20 +215,20 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 
 				{/* Live Word/Char Count + One-Click Copy Bar */}
 				<div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-					<div className="flex flex-wrap items-center gap-2.5 text-xs text-slate-500 dark:text-slate-400">
+					<div className="flex flex-wrap items-center gap-2.5 text-xs text-slate-700 dark:text-slate-300">
 						<span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-[#151820] border border-slate-200/80 dark:border-slate-800 px-3 py-1 font-medium">
 							<span>Words:</span>
-							<strong className="text-indigo-600 dark:text-indigo-300 font-mono">
+							<strong className="text-indigo-700 dark:text-indigo-300 font-mono">
 								{stats.words}
 							</strong>
 						</span>
 						<span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-[#151820] border border-slate-200/80 dark:border-slate-800 px-3 py-1 font-medium">
 							<span>Characters:</span>
-							<strong className="text-indigo-600 dark:text-indigo-300 font-mono">
+							<strong className="text-indigo-700 dark:text-indigo-300 font-mono">
 								{stats.chars}
 							</strong>
 						</span>
-						<span className="hidden sm:inline text-slate-500 dark:text-slate-400">
+						<span className="hidden sm:inline text-slate-600 dark:text-slate-300">
 							Approved for event websites, podcast intros &amp; press releases
 						</span>
 					</div>
@@ -275,7 +275,7 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 							What Ready-to-Run Talk Abstracts Are Available? ({talks.length})
 						</h2>
 					</div>
-					<span className="text-xs text-slate-500 dark:text-slate-400">
+					<span className="text-xs text-slate-600 dark:text-slate-300">
 						Click any topic to view full abstract &amp; audience takeaways
 					</span>
 				</div>
@@ -315,7 +315,7 @@ export default function SpeakerKitIsland({ bios, talks }: Props) {
 												{talk.tags.map((tag) => (
 													<span
 														key={tag}
-														className="rounded-full bg-slate-100 dark:bg-[#151820] border border-slate-200/80 dark:border-slate-800 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-400"
+														className="rounded-full bg-slate-100 dark:bg-[#151820] border border-slate-200/80 dark:border-slate-800 px-2.5 py-0.5 text-xs font-medium text-slate-700 dark:text-slate-300"
 													>
 														{tag}
 													</span>

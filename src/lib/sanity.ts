@@ -410,7 +410,7 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		alt: "Alex Patterson — Official Speaker Portrait",
 		sanityBaseUrl:
 			"https://cdn.sanity.io/images/hfh83o0w/production/a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-400x400.jpg",
-		fallbackLocalUrl: "/headshots/alex_headshot_1.jpg",
+		fallbackLocalUrl: "/headshots/alex_headshot_1.webp",
 		assetId: "image-a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-400x400-jpg",
 		hotspot: { x: 0.5, y: 0.42, height: 0.8, width: 0.8 },
 		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },
@@ -425,7 +425,7 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		alt: "Alex Patterson — Warm Keynote Backdrop Headshot",
 		sanityBaseUrl:
 			"https://cdn.sanity.io/images/hfh83o0w/production/e4c3255612674b2f16f75c90b24a42f85ae98109-1000x1000.jpg",
-		fallbackLocalUrl: "/headshots/alex_fire.jpg",
+		fallbackLocalUrl: "/headshots/alex_fire.webp",
 		assetId: "image-e4c3255612674b2f16f75c90b24a42f85ae98109-1000x1000-jpg",
 		hotspot: { x: 0.5, y: 0.45, height: 0.85, width: 0.85 },
 		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },
@@ -440,7 +440,7 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		alt: "Alex Patterson — Recording Studio Headshot",
 		sanityBaseUrl:
 			"https://cdn.sanity.io/images/hfh83o0w/production/52c6b886a0c8a719536b3d1f97b82330b29e0ec2-1000x1000.jpg",
-		fallbackLocalUrl: "/headshots/alex_soundproof.jpg",
+		fallbackLocalUrl: "/headshots/alex_soundproof.webp",
 		assetId: "image-52c6b886a0c8a719536b3d1f97b82330b29e0ec2-1000x1000-jpg",
 		hotspot: { x: 0.5, y: 0.44, height: 0.85, width: 0.85 },
 		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },
@@ -455,7 +455,7 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		alt: "Alex Patterson — Casual Outdoor Headshot",
 		sanityBaseUrl:
 			"https://cdn.sanity.io/images/hfh83o0w/production/de0f6fd275173866f415dea4def74a391620ce60-1000x1000.jpg",
-		fallbackLocalUrl: "/headshots/alex_casual.jpg",
+		fallbackLocalUrl: "/headshots/alex_casual.webp",
 		assetId: "image-de0f6fd275173866f415dea4def74a391620ce60-1000x1000-jpg",
 		hotspot: { x: 0.5, y: 0.4, height: 0.85, width: 0.85 },
 		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },

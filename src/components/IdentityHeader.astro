@@ -6,11 +6,13 @@ import {
 	GraduationCap,
 	Mail,
 	MapPin,
+	Menu,
 	Mic,
 	Plane,
 	Presentation,
 	Sparkles,
 	Video,
+	X,
 } from "lucide-react";
 import AjHeadphones from "@/components/icons/AjHeadphones.astro";
 import AjPrimaryAlt from "@/components/icons/AjPrimaryAlt.astro";
@@ -23,78 +25,155 @@ interface Props {
 
 const { profile } = Astro.props;
 
-const heroPortraitSrc = profile.avatarUrl
-	? `${profile.avatarUrl.split("?")[0]}?w=720&h=840&fit=crop&crop=focalpoint&fm=webp`
-	: "/headshots/alex_headshot_1.jpg";
+// Use optimized WebP portrait (29 KB @ 640w, 59 KB @ 1000w) for ultra-fast LCP
+const heroPortraitSrc = "/headshots/alex_fire-640.webp";
 ---
 
 <!-- Sticky Glassmorphic Executive Top Navigation -->
-<div class="sticky top-4 z-40 mb-10">
-	<div class="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/85 dark:bg-[#1b1e26]/85 backdrop-blur-md px-4 sm:px-6 py-3 shadow-sm shadow-slate-900/[0.04] dark:shadow-black/25 flex items-center justify-between gap-3">
-		<div class="flex items-center gap-3 min-w-0">
+<div class="sticky top-3 z-40 mb-8 sm:mb-10">
+	<div class="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/90 dark:bg-[#1b1e26]/90 backdrop-blur-md px-4 sm:px-6 py-3 shadow-sm shadow-slate-900/[0.04] dark:shadow-black/25">
+		<div class="flex items-center justify-between gap-4">
+			<!-- Brand Wordmark (Never Truncated) -->
 			<a
 				href="#identity"
-				class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors truncate"
+				class="inline-flex items-center gap-2.5 text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors whitespace-nowrap shrink-0"
 			>
-				{profile.name}
+				{profile.availableForSpeaking && (
+					<span
+						title="Available for Speaking & Sponsorships"
+						class="h-2 w-2 rounded-full bg-emerald-500 dark:bg-emerald-400 shrink-0"
+					></span>
+				)}
+				<span>{profile.name}</span>
 			</a>
-			{profile.availableForSpeaking && (
-				<span class="hidden lg:inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/25 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-300">
-					<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
-					Open for Keynotes &amp; Sponsorships
-				</span>
-			)}
+
+			<!-- Desktop Navigation Links (Single Line, Never Wrapped) -->
+			<nav
+				aria-label="Primary section navigation"
+				class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-700 dark:text-slate-200 whitespace-nowrap"
+			>
+				<a
+					href="#partner"
+					class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors whitespace-nowrap"
+				>
+					Ways to Partner
+				</a>
+				<a
+					href="https://codingcat.dev/sponsorships"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center gap-1.5 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors whitespace-nowrap"
+				>
+					<AjPrimaryAlt cls="w-4 h-4 shrink-0" />
+					<span>Sponsorships</span>
+				</a>
+				<a
+					href="#speaker-kit"
+					class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors whitespace-nowrap"
+				>
+					Speaker Kit
+				</a>
+				<a
+					href="#headshots"
+					class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors whitespace-nowrap"
+				>
+					Headshots
+				</a>
+				<a
+					href="#speaking-ledger"
+					class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors whitespace-nowrap"
+				>
+					Speaking
+				</a>
+			</nav>
+
+			<!-- Right Actions: Theme Switcher, Primary CTA & Mobile Menu Toggle -->
+			<div class="flex items-center gap-2 shrink-0 whitespace-nowrap">
+				<ThemeToggle />
+				<a
+					href="#partner"
+					class="inline-flex items-center gap-1.5 rounded-full bg-indigo-600 hover:bg-indigo-500 px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold text-white shadow-xs transition-colors whitespace-nowrap"
+				>
+					<span class="sm:hidden">Partner</span>
+					<span class="hidden sm:inline">Partner / Book Alex</span>
+				</a>
+				<button
+					type="button"
+					id="mobile-nav-toggle"
+					aria-expanded="false"
+					aria-controls="mobile-nav-drawer"
+					aria-label="Toggle navigation menu"
+					class="lg:hidden inline-flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+				>
+					<Menu id="mobile-nav-icon-open" className="w-4 h-4" />
+					<X id="mobile-nav-icon-close" className="w-4 h-4 hidden" />
+				</button>
+			</div>
 		</div>
 
-		<nav aria-label="Primary section navigation" class="hidden md:flex items-center gap-5 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">
-			<a href="#partner" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
+		<!-- Expandable Mobile & Tablet Navigation Menu (< lg) -->
+		<nav
+			id="mobile-nav-drawer"
+			hidden
+			aria-label="Mobile section navigation"
+			class="lg:hidden mt-3 pt-3 border-t border-slate-200/80 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-sm font-medium"
+		>
+			<a
+				href="#partner"
+				class="mobile-nav-link rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+			>
 				Ways to Partner
 			</a>
 			<a
 				href="https://codingcat.dev/sponsorships"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="inline-flex items-center gap-1.5 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
+				class="mobile-nav-link inline-flex items-center gap-2 rounded-xl px-3 py-2 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50/70 dark:hover:bg-emerald-500/10 transition-colors"
 			>
 				<AjPrimaryAlt cls="w-4 h-4 shrink-0" />
-				<span>Sponsorships</span>
+				<span>CodingCat.dev Sponsorships ↗</span>
 			</a>
-			<a href="#speaker-kit" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
-				Speaker Kit
+			<a
+				href="#speaker-kit"
+				class="mobile-nav-link rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+			>
+				Speaker Kit &amp; Bios
 			</a>
-			<a href="#headshots" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
-				Headshots
+			<a
+				href="#headshots"
+				class="mobile-nav-link rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+			>
+				Official Press Headshots
 			</a>
-			<a href="#speaking-ledger" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
-				Speaking
+			<a
+				href="#speaking-ledger"
+				class="mobile-nav-link rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors"
+			>
+				Speaking Track Record
+			</a>
+			<a
+				href="/contact"
+				class="mobile-nav-link rounded-xl px-3 py-2 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-50/70 dark:hover:bg-indigo-500/10 transition-colors"
+			>
+				Direct Contact &amp; Calendar
 			</a>
 		</nav>
-
-		<div class="flex items-center gap-2 shrink-0">
-			<ThemeToggle />
-			<a
-				href="#partner"
-				class="inline-flex items-center gap-1.5 rounded-full bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold text-white shadow-xs transition-colors"
-			>
-				<span>Partner / Book Alex</span>
-			</a>
-		</div>
 	</div>
 </div>
 
 <header id="identity" role="banner" aria-label="Alex Patterson Executive Overview" class="scroll-mt-24">
 	<!-- 2-Column Executive Hero Section -->
-	<div class="rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1b1e26] p-6 sm:p-10 shadow-sm shadow-slate-900/[0.03] dark:shadow-black/20">
+	<div class="rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1b1e26] p-5 sm:p-8 lg:p-10 shadow-sm shadow-slate-900/[0.03] dark:shadow-black/20">
 		<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
 			<!-- Left Column: Positioning, Credentials & Primary CTAs -->
 			<div class="lg:col-span-7 space-y-5">
-				<div class="inline-flex flex-wrap items-center gap-2 rounded-full bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/80 dark:border-indigo-400/30 px-3.5 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300">
-					<Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+				<div class="inline-flex items-center gap-2 rounded-full bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/80 dark:border-indigo-400/30 px-3 sm:px-3.5 py-1 text-[11px] sm:text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+					<Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
 					<span>Keynote Speaker • Podcast Host • YouTube Creator</span>
 				</div>
 
-				<div class="space-y-3">
-					<p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+				<div class="space-y-2.5">
+					<p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-300">
 						{profile.name} — Developer Relations &amp; Media Partnerships
 					</p>
 					<h1 class="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-slate-900 dark:text-slate-50 leading-[1.12]">
@@ -102,7 +181,7 @@ const heroPortraitSrc = profile.avatarUrl
 					</h1>
 				</div>
 
-				<p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+				<p class="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
 					Whether you’re a <strong>CMO or DevRel lead</strong> launching a developer product through dedicated YouTube videos and podcasts, or a <strong>conference organizer</strong> booking a high-energy keynote or workshop—let’s build something developers genuinely trust.
 				</p>
 
@@ -114,7 +193,7 @@ const heroPortraitSrc = profile.avatarUrl
 						rel="noopener noreferrer"
 						class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-[#151820] hover:border-indigo-300 dark:hover:border-indigo-500/50 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors"
 					>
-						<span class="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
+						<span class="h-1.5 w-1.5 rounded-full bg-indigo-500 shrink-0"></span>
 						<span>Senior Solutions Engineer @ Sanity</span>
 					</a>
 
@@ -134,7 +213,7 @@ const heroPortraitSrc = profile.avatarUrl
 						rel="noopener noreferrer"
 						class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-[#151820] hover:border-indigo-300 dark:hover:border-indigo-500/50 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors"
 					>
-						<span class="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
+						<span class="h-1.5 w-1.5 rounded-full bg-indigo-500 shrink-0"></span>
 						<span>Google Developer Expert (GDE)</span>
 					</a>
 
@@ -145,14 +224,14 @@ const heroPortraitSrc = profile.avatarUrl
 				</div>
 
 				<!-- Location & Travel Metadata -->
-				<div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-600 dark:text-slate-300">
 					<span class="inline-flex items-center gap-1.5">
-						<MapPin className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" />
+						<MapPin className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
 						Based in {profile.location}
 					</span>
 					<span aria-hidden="true">•</span>
 					<span class="inline-flex items-center gap-1.5">
-						<Plane className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+						<Plane className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" />
 						Flying from {profile.homeAirport}
 					</span>
 					<span aria-hidden="true">•</span>
@@ -160,16 +239,16 @@ const heroPortraitSrc = profile.avatarUrl
 				</div>
 
 				<!-- Primary CTA Buttons -->
-				<div class="pt-2 flex flex-wrap items-center gap-3">
+				<div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
 					<a
 						href="https://codingcat.dev/sponsorships"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="inline-flex items-center gap-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-indigo-500/20 transition-all"
+						class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 px-5 py-3 text-xs sm:text-sm font-semibold text-white shadow-sm shadow-indigo-500/20 transition-all whitespace-nowrap"
 					>
 						<AjPrimaryAlt cls="w-5 h-5 shrink-0" />
 						<span>Explore CodingCat.dev Sponsorships</span>
-						<ArrowUpRight className="w-4 h-4" />
+						<ArrowUpRight className="w-4 h-4 shrink-0" />
 					</a>
 
 					<button
@@ -181,18 +260,18 @@ const heroPortraitSrc = profile.avatarUrl
 						tooldescription="Open direct speaker booking calendar and inquiry contact options"
 						tool-name="toggle_booking_drawer"
 						tool-description="Open direct speaker booking calendar and inquiry contact options"
-						class="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#151820] hover:bg-slate-50 dark:hover:bg-slate-800/80 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-100 transition-colors cursor-pointer"
+						class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#151820] hover:bg-slate-50 dark:hover:bg-slate-800/80 px-4 py-3 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-100 transition-colors cursor-pointer whitespace-nowrap"
 					>
-						<Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+						<Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
 						<span>Book for Speaking / Podcast</span>
-						<span id="booking-drawer-chevron" class="text-xs text-slate-400 transition-transform duration-200">
+						<span id="booking-drawer-chevron" class="text-xs text-slate-500 dark:text-slate-400 transition-transform duration-200">
 							↓
 						</span>
 					</button>
 				</div>
 
 				<!-- Quick Social & Speaker Kit Bar -->
-				<div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400">
+				<div class="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-600 dark:text-slate-300">
 					<div class="flex flex-wrap items-center gap-3">
 						<a href={profile.socialLinks.youtube} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
 							YouTube (@CodingCatDev)
@@ -213,86 +292,94 @@ const heroPortraitSrc = profile.avatarUrl
 
 					<a
 						href="#speaker-kit"
-						class="inline-flex items-center gap-1 font-medium text-indigo-600 dark:text-indigo-300 hover:underline"
+						class="inline-flex items-center gap-1 font-semibold text-indigo-600 dark:text-indigo-300 hover:underline"
 					>
 						<span>Jump to Organizer Speaker Kit ↓</span>
 					</a>
 				</div>
 			</div>
 
-			<!-- Right Column: Studio Portrait + Floating Proof Badges -->
+			<!-- Right Column: High-Res Studio Portrait + Unobstructed Proof Dock -->
 			<div class="lg:col-span-5">
-				<div class="relative mx-auto max-w-sm lg:max-w-none">
+				<div class="relative mx-auto max-w-sm lg:max-w-none space-y-3">
 					<!-- Soft decorative backdrop glow -->
 					<div
 						aria-hidden="true"
-						class="absolute -inset-3 rounded-3xl bg-gradient-to-tr from-indigo-500/15 via-purple-500/10 to-emerald-500/15 blur-xl"
+						class="
+						absolute -inset-2 rounded-3xl bg-gradient-to-tr from-indigo-500/15 via-purple-500/10 to-emerald-500/15 blur-xl pointer-events-none"
 					></div>
 
-					<div class="relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-700/80 bg-slate-100 dark:bg-[#151820] shadow-md aspect-[4/4.4]">
+					<!-- Portrait Card (Face & Eyes 100% Unobstructed) -->
+					<div class="relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-700/80 bg-slate-100 dark:bg-[#151820] shadow-md aspect-[4/3.8]">
 						<img
 							src={heroPortraitSrc}
+							srcset="/headshots/alex_fire-640.webp 640w, /headshots/alex_fire.webp 1000w"
+							sizes="(max-width: 1024px) 100vw, 380px"
 							alt={`${profile.name} — Keynote Speaker, Podcast Host, and Founder of CodingCat.dev`}
-							width="480"
-							height="528"
+							width="600"
+							height="570"
 							fetchpriority="high"
-							class="w-full h-full object-cover object-center"
+							class="w-full h-full object-cover object-top"
 						/>
+						<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/75 via-slate-950/20 to-transparent p-4 flex items-end justify-between">
+							<span class="inline-flex items-center gap-1.5 rounded-full bg-white/95 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1 text-[11px] font-semibold text-slate-900 dark:text-slate-100 shadow-xs">
+								<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+								Booking Keynotes, Video &amp; Podcasts
+							</span>
+						</div>
 					</div>
 
-					<!-- Floating Proof Badge 1: 61.2K+ YouTube Subscribers (with AJ Tag Logo) -->
-					<a
-						href="https://codingcat.dev/sponsorships"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="absolute -top-3 -left-3 sm:-left-5 rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/95 dark:bg-[#1b1e26]/95 backdrop-blur-md px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 hover:scale-[1.02] transition-transform"
-					>
-						<AjPrimaryAlt cls="w-8 h-8 shrink-0" />
-						<div>
-							<div class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-								61.2K+
+					<!-- 3-Column Audience & Stage Proof Dock (Below Portrait — Never Blocks Face) -->
+					<div class="relative grid grid-cols-3 gap-2 sm:gap-2.5">
+						<a
+							href="https://codingcat.dev/sponsorships"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="rounded-xl border border-slate-200/90 dark:border-slate-700/90 bg-slate-50/90 dark:bg-[#151820] hover:border-indigo-400 p-2.5 sm:p-3 text-center transition-colors shadow-2xs"
+						>
+							<div class="flex items-center justify-center gap-1.5">
+								<AjPrimaryAlt cls="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+								<span class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white">
+									61.2K+
+								</span>
 							</div>
-							<div class="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
-								YouTube Subscribers
+							<div class="text-[10px] sm:text-[11px] font-medium text-slate-600 dark:text-slate-300 mt-0.5 leading-tight">
+								YouTube Subs
 							</div>
-						</div>
-					</a>
+						</a>
 
-					<!-- Floating Proof Badge 2: 405K+ Video Views (with AJ Headphones Logo) -->
-					<a
-						href="https://codingcat.dev"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="absolute top-1/2 -translate-y-1/2 -right-3 sm:-right-5 rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/95 dark:bg-[#1b1e26]/95 backdrop-blur-md px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 hover:scale-[1.02] transition-transform"
-					>
-						<AjHeadphones cls="w-8 h-8 shrink-0" />
-						<div>
-							<div class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-								405K+
+						<a
+							href="https://codingcat.dev"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="rounded-xl border border-slate-200/90 dark:border-slate-700/90 bg-slate-50/90 dark:bg-[#151820] hover:border-emerald-400 p-2.5 sm:p-3 text-center transition-colors shadow-2xs"
+						>
+							<div class="flex items-center justify-center gap-1.5">
+								<AjHeadphones cls="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+								<span class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white">
+									405K+
+								</span>
 							</div>
-							<div class="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
-								Video &amp; Podcast Views
+							<div class="text-[10px] sm:text-[11px] font-medium text-slate-600 dark:text-slate-300 mt-0.5 leading-tight">
+								Video Views
 							</div>
-						</div>
-					</a>
+						</a>
 
-					<!-- Floating Proof Badge 3: Global Stages -->
-					<a
-						href="#speaking-ledger"
-						class="absolute -bottom-3 left-4 sm:left-6 rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/95 dark:bg-[#1b1e26]/95 backdrop-blur-md px-3.5 py-2.5 shadow-lg flex items-center gap-2.5 hover:scale-[1.02] transition-transform"
-					>
-						<span class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300">
-							<Mic className="w-4 h-4" />
-						</span>
-						<div>
-							<div class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-								25+ Stages
+						<a
+							href="#speaking-ledger"
+							class="rounded-xl border border-slate-200/90 dark:border-slate-700/90 bg-slate-50/90 dark:bg-[#151820] hover:border-indigo-400 p-2.5 sm:p-3 text-center transition-colors shadow-2xs"
+						>
+							<div class="flex items-center justify-center gap-1">
+								<Mic className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+								<span class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white">
+									25+
+								</span>
 							</div>
-							<div class="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
-								Keynotes &amp; Workshops
+							<div class="text-[10px] sm:text-[11px] font-medium text-slate-600 dark:text-slate-300 mt-0.5 leading-tight">
+								Global Stages
 							</div>
-						</div>
-					</a>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -306,11 +393,11 @@ const heroPortraitSrc = profile.avatarUrl
 							<Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
 							Book Alex or Start a CodingCat.dev Sponsorship
 						</h2>
-						<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+						<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-0.5">
 							Choose the fastest path for your team—whether you’re planning a product launch, podcast tour, or developer conference.
 						</p>
 					</div>
-					<span class="text-xs font-medium text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 py-1">
+					<span class="text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 py-1">
 						Typical response &lt; 24 hours
 					</span>
 				</div>
@@ -333,7 +420,7 @@ const heroPortraitSrc = profile.avatarUrl
 							<p class="mt-2 text-sm font-bold text-slate-900 dark:text-slate-100">
 								CodingCat.dev Sponsorships
 							</p>
-							<p class="mt-1 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+							<p class="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
 								Dedicated YouTube product videos, podcast sponsorships, and multi-channel launch bundles.
 							</p>
 						</div>
@@ -359,7 +446,7 @@ const heroPortraitSrc = profile.avatarUrl
 							<p class="mt-2 text-sm font-bold text-slate-900 dark:text-slate-100">
 								Book a Discovery Call
 							</p>
-							<p class="mt-1 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+							<p class="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
 								Grab a live slot on Alex’s calendar to discuss conference keynotes, podcast hosting, or campaign goals.
 							</p>
 						</div>
@@ -380,7 +467,7 @@ const heroPortraitSrc = profile.avatarUrl
 							<p class="mt-2 text-sm font-bold text-slate-900 dark:text-slate-100">
 								Direct Speaker &amp; Brand Inquiry
 							</p>
-							<p class="mt-1 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+							<p class="mt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
 								Send event dates, location, podcast topic, or sponsorship timeline directly to Alex’s inbox.
 							</p>
 						</div>
@@ -397,7 +484,7 @@ const heroPortraitSrc = profile.avatarUrl
 	<section id="partner" aria-labelledby="partner-heading" class="mt-12 scroll-mt-24">
 		<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
 			<div>
-				<p class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+				<p class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-300">
 					For CMOs, DevRel Leads &amp; Event Organizers
 				</p>
 				<h2 id="partner-heading" class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 mt-1">
@@ -423,7 +510,7 @@ const heroPortraitSrc = profile.avatarUrl
 					<div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/70 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-300">
 						<Presentation className="w-5 h-5" />
 					</div>
-					<span class="block text-[11px] font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+					<span class="block text-[11px] font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-300">
 						Flagship Events &amp; Summits
 					</span>
 					<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
@@ -449,12 +536,12 @@ const heroPortraitSrc = profile.avatarUrl
 						<div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 border border-indigo-200/70 dark:border-indigo-500/30">
 							<AjPrimaryAlt cls="w-7 h-7" />
 						</div>
-						<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-[#151820] px-2.5 py-0.5 text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-							<Video className="w-3 h-3 text-indigo-500" />
+						<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 dark:bg-[#151820] px-2.5 py-0.5 text-[11px] font-semibold text-slate-700 dark:text-slate-200">
+							<Video className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
 							61.2K+ Subs
 						</span>
 					</div>
-					<span class="block text-[11px] font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+					<span class="block text-[11px] font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-300">
 						Product Launches &amp; Tutorials
 					</span>
 					<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
@@ -482,11 +569,11 @@ const heroPortraitSrc = profile.avatarUrl
 						<div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-500/15 border border-emerald-200/70 dark:border-emerald-500/30">
 							<AjHeadphones cls="w-7 h-7" />
 						</div>
-						<span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">
+						<span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">
 							Host or Guest
 						</span>
 					</div>
-					<span class="block text-[11px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+					<span class="block text-[11px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
 						CodingCat.dev Podcast &amp; Brand Shows
 					</span>
 					<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
@@ -519,7 +606,7 @@ const heroPortraitSrc = profile.avatarUrl
 								<AjHeadphones cls="w-7 h-7" />
 							</div>
 						</div>
-						<span class="rounded-full bg-indigo-600 dark:bg-emerald-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white dark:text-slate-950">
+						<span class="rounded-full bg-indigo-600 dark:bg-emerald-400 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white dark:text-slate-950">
 							Most Popular
 						</span>
 					</div>
@@ -537,7 +624,7 @@ const heroPortraitSrc = profile.avatarUrl
 					href="https://codingcat.dev/sponsorships"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 px-3.5 py-2.5 text-xs font-bold text-white dark:text-slate-950 shadow-xs transition-colors"
+					class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 dark:bg-emerald-400 dark:hover:bg-emerald-300 px-3.5 py-2.5 text-xs font-bold text-white dark:text-slate-950 shadow-xs transition-colors"
 				>
 					<span>See Packages on CodingCat.dev</span>
 					<ArrowUpRight className="w-4 h-4" />
@@ -550,7 +637,7 @@ const heroPortraitSrc = profile.avatarUrl
 	<aside
 		id="sponsorships"
 		aria-label="CodingCat.dev Sponsorships and Media Network"
-		class="mt-8 rounded-3xl border border-emerald-300/80 dark:border-emerald-500/30 bg-gradient-to-r from-emerald-50/80 via-white to-indigo-50/70 dark:from-[#162222] dark:via-[#1b1e26] dark:to-[#1d1f2e] p-6 sm:p-8 shadow-xs scroll-mt-24"
+		class="mt-8 rounded-3xl border border-emerald-300/80 dark:border-emerald-500/30 bg-gradient-to-r from-emerald-50/80 via-white to-indigo-50/70 dark:from-[#162222] dark:via-[#1b1e26] dark:to-[#1d1f2e] p-5 sm:p-8 shadow-xs scroll-mt-24"
 	>
 		<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
 			<div class="lg:col-span-7 space-y-3">
@@ -573,27 +660,27 @@ const heroPortraitSrc = profile.avatarUrl
 					All of our tutorials, deep-dive product reviews, blog articles, and podcast episodes live on <strong>CodingCat.dev</strong>. Sponsors get transparent, first-party YouTube Analytics and Umami Deal Room telemetry—never inflated agency estimates.
 				</p>
 
-				<div class="pt-1 flex flex-wrap items-center gap-3">
+				<div class="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
 					<a
 						href="https://codingcat.dev/sponsorships"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 px-4 py-2.5 text-xs sm:text-sm font-bold text-white dark:text-slate-950 shadow-xs transition-colors"
+						class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 dark:bg-emerald-400 dark:hover:bg-emerald-300 px-4 py-2.5 text-xs sm:text-sm font-bold text-white dark:text-slate-950 shadow-xs transition-colors"
 					>
-						<AjPrimaryAlt cls="w-5 h-5" />
+						<AjPrimaryAlt cls="w-5 h-5 shrink-0" />
 						<span>Explore CodingCat.dev Sponsorships</span>
-						<ExternalLink className="w-3.5 h-3.5" />
+						<ExternalLink className="w-3.5 h-3.5 shrink-0" />
 					</a>
 
 					<a
 						href="https://codingcat.dev"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#151820] hover:bg-slate-50 dark:hover:bg-slate-800 px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 transition-colors"
+						class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#151820] hover:bg-slate-50 dark:hover:bg-slate-800 px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 transition-colors"
 					>
-						<AjHeadphones cls="w-5 h-5" />
+						<AjHeadphones cls="w-5 h-5 shrink-0" />
 						<span>Watch Tutorials &amp; Podcast</span>
-						<ArrowUpRight className="w-3.5 h-3.5" />
+						<ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
 					</a>
 				</div>
 			</div>
@@ -604,7 +691,7 @@ const heroPortraitSrc = profile.avatarUrl
 					<div class="text-2xl font-extrabold text-slate-900 dark:text-white">
 						61.2K+
 					</div>
-					<div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+					<div class="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">
 						YouTube Subscribers
 					</div>
 				</div>
@@ -612,7 +699,7 @@ const heroPortraitSrc = profile.avatarUrl
 					<div class="text-2xl font-extrabold text-slate-900 dark:text-white">
 						405K+
 					</div>
-					<div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+					<div class="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">
 						Verified Video Views
 					</div>
 				</div>
@@ -620,7 +707,7 @@ const heroPortraitSrc = profile.avatarUrl
 					<div class="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300">
 						21.1%
 					</div>
-					<div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+					<div class="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">
 						US / UK / CA / AU Tier-1
 					</div>
 				</div>
@@ -628,7 +715,7 @@ const heroPortraitSrc = profile.avatarUrl
 					<div class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-300">
 						7 Platforms
 					</div>
-					<div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+					<div class="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">
 						Short-Form Syndication
 					</div>
 				</div>
@@ -638,6 +725,7 @@ const heroPortraitSrc = profile.avatarUrl
 </header>
 
 <script>
+	// 1. Inline Booking Drawer Toggle
 	const toggleBtn = document.getElementById("booking-drawer-toggle");
 	const panel = document.getElementById("booking-drawer-panel");
 	const chevron = document.getElementById("booking-drawer-chevron");
@@ -663,6 +751,29 @@ const heroPortraitSrc = profile.avatarUrl
 
 		panel.addEventListener("beforematch", () => {
 			syncState(true);
+		});
+	}
+
+	// 2. Mobile Navigation Drawer Toggle
+	const mobileToggle = document.getElementById("mobile-nav-toggle");
+	const mobileDrawer = document.getElementById("mobile-nav-drawer");
+	const iconOpen = document.getElementById("mobile-nav-icon-open");
+	const iconClose = document.getElementById("mobile-nav-icon-close");
+
+	if (mobileToggle && mobileDrawer) {
+		const setMobileOpen = (open: boolean) => {
+			mobileDrawer.hidden = !open;
+			mobileToggle.setAttribute("aria-expanded", String(open));
+			iconOpen?.classList.toggle("hidden", open);
+			iconClose?.classList.toggle("hidden", !open);
+		};
+
+		mobileToggle.addEventListener("click", () => {
+			setMobileOpen(mobileDrawer.hidden);
+		});
+
+		mobileDrawer.querySelectorAll("a").forEach((link) => {
+			link.addEventListener("click", () => setMobileOpen(false));
 		});
 	}
 </script>

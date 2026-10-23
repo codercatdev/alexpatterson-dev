@@ -274,7 +274,8 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 						format,
 						item.hotspot,
 					);
-					const useFallback = Boolean(fallbackActive[item._id]);
+					const useFallback =
+						Boolean(item.fallbackLocalUrl) || Boolean(fallbackActive[item._id]);
 					const displaySrc =
 						useFallback && item.fallbackLocalUrl
 							? item.fallbackLocalUrl

@@ -41,11 +41,14 @@ const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 
 				<section class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] p-6 space-y-3 shadow-xs">
 					<h2 class="text-base font-bold text-slate-900 dark:text-slate-100">
-						1. Unauthenticated MCP Server (<code class="font-mono text-xs text-indigo-600 dark:text-indigo-300">POST /mcp</code>)
+						1. Unauthenticated MCP Server (<code class="font-mono text-xs text-indigo-600 dark:text-indigo-300">POST /mcp</code>) &amp; CLI Quickstart
 					</h2>
 					<p>
-						Connect any Streamable HTTP MCP client (`2026-07-28`, `2025-11-25`, `2024-11-05`) to <a href="/mcp" class="text-indigo-600 dark:text-indigo-300 underline">{origin}/mcp</a>. Available tools: <code class="font-mono text-xs">get_speaker_profile</code>, <code class="font-mono text-xs">get_speaker_bio</code>, <code class="font-mono text-xs">list_talk_abstracts</code>, <code class="font-mono text-xs">list_headshots</code>, <code class="font-mono text-xs">list_speaking_ledger</code>, and <code class="font-mono text-xs">get_full_speaker_kit</code>.
+						Connect any Streamable HTTP MCP client (<code class="font-mono text-xs">2026-07-28</code>, <code class="font-mono text-xs">2025-11-25</code>, <code class="font-mono text-xs">2024-11-05</code>) or install the official <a href="https://www.npmjs.com/package/@modelcontextprotocol/sdk" target="_blank" rel="noopener noreferrer" class="text-indigo-600 dark:text-indigo-300 underline">@modelcontextprotocol/sdk</a> package from npm to query <a href="/mcp" class="text-indigo-600 dark:text-indigo-300 underline">{origin}/mcp</a>. Available tools: <code class="font-mono text-xs">get_speaker_profile</code>, <code class="font-mono text-xs">get_speaker_bio</code>, <code class="font-mono text-xs">list_talk_abstracts</code>, <code class="font-mono text-xs">list_headshots</code>, <code class="font-mono text-xs">list_speaking_ledger</code>, and <code class="font-mono text-xs">get_full_speaker_kit</code>.
 					</p>
+					<pre class="rounded-xl bg-slate-900 text-slate-100 p-4 font-mono text-xs overflow-x-auto"><code>claude mcp add --transport http alexpatterson {origin}/mcp
+npx @modelcontextprotocol/inspector {origin}/mcp
+npm install @modelcontextprotocol/sdk @sanity/client</code></pre>
 				</section>
 
 				<section class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b1e26] p-6 space-y-3 shadow-xs">
