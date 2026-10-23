@@ -309,20 +309,20 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 						absolute -inset-2 rounded-3xl bg-gradient-to-tr from-indigo-500/15 via-purple-500/10 to-emerald-500/15 blur-xl pointer-events-none"
 					></div>
 
-					<!-- Portrait Card (Face & Eyes 100% Unobstructed) -->
-					<div class="relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-700/80 bg-slate-100 dark:bg-[#151820] shadow-md aspect-[4/3.8]">
+					<!-- Portrait Card (Face, Mic & AJ Shirt 100% Unobstructed) -->
+					<div class="relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-700/80 bg-slate-100 dark:bg-[#151820] shadow-md aspect-square">
 						<img
 							src={heroPortraitSrc}
 							srcset="/headshots/alex_studio_mic-640.webp 640w, /headshots/alex_studio_mic.webp 1000w"
 							sizes="(max-width: 1024px) 100vw, 380px"
 							alt={`${profile.name} — Keynote Speaker, Podcast Host, and Founder of CodingCat.dev`}
-							width="600"
-							height="570"
+							width="640"
+							height="640"
 							fetchpriority="high"
-							class="w-full h-full object-cover object-top"
+							class="w-full h-full object-cover object-center"
 						/>
-						<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/75 via-slate-950/20 to-transparent p-4 flex items-end justify-between">
-							<span class="inline-flex items-center gap-1.5 rounded-full bg-white/95 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1 text-[11px] font-semibold text-slate-900 dark:text-slate-100 shadow-xs">
+						<div class="absolute top-3 right-3">
+							<span class="inline-flex items-center gap-1.5 rounded-full bg-white/95 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/80 px-3 py-1 text-[11px] font-semibold text-slate-900 dark:text-slate-100 shadow-xs">
 								<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
 								Booking Keynotes, Video &amp; Podcasts
 							</span>
