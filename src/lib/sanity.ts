@@ -463,6 +463,29 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 
 export const SEED_TALK_ABSTRACTS: TalkAbstract[] = [
 	{
+		_id: "talk-client-side-web-ai-webmcp",
+		_type: "talkAbstract",
+		title:
+			"The Agentic Browser: Building Zero-Latency Web Apps with Chrome Built-in AI, WebGPU, and WebMCP",
+		slug: "the-agentic-browser-chrome-built-in-ai-webgpu-webmcp",
+		format: "keynote",
+		status: "active",
+		tags: [
+			"WebMCP",
+			"Chrome Built-in AI",
+			"Gemini Nano",
+			"WebGPU",
+			"Web Technologies",
+		],
+		abstract:
+			"For the past three years, web developers treated AI as a remote HTTP call to a cloud GPU cluster, paying a 500ms latency tax on every keystroke and forcing browser agents to scrape fragile DOM trees. That era is ending. With Chrome's Built-in AI APIs (Prompt, Summarizer, Rewriter, and Translator powered by on-device Gemini Nano), WebGPU compute shaders for client-side embeddings, and the W3C WebMCP specification (document.modelContext and declarative HTML tool forms), the browser is now a first-class AI runtime and agent host. In this session, we walk through live production code from CodingCat.dev showing how to build zero-backend client-side RAG, hybrid browser-to-edge AI routers with Firebase AI Logic and Cloudflare Workers, and deterministic WebMCP tools that reduce agent token overhead by 90%.",
+		takeaways: [
+			"Wiring up Chrome Built-in AI (window.LanguageModel, Summarizer, and Rewriter) with progressive download states and hybrid cloud fallbacks.",
+			"Exposing deterministic in-tab tools to browser AI agents using WebMCP imperative (document.modelContext.registerTool) and declarative (<form toolname>) APIs.",
+			"Running quantized embedding models on WebGPU with Origin Private File System (OPFS) vector caching for sub-10ms client-side semantic search.",
+		],
+	},
+	{
 		_id: "talk-five-layers-agentic-context",
 		_type: "talkAbstract",
 		title:
@@ -478,7 +501,7 @@ export const SEED_TALK_ABSTRACTS: TalkAbstract[] = [
 			"Architecture",
 		],
 		abstract:
-			"Most enterprise AI agents fail in production not because the model is weak, but because teams dump every PDF, wiki page, and Slack thread into a single vector database and force the LLM to resolve conflicting claims at query time. In this keynote, we dissect the five distinct layers of agentic context—Situation, Records, Memory, Process, and Canon—which move at different speeds and have different owners. You will see how pre-compiling structured datasets and documentation into human-verified topic outlines served over Context MCP slashes token costs, surfaces contradictory claims before deployment, and lets fast, inexpensive models outperform frontier models running on uncurated RAG.",
+			"Most enterprise AI agents fail in production not because the model is weak, but because teams dump every PDF, wiki page, and Slack thread into a single vector database and force the LLM to resolve conflicting claims at query time. In this keynote, we dissect the five distinct layers of agentic context (Situation, Records, Memory, Process, and Canon), which move at different speeds and have different owners. You will see how pre-compiling structured datasets and documentation into human-verified topic outlines served over Context MCP slashes token costs, surfaces contradictory claims before deployment, and lets fast, inexpensive models outperform frontier models running on uncurated RAG.",
 		takeaways: [
 			"Why 'company brain' vector stores degrade into high-latency data swamps for customer-facing agents.",
 			"How to separate Situation, Records, Memory, Process, and Canon in your architecture.",
@@ -503,11 +526,11 @@ export const SEED_TALK_ABSTRACTS: TalkAbstract[] = [
 		],
 	},
 	{
-		_id: "talk-wtf-is-firebase-now",
+		_id: "talk-firebase-modern-architecture",
 		_type: "talkAbstract",
 		title:
-			"What the F*ck is Firebase Now? Navigating Data Connect, Genkit, and Modern App Hosting",
-		slug: "what-the-fck-is-firebase-now",
+			"Firebase Modern Architecture: Navigating Data Connect, Genkit, and App Hosting",
+		slug: "firebase-modern-architecture-data-connect-genkit-app-hosting",
 		format: "talk",
 		status: "active",
 		tags: ["Firebase", "Google Cloud", "PostgreSQL", "Genkit", "GDE"],
@@ -529,7 +552,7 @@ export const SEED_TALK_ABSTRACTS: TalkAbstract[] = [
 		status: "active",
 		tags: ["Astro", "Cloudflare Workers", "Serverless GPUs", "Web Performance"],
 		abstract:
-			"Commercial image generation APIs charge 3–4 cents per generation—a pricing wall that kills creative developer tools and event experiences. What happens when you combine an ultra-fast Astro SSR edge application on Cloudflare Workers with dockerless serverless GPU workers that scale to zero? In this session, we break down the real-world architecture, cold-start benchmarks, and unit economics of generating up to 3,000 AI images per dollar without writing a single Dockerfile.",
+			"Commercial image generation APIs charge 3 to 4 cents per generation, a pricing wall that kills creative developer tools and event experiences. What happens when you combine an ultra-fast Astro SSR edge application on Cloudflare Workers with dockerless serverless GPU workers that scale to zero? In this session, we break down the real-world architecture, cold-start benchmarks, and unit economics of generating up to 3,000 AI images per dollar without writing a single Dockerfile.",
 		takeaways: [
 			"Architecting Astro 7 SSR on Cloudflare Workers with zero cold-start overhead.",
 			"Dispatching Python GPU workloads from TypeScript edge routes without maintaining Docker images.",
@@ -574,6 +597,23 @@ export const SEED_SPEAKING_EVENTS: SpeakingEvent[] = [
 		source: "seed",
 	},
 	{
+		_id: "event-chrome-web-ai-webmcp-2026",
+		_type: "speakingEvent",
+		eventName: "Web AI & Agentic Browser Architecture Deep Dive",
+		talkTitle:
+			"The Agentic Browser: Building Zero-Latency Web Apps with Chrome Built-in AI, WebGPU, and WebMCP",
+		date: "2026-08-20",
+		eventFormat: "Virtual",
+		city: "Remote",
+		country: "USA",
+		role: "Speaker",
+		eventUrl: "https://codingcat.dev/demos/web-ai",
+		slidesUrl:
+			"https://codingcat.dev/post/webmcp-browser-native-model-context-protocol-guide",
+		featured: true,
+		source: "seed",
+	},
+	{
 		_id: "event-cloudflare-mcp-workshop-2026",
 		_type: "speakingEvent",
 		eventName: "Cloudflare Edge & AI Builders Workshop",
@@ -594,14 +634,14 @@ export const SEED_SPEAKING_EVENTS: SpeakingEvent[] = [
 		_type: "speakingEvent",
 		eventName: "Google I/O Extended Grand Rapids",
 		talkTitle:
-			"What the F*ck is Firebase Now? GenAI, Data Connect & App Hosting",
+			"Firebase Modern Architecture: GenAI, Data Connect & App Hosting",
 		date: "2026-05-28",
 		eventFormat: "In-Person",
 		city: "Grand Rapids, MI",
 		country: "USA",
 		role: "Keynote",
 		eventUrl: "https://gdg.community.dev/",
-		slidesUrl: "https://dev.to/codingcatdev/what-the-fck-is-firebase-now-2iaj",
+		slidesUrl: "https://codingcat.dev/topic/firebase",
 		featured: true,
 		source: "seed",
 	},
