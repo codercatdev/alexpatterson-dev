@@ -1064,19 +1064,14 @@ export async function getSpeakerKitData(
 
 	const talks = sanityTalks.length > 0 ? sanityTalks : SEED_TALK_ABSTRACTS;
 
-	const baseEvents =
-		sanityEvents.length > 0 ? sanityEvents : SEED_SPEAKING_EVENTS;
-
-	// Merge D1 speaking events without duplicating by title+date
-	const seenKeys = new Set(
-		baseEvents.map((e) => `${e.date}::${e.talkTitle.toLowerCase()}`),
-	);
-	const mergedEvents = [...baseEvents];
-	for (const d1Event of d1Events) {
-		const key = `${d1Event.date}::${d1Event.talkTitle.toLowerCase()}`;
+	// Merge Sanity, D1, and Seed speaking events without duplicating by title+date
+	const seenKeys = new Set<string>();
+	const mergedEvents: SpeakingEvent[] = [];
+	for (const event of [...sanityEvents, ...d1Events, ...SEED_SPEAKING_EVENTS]) {
+		const key = `${event.date}::${event.talkTitle.toLowerCase()}`;
 		if (!seenKeys.has(key)) {
 			seenKeys.add(key);
-			mergedEvents.push(d1Event);
+			mergedEvents.push(event);
 		}
 	}
 	mergedEvents.sort((a, b) => b.date.localeCompare(a.date));
