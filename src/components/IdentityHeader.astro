@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import AjHeadphones from "@/components/icons/AjHeadphones.astro";
 import AjPrimaryAlt from "@/components/icons/AjPrimaryAlt.astro";
+import SocialIconsBar from "@/components/SocialIconsBar.astro";
 import ThemeToggle from "@/components/ThemeToggle.astro";
 import type { SpeakerProfile } from "@/lib/sanity";
 
@@ -30,13 +31,13 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 ---
 
 <!-- Sticky Glassmorphic Executive Top Navigation -->
-<div class="sticky top-3 z-40 mb-8 sm:mb-10">
-	<div class="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/90 dark:bg-[#1b1e26]/90 backdrop-blur-md px-4 sm:px-6 py-3 shadow-sm shadow-slate-900/[0.04] dark:shadow-black/25">
-		<div class="flex items-center justify-between gap-4">
+<div class="sticky top-3 z-40 mb-8 sm:mb-10 w-full max-w-full">
+	<div class="w-full max-w-full box-border overflow-hidden rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/90 dark:bg-[#1b1e26]/90 backdrop-blur-md px-3.5 sm:px-5 py-2.5 sm:py-3 shadow-sm shadow-slate-900/[0.04] dark:shadow-black/25">
+		<div class="flex items-center justify-between gap-2 lg:gap-3 min-w-0">
 			<!-- Brand Wordmark (Never Truncated) -->
 			<a
 				href="#identity"
-				class="inline-flex items-center gap-2.5 text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors whitespace-nowrap shrink-0"
+				class="inline-flex items-center gap-2 text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors whitespace-nowrap shrink-0"
 			>
 				{profile.availableForSpeaking && (
 					<span
@@ -47,10 +48,10 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 				<span>{profile.name}</span>
 			</a>
 
-			<!-- Desktop Navigation Links (Single Line, Never Wrapped) -->
+			<!-- Desktop Navigation Links (Single Line, Never Overflowing) -->
 			<nav
 				aria-label="Primary section navigation"
-				class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-700 dark:text-slate-200 whitespace-nowrap"
+				class="hidden lg:flex items-center lg:gap-3.5 xl:gap-5 text-xs xl:text-sm font-medium text-slate-700 dark:text-slate-200 whitespace-nowrap min-w-0"
 			>
 				<a
 					href="#partner"
@@ -92,7 +93,7 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 				<ThemeToggle />
 				<a
 					href="#partner"
-					class="inline-flex items-center gap-1.5 rounded-full bg-indigo-600 hover:bg-indigo-500 px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold text-white shadow-xs transition-colors whitespace-nowrap"
+					class="inline-flex items-center gap-1.5 rounded-full bg-indigo-600 hover:bg-indigo-500 px-3 sm:px-3.5 xl:px-4 py-1.5 text-xs xl:text-sm font-semibold text-white shadow-xs transition-colors whitespace-nowrap"
 				>
 					<span class="sm:hidden">Partner</span>
 					<span class="hidden sm:inline">Partner / Book Alex</span>
@@ -174,7 +175,7 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 
 				<div class="space-y-2.5">
 					<p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-300">
-						{profile.name} — Developer Relations &amp; Media Partnerships
+						{profile.name} • Developer Relations &amp; Media Partnerships
 					</p>
 					<h1 class="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-slate-900 dark:text-slate-50 leading-[1.12]">
 						Helping developer brands tell authentic stories that convert.
@@ -182,7 +183,7 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 				</div>
 
 				<p class="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-					Whether you’re a <strong>CMO or DevRel lead</strong> launching a developer product through dedicated YouTube videos and podcasts, or a <strong>conference organizer</strong> booking a high-energy keynote or workshop—let’s build something developers genuinely trust.
+					Whether you’re a <strong>CMO or DevRel lead</strong> launching a developer product through dedicated YouTube videos and podcasts, or a <strong>conference organizer</strong> booking a high-energy keynote or workshop, let’s build something developers genuinely trust.
 				</p>
 
 				<!-- Clean Role & Credential Pills (Featuring AJ's Tag Logo for CodingCat.dev) -->
@@ -194,7 +195,7 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 						class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-[#151820] hover:border-indigo-300 dark:hover:border-indigo-500/50 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors"
 					>
 						<span class="h-1.5 w-1.5 rounded-full bg-indigo-500 shrink-0"></span>
-						<span>Senior Solutions Engineer @ Sanity</span>
+						<span>Senior Solutions Architect @ Sanity</span>
 					</a>
 
 					<a
@@ -270,25 +271,9 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 					</button>
 				</div>
 
-				<!-- Quick Social & Speaker Kit Bar -->
-				<div class="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-600 dark:text-slate-300">
-					<div class="flex flex-wrap items-center gap-3">
-						<a href={profile.socialLinks.youtube} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
-							YouTube (@CodingCatDev)
-						</a>
-						<span aria-hidden="true">•</span>
-						<a href={profile.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
-							LinkedIn (/in/alexpatterson)
-						</a>
-						<span aria-hidden="true">•</span>
-						<a href={profile.socialLinks.x} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
-							X (@codercatdev)
-						</a>
-						<span aria-hidden="true">•</span>
-						<a href={profile.socialLinks.github} target="_blank" rel="noopener noreferrer" class="hover:text-indigo-600 dark:hover:text-indigo-300 font-medium transition-colors">
-							GitHub
-						</a>
-					</div>
+				<!-- Quick Social Icons & Speaker Kit Bar -->
+				<div class="pt-3 flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-600 dark:text-slate-300">
+					<SocialIconsBar socialLinks={profile.socialLinks} sizeClass="h-5 sm:h-6" />
 
 					<a
 						href="#speaker-kit"

@@ -8,6 +8,7 @@ import AjHeadphones from "@/components/icons/AjHeadphones.astro";
 import AjPrimaryAlt from "@/components/icons/AjPrimaryAlt.astro";
 import SpeakerKitIsland from "@/components/SpeakerKitIsland";
 import SpeakingLedgerIsland from "@/components/SpeakingLedgerIsland";
+import SocialIconsBar from "@/components/SocialIconsBar.astro";
 import ThemeScript from "@/components/ThemeScript.astro";
 import { getSpeakerKitData } from "@/lib/sanity";
 
@@ -16,9 +17,9 @@ const data = await getSpeakerKitData(runtimeEnv);
 const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 
 const pageTitle =
-	"Alex Patterson — Keynote Speaker, Podcast Host & Sponsorships";
+	"Alex Patterson | Keynote Speaker, Podcast Host & Sponsorships";
 const pageDescription =
-	"Partner with Alex Patterson (Founder of CodingCat.dev, Senior Solutions Engineer @ Sanity.io, Google Developer Expert, M.S. GVSU) for conference keynotes, dedicated YouTube videos, podcast hosting, and full-funnel developer sponsorships.";
+	"Partner with Alex Patterson (Founder of CodingCat.dev, Senior Solutions Architect @ Sanity.io, Google Developer Expert, M.S. GVSU) for conference keynotes, dedicated YouTube videos, podcast hosting, and full-funnel developer sponsorships.";
 
 const faqs = [
 	{
@@ -62,9 +63,11 @@ const jsonLd = {
 				data.profile.socialLinks.codingcat,
 				"https://codingcat.dev/sponsorships",
 				data.profile.socialLinks.github,
+				data.profile.socialLinks.linkedin,
+				data.profile.socialLinks.tiktok,
+				data.profile.socialLinks.twitch,
 				data.profile.socialLinks.x,
 				data.profile.socialLinks.youtube,
-				data.profile.socialLinks.linkedin,
 				data.profile.socialLinks.gdeProfile,
 			],
 			contactPoint: {
@@ -99,7 +102,7 @@ const jsonLd = {
 			name: data.profile.name,
 			url: origin,
 			image: data.profile.avatarUrl,
-			jobTitle: "Senior Solutions Engineer & Founder",
+			jobTitle: "Senior Solutions Architect & Founder",
 			description: data.profile.bios.mediumThird,
 			alumniOf: {
 				"@type": "CollegeOrUniversity",
@@ -120,9 +123,11 @@ const jsonLd = {
 			sameAs: [
 				data.profile.socialLinks.codingcat,
 				data.profile.socialLinks.github,
+				data.profile.socialLinks.linkedin,
+				data.profile.socialLinks.tiktok,
+				data.profile.socialLinks.twitch,
 				data.profile.socialLinks.x,
 				data.profile.socialLinks.youtube,
-				data.profile.socialLinks.linkedin,
 				data.profile.socialLinks.gdeProfile,
 			],
 		},
@@ -433,10 +438,13 @@ const webmcpManifestInline = {
 					</nav>
 				</div>
 
-				<nav aria-label="Agent and Media Resources" class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200/50 dark:border-slate-800/50 text-[11px] text-slate-600 dark:text-slate-300">
-					<span>
-						© {new Date().getFullYear()} Alex Patterson • Grand Rapids, MI • M.S., Grand Valley State University (GVSU)
-					</span>
+				<nav aria-label="Agent and Media Resources" class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200/50 dark:border-slate-800/50 text-[11px] text-slate-600 dark:text-slate-300">
+					<div class="flex flex-wrap items-center gap-4">
+						<span>
+							© {new Date().getFullYear()} Alex Patterson • Grand Rapids, MI • M.S., Grand Valley State University (GVSU)
+						</span>
+						<SocialIconsBar socialLinks={data.profile.socialLinks} sizeClass="h-4" />
+					</div>
 					<div class="flex flex-wrap items-center gap-3 font-mono">
 						<a href="/mcp" class="hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors">
 							/mcp

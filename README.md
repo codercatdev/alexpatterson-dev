@@ -1,6 +1,6 @@
-# alexpatterson.dev — Minimalist DevRel & Interactive Speaker Hub
+# alexpatterson.dev | Minimalist DevRel & Interactive Speaker Hub
 
-Minimalist, single-page developer relations portfolio and interactive speaker kit for **Alex Patterson** (Senior Solutions Engineer @ Sanity.io, Founder & Host @ CodingCat.dev, Google Developer Expert, AWS Certified Cloud Practitioner).
+Minimalist, single-page developer relations portfolio and interactive speaker kit for **Alex Patterson** (Senior Solutions Architect @ Sanity.io, Founder & Host @ CodingCat.dev, Google Developer Expert, AWS Certified Cloud Practitioner).
 
 - **Media & Tutorials Hub:** [https://codingcat.dev](https://codingcat.dev) (`alexpatterson.dev` strictly serves executive DevRel & conference speaker kit assets; routine tutorials, blog posts, and podcast episodes live on CodingCat.dev).
 - **Programmatic Speaker Kit (JSON / MCP):** [`/speaker-kit.json`](https://alexpatterson.dev/speaker-kit.json)

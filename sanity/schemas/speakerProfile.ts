@@ -112,6 +112,24 @@ export const speakerProfile = defineType({
 					initialValue: "https://github.com/codercatdev",
 				}),
 				defineField({
+					name: "linkedin",
+					title: "LinkedIn URL",
+					type: "url",
+					initialValue: "https://www.linkedin.com/in/codercatdev/",
+				}),
+				defineField({
+					name: "tiktok",
+					title: "TikTok URL",
+					type: "url",
+					initialValue: "https://www.tiktok.com/@codingcatdev",
+				}),
+				defineField({
+					name: "twitch",
+					title: "Twitch URL",
+					type: "url",
+					initialValue: "https://www.twitch.tv/codingcatdev/",
+				}),
+				defineField({
 					name: "x",
 					title: "X (Twitter) URL",
 					type: "url",
@@ -121,13 +139,7 @@ export const speakerProfile = defineType({
 					name: "youtube",
 					title: "YouTube URL",
 					type: "url",
-					initialValue: "https://www.youtube.com/@CodingCatDev",
-				}),
-				defineField({
-					name: "linkedin",
-					title: "LinkedIn URL",
-					type: "url",
-					initialValue: "https://www.linkedin.com/in/alexpatterson",
+					initialValue: "https://www.youtube.com/codingcatdev",
 				}),
 				defineField({
 					name: "gdeProfile",

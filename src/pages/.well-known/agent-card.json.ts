@@ -11,7 +11,7 @@ export const GET: APIRoute = async ({ locals }) => {
 	const agentCard = {
 		name: "Alex Patterson Speaker Kit Agent",
 		description:
-			"Autonomous speaker kit and DevRel agent for Alex Patterson (Senior Solutions Engineer @ Sanity.io, Founder & Host @ CodingCat.dev, Google Developer Expert). Provides unauthenticated access to bios, talk abstracts, Sanity CDN headshots, and speaking ledger.",
+			"Autonomous speaker kit and DevRel agent for Alex Patterson (Senior Solutions Architect @ Sanity.io, Founder & Host @ CodingCat.dev, Google Developer Expert). Provides unauthenticated access to bios, talk abstracts, Sanity CDN headshots, and speaking ledger.",
 		url: `${origin}/mcp`,
 		version: "2.0.0",
 		protocol: "a2a",
