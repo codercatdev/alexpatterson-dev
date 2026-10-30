@@ -31,6 +31,7 @@ export interface SocialLinks {
 	twitch: string;
 	x: string;
 	youtube: string;
+	aws: string;
 	gdeProfile: string;
 }
 
@@ -51,7 +52,7 @@ export interface SpeakerProfile {
 	credentials: CredentialBadge[];
 	location: string;
 	homeAirport: string;
-	education: string;
+	education?: string;
 	bookingUrl: string;
 	speakerEmail: string;
 	availableForSpeaking: boolean;
@@ -260,6 +261,7 @@ export const SPEAKER_PROFILE_QUERY = defineQuery(/* groq */ `
 			twitch,
 			x,
 			youtube,
+			aws,
 			gdeProfile
 		},
 		bios {
@@ -338,7 +340,7 @@ export const SEED_SPEAKER_PROFILE: SpeakerProfile = {
 	_type: "speakerProfile",
 	name: "Alex Patterson",
 	headline:
-		"Senior Solutions Architect at Sanity.io, Founder & Host of CodingCat.dev, and Google Developer Expert (GDE) partnering with developer brands for conference keynotes, dedicated YouTube videos, podcast hosting, and full-funnel media sponsorships.",
+		"Senior Solutions Architect at Sanity.io, Founder & Host of CodingCat.dev, Google Developer Expert (GDE), and AWS Community Builder partnering with developer brands for conference keynotes, dedicated YouTube videos, podcast hosting, and full-funnel media sponsorships.",
 	credentials: [
 		{
 			_key: "cred-sanity",
@@ -359,10 +361,10 @@ export const SEED_SPEAKER_PROFILE: SpeakerProfile = {
 			accent: "violet",
 		},
 		{
-			_key: "cred-gvsu",
-			label: "M.S., Grand Valley State University (GVSU)",
-			url: "https://www.gvsu.edu",
-			accent: "zinc",
+			_key: "cred-aws-cb",
+			label: "AWS Community Builder",
+			url: "https://builder.aws.com/community/@codingcatdev",
+			accent: "violet",
 		},
 		{
 			_key: "cred-aws",
@@ -373,7 +375,6 @@ export const SEED_SPEAKER_PROFILE: SpeakerProfile = {
 	],
 	location: "Grand Rapids, MI",
 	homeAirport: "GRR / DTW",
-	education: "M.S., Grand Valley State University (GVSU)",
 	bookingUrl: "https://codingcat.dev/book",
 	speakerEmail: "alex@codingcat.dev",
 	availableForSpeaking: true,
@@ -385,22 +386,23 @@ export const SEED_SPEAKER_PROFILE: SpeakerProfile = {
 		twitch: "https://www.twitch.tv/codingcatdev/",
 		x: "https://x.com/codercatdev",
 		youtube: "https://www.youtube.com/codingcatdev",
+		aws: "https://builder.aws.com/community/@codingcatdev",
 		gdeProfile: "https://developers.google.com/profile/u/codercatdev",
 	},
 	avatarUrl: "https://alexpatterson.dev/headshots/alex_studio_mic.jpg",
 	bios: {
 		shortThird:
-			"Alex Patterson is a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, and a Google Developer Expert (GDE). Holding a Master of Science from Grand Valley State University (GVSU) and based in Grand Rapids, Michigan, he helps developer brands and enterprise teams tell authentic technical stories through keynotes, podcasts, and YouTube deep-dives.",
+			"Alex Patterson is a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, a Google Developer Expert (GDE), and an AWS Community Builder. Based in Grand Rapids, Michigan, he helps developer brands and enterprise teams tell authentic technical stories through keynotes, podcasts, and YouTube deep-dives.",
 		shortFirst:
-			"I’m a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, and a Google Developer Expert (GDE). With a Master of Science from Grand Valley State University (GVSU) and based in Grand Rapids, Michigan, I help developer brands and enterprise teams tell authentic technical stories through keynotes, podcasts, and YouTube deep-dives.",
+			"I’m a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, a Google Developer Expert (GDE), and an AWS Community Builder. Based in Grand Rapids, Michigan, I help developer brands and enterprise teams tell authentic technical stories through keynotes, podcasts, and YouTube deep-dives.",
 		mediumThird:
-			"Alex Patterson is a Senior Solutions Architect at Sanity.io and the Founder of CodingCat.dev, where he produces technical YouTube deep-dives and hosts podcasts with engineering and product leaders across the web ecosystem. Recognized as a Google Developer Expert (GDE) and AWS Certified Cloud Practitioner, Alex specializes in bridging enterprise content architecture with modern AI workflows, Model Context Protocol (MCP), and edge web platforms. Holding a Master of Science degree from Grand Valley State University (GVSU) and based in Grand Rapids, MI, Alex brings nearly two decades of production engineering and developer advocacy experience to global conference stages and developer brand partnerships.",
+			"Alex Patterson is a Senior Solutions Architect at Sanity.io and the Founder of CodingCat.dev, where he produces technical YouTube deep-dives and hosts podcasts with engineering and product leaders across the web ecosystem. Recognized as a Google Developer Expert (GDE), AWS Community Builder, and AWS Certified Cloud Practitioner, Alex specializes in bridging enterprise content architecture with modern AI workflows, Model Context Protocol (MCP), and edge web platforms. Based in Grand Rapids, MI, Alex brings nearly two decades of production engineering and developer advocacy experience to global conference stages and developer brand partnerships.",
 		mediumFirst:
-			"I’m a Senior Solutions Architect at Sanity.io and the Founder of CodingCat.dev, where I produce technical YouTube deep-dives and host podcasts with engineering and product leaders across the web ecosystem. As a Google Developer Expert (GDE) and AWS Certified Cloud Practitioner, I specialize in bridging enterprise content architecture with modern AI workflows, Model Context Protocol (MCP), and edge web platforms. Holding a Master of Science degree from Grand Valley State University (GVSU) and based in Grand Rapids, MI, I bring nearly two decades of production engineering and developer advocacy experience to global conference stages and developer brand partnerships.",
+			"I’m a Senior Solutions Architect at Sanity.io and the Founder of CodingCat.dev, where I produce technical YouTube deep-dives and host podcasts with engineering and product leaders across the web ecosystem. As a Google Developer Expert (GDE), AWS Community Builder, and AWS Certified Cloud Practitioner, I specialize in bridging enterprise content architecture with modern AI workflows, Model Context Protocol (MCP), and edge web platforms. Based in Grand Rapids, MI, I bring nearly two decades of production engineering and developer advocacy experience to global conference stages and developer brand partnerships.",
 		fullThird:
-			"Alex Patterson is a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, Google Developer Expert (GDE), and AWS Certified Cloud Practitioner. At Sanity, he partners with enterprise organizations to design structured Content Operating Systems, event-driven Sanity Functions, and compiled Context Knowledge Bases served over the Model Context Protocol (MCP). Through CodingCat.dev, Alex has built a multi-channel developer media network reaching 61.2K+ YouTube subscribers and 405K+ views, producing dedicated product launches, technical tutorials, and long-form podcast interviews with the creators of the modern web stack.\n\nAlex holds a Master of Science degree from Grand Valley State University (GVSU) and began his engineering career building mission-critical SAP ABAP and Manufacturing Execution Systems (MES) for global office furniture manufacturers. That foundation in rigorous enterprise systems shapes how he approaches developer relations, product storytelling, and AI engineering today. Based in Grand Rapids, Michigan, Alex is a frequent keynote speaker, workshop host, podcast guest, and custom podcast producer for developer-first brands worldwide.",
+			"Alex Patterson is a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, Google Developer Expert (GDE), AWS Community Builder, and AWS Certified Cloud Practitioner. At Sanity, he partners with enterprise organizations to design structured Content Operating Systems, event-driven Sanity Functions, and compiled Context Knowledge Bases served over the Model Context Protocol (MCP). Through CodingCat.dev, Alex has built a multi-channel developer media network reaching 61.2K+ YouTube subscribers and 405K+ views, producing dedicated product launches, technical tutorials, and long-form podcast interviews with the creators of the modern web stack.\n\nAlex began his engineering career building mission-critical SAP ABAP and Manufacturing Execution Systems (MES) for global office furniture manufacturers. That foundation in rigorous enterprise systems shapes how he approaches developer relations, product storytelling, and AI engineering today. Based in Grand Rapids, Michigan, Alex is a frequent keynote speaker, workshop host, podcast guest, and custom podcast producer for developer-first brands worldwide.",
 		fullFirst:
-			"I’m a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, a Google Developer Expert (GDE), and an AWS Certified Cloud Practitioner. At Sanity, I partner with enterprise engineering teams to design structured Content Operating Systems, event-driven Sanity Functions, and compiled Context Knowledge Bases served over the Model Context Protocol (MCP). Through CodingCat.dev, I’ve built a multi-channel developer media network reaching 61.2K+ YouTube subscribers and 405K+ views, producing dedicated product videos, tutorials, and long-form podcast conversations with the builders behind today’s most impactful web frameworks and cloud platforms.\n\nI hold a Master of Science degree from Grand Valley State University (GVSU) and started my career writing SAP ABAP before architecting a full Manufacturing Execution System (MES) for a major office furniture manufacturer. That background in mission-critical enterprise systems drives how I approach developer marketing, product storytelling, and AI architecture today. Based in Grand Rapids, Michigan, I partner with CMOs, DevRel leads, and event organizers for conference keynotes, hands-on workshops, YouTube video creation, and podcast hosting.",
+			"I’m a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, a Google Developer Expert (GDE), an AWS Community Builder, and an AWS Certified Cloud Practitioner. At Sanity, I partner with enterprise engineering teams to design structured Content Operating Systems, event-driven Sanity Functions, and compiled Context Knowledge Bases served over the Model Context Protocol (MCP). Through CodingCat.dev, I’ve built a multi-channel developer media network reaching 61.2K+ YouTube subscribers and 405K+ views, producing dedicated product videos, tutorials, and long-form podcast conversations with the builders behind today’s most impactful web frameworks and cloud platforms.\n\nI started my career writing SAP ABAP before architecting a full Manufacturing Execution System (MES) for a major office furniture manufacturer. That background in mission-critical enterprise systems drives how I approach developer marketing, product storytelling, and AI architecture today. Based in Grand Rapids, Michigan, I partner with CMOs, DevRel leads, and event organizers for conference keynotes, hands-on workshops, YouTube video creation, and podcast hosting.",
 	},
 };
 

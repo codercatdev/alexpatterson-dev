@@ -28,7 +28,6 @@ export const GET: APIRoute = async ({ locals }) => {
 			(c) => `- **${c.label}**${c.url ? ` (${c.url})` : ""}`,
 		),
 		`- **Location**: ${data.profile.location} (${data.profile.homeAirport})`,
-		`- **Education**: ${data.profile.education}`,
 		`- **Booking Calendar**: [${data.profile.bookingUrl}](${data.profile.bookingUrl})`,
 		`- **Speaker Inquiry Email**: mailto:${data.profile.speakerEmail}`,
 		"",

@@ -142,6 +142,12 @@ export const speakerProfile = defineType({
 					initialValue: "https://www.youtube.com/codingcatdev",
 				}),
 				defineField({
+					name: "aws",
+					title: "AWS Builder Center URL",
+					type: "url",
+					initialValue: "https://builder.aws.com/community/@codingcatdev",
+				}),
+				defineField({
 					name: "gdeProfile",
 					title: "Google Developer Expert Directory URL",
 					type: "url",

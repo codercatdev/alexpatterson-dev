@@ -19,7 +19,7 @@ const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 const pageTitle =
 	"Alex Patterson | Keynote Speaker, Podcast Host & Sponsorships";
 const pageDescription =
-	"Partner with Alex Patterson (Founder of CodingCat.dev, Senior Solutions Architect @ Sanity.io, Google Developer Expert, M.S. GVSU) for conference keynotes, dedicated YouTube videos, podcast hosting, and full-funnel developer sponsorships.";
+	"Partner with Alex Patterson (Founder of CodingCat.dev, Senior Solutions Architect @ Sanity.io, Google Developer Expert, AWS Community Builder) for conference keynotes, dedicated YouTube videos, podcast hosting, and full-funnel developer sponsorships.";
 
 const faqs = [
 	{
@@ -68,6 +68,7 @@ const jsonLd = {
 				data.profile.socialLinks.twitch,
 				data.profile.socialLinks.x,
 				data.profile.socialLinks.youtube,
+				data.profile.socialLinks.aws,
 				data.profile.socialLinks.gdeProfile,
 			],
 			contactPoint: {
@@ -104,10 +105,6 @@ const jsonLd = {
 			image: data.profile.avatarUrl,
 			jobTitle: "Senior Solutions Architect & Founder",
 			description: data.profile.bios.mediumThird,
-			alumniOf: {
-				"@type": "CollegeOrUniversity",
-				name: "Grand Valley State University",
-			},
 			worksFor: [
 				{
 					"@type": "Organization",
@@ -128,6 +125,7 @@ const jsonLd = {
 				data.profile.socialLinks.twitch,
 				data.profile.socialLinks.x,
 				data.profile.socialLinks.youtube,
+				data.profile.socialLinks.aws,
 				data.profile.socialLinks.gdeProfile,
 			],
 		},
@@ -441,7 +439,7 @@ const webmcpManifestInline = {
 				<nav aria-label="Agent and Media Resources" class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200/50 dark:border-slate-800/50 text-[11px] text-slate-600 dark:text-slate-300">
 					<div class="flex flex-wrap items-center gap-4">
 						<span>
-							© {new Date().getFullYear()} Alex Patterson • Grand Rapids, MI • M.S., Grand Valley State University (GVSU)
+							© {new Date().getFullYear()} Alex Patterson • Grand Rapids, MI • AWS Community Builder • Google Developer Expert (GDE)
 						</span>
 						<SocialIconsBar socialLinks={data.profile.socialLinks} sizeClass="h-4" />
 					</div>

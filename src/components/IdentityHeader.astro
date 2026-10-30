@@ -3,7 +3,6 @@ import {
 	ArrowUpRight,
 	Calendar,
 	ExternalLink,
-	GraduationCap,
 	Mail,
 	MapPin,
 	Menu,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react";
 import AjHeadphones from "@/components/icons/AjHeadphones.astro";
 import AjPrimaryAlt from "@/components/icons/AjPrimaryAlt.astro";
+import AwsLogo from "@/components/icons/AwsLogo.astro";
 import SocialIconsBar from "@/components/SocialIconsBar.astro";
 import ThemeToggle from "@/components/ThemeToggle.astro";
 import type { SpeakerProfile } from "@/lib/sanity";
@@ -218,10 +218,15 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 						<span>Google Developer Expert (GDE)</span>
 					</a>
 
-					<span class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-[#151820] px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200">
-						<GraduationCap className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
-						<span>{profile.education}</span>
-					</span>
+					<a
+						href={profile.socialLinks.aws || "https://builder.aws.com/community/@codingcatdev"}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-[#151820] hover:border-indigo-300 dark:hover:border-indigo-500/50 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors"
+					>
+						<AwsLogo cls="h-3.5 w-auto text-slate-800 dark:text-slate-100 shrink-0" />
+						<span>AWS Community Builder</span>
+					</a>
 				</div>
 
 				<!-- Location & Travel Metadata -->

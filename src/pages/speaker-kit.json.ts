@@ -36,7 +36,6 @@ export const GET: APIRoute = async ({ locals }) => {
 			headline: data.profile.headline,
 			location: data.profile.location,
 			homeAirport: data.profile.homeAirport,
-			education: data.profile.education,
 			availableForSpeaking: data.profile.availableForSpeaking,
 			bookingUrl: data.profile.bookingUrl,
 			speakerEmail: data.profile.speakerEmail,

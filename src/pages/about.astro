@@ -23,7 +23,7 @@ const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 		<title>About Alex Patterson | Keynote Speaker, Podcast Host &amp; Founder of CodingCat.dev</title>
 		<meta
 			name="description"
-			content="About Alex Patterson: Senior Solutions Architect at Sanity.io, Founder & Host of CodingCat.dev, Google Developer Expert (GDE), M.S. from Grand Valley State University (GVSU), and international technical conference speaker."
+			content="About Alex Patterson: Senior Solutions Architect at Sanity.io, Founder & Host of CodingCat.dev, Google Developer Expert (GDE), AWS Community Builder, and international technical conference speaker."
 		/>
 		<link rel="canonical" href={`${origin}/about`} />
 		<Font cssVariable="--font-geist" preload />
@@ -57,7 +57,6 @@ const origin = Astro.locals.siteUrl?.origin ?? "https://alexpatterson.dev";
 							</li>
 						))}
 						<li>• <strong class="text-slate-900 dark:text-slate-100">Location:</strong> {data.profile.location} ({data.profile.homeAirport})</li>
-						<li>• <strong class="text-slate-900 dark:text-slate-100">Education:</strong> {data.profile.education}</li>
 						<li class="flex items-center gap-2 flex-wrap pt-1">
 							<AjPrimaryAlt cls="w-5 h-5 shrink-0" />
 							<span>
