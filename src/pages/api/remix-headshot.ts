@@ -4,12 +4,23 @@ import type { APIRoute } from "astro";
 export const prerender = false;
 
 export const OPEN_AI_MODELS = [
-	"@cf/runwayml/stable-diffusion-v1-5-img2img",
+	"@cf/black-forest-labs/flux-2-klein-4b",
+	"@cf/black-forest-labs/flux-2-dev",
 	"@cf/black-forest-labs/flux-1-schnell",
-	"@cf/bytedance/stable-diffusion-xl-lightning",
 ] as const;
 
 export type CloudflareImageModel = (typeof OPEN_AI_MODELS)[number];
+
+const PRESET_FLUX2_EDIT_PROMPTS: Record<string, string> = {
+	"Cyberpunk Keynote":
+		"Change the background and lighting to a neon-lit cyberpunk conference keynote stage with royal violet and emerald spotlight rim lighting and shallow depth of field while keeping the subject in the foreground unchanged",
+	"8-Bit Retro":
+		"Restyle this image into a crisp 16-bit retro pixel art illustration with an indigo, royal purple, and emerald palette while keeping the subject composition and details intact",
+	"Conference Sketch":
+		"Change the background and lighting to a hand-drawn dark chalkboard architectural diagram studio with glowing indigo and white sketch lines on the wall behind the subject while keeping the subject in the foreground unchanged",
+	Synthwave:
+		"Change the background and lighting to a dramatic conference stage with glowing purple and emerald studio spotlight beams and shallow depth of field while keeping the subject in the foreground unchanged",
+};
 
 const HEADSHOT_URL_BY_ID: Record<string, string> = {
 	"headshot-studio-dark":
@@ -79,12 +90,31 @@ async function aiResultToDataUrl(result: unknown): Promise<string | null> {
 	return null;
 }
 
-function toSanity512Url(url: string): string {
+function toSanity768Url(url: string): string {
 	if (!url.includes("cdn.sanity.io/")) {
 		return url;
 	}
 	const base = url.split("?")[0];
-	return `${base}?w=512&h=512&fit=crop&fm=jpg&q=90`;
+	return `${base}?w=768&h=768&fit=crop&fm=jpg&q=90`;
+}
+
+function buildFlux2EditPrompt(
+	stylePreset: string,
+	rawCustomPrompt?: string,
+): string {
+	if (rawCustomPrompt && rawCustomPrompt.trim().length > 0) {
+		const cleaned = rawCustomPrompt
+			.trim()
+			.replace(/synthwave/gi, "retro purple and cyan neon spotlight stage");
+		if (cleaned.toLowerCase().includes("while keeping the subject")) {
+			return cleaned;
+		}
+		return `Change the background and lighting to ${cleaned} while keeping the subject in the foreground unchanged`;
+	}
+	return (
+		PRESET_FLUX2_EDIT_PROMPTS[stylePreset] ||
+		PRESET_FLUX2_EDIT_PROMPTS["Cyberpunk Keynote"]
+	);
 }
 
 function buildStylizedPreviewSvg(
@@ -165,16 +195,13 @@ export const POST: APIRoute = async ({ request }) => {
 	const requestedModel = (
 		OPEN_AI_MODELS.includes(body.model as CloudflareImageModel)
 			? body.model
-			: "@cf/runwayml/stable-diffusion-v1-5-img2img"
+			: "@cf/black-forest-labs/flux-2-klein-4b"
 	) as CloudflareImageModel;
 
+	const flux2EditPrompt = buildFlux2EditPrompt(stylePreset, body.prompt);
 	const baseSubjectPrompt =
 		"Photorealistic portrait of Alex Patterson, mid-40s Caucasian male software architect and keynote speaker, short light-brown hair, blue-green eyes, trimmed salt-and-pepper beard, friendly smile, NO eyeglasses, black crew-neck t-shirt";
-	const negativePrompt =
-		"eyeglasses, glasses, spectacles, sunglasses, different person, deformed face, asymmetrical eyes, blurry, low quality, watermark";
-	const userStylePrompt =
-		body.prompt?.trim() ||
-		`Keep the subject's exact face and identity intact while applying ${stylePreset} lighting and color grading with deep zinc, royal purple, and emerald accents.`;
+	const userStylePrompt = body.prompt?.trim() || flux2EditPrompt;
 	const fullPrompt = `${baseSubjectPrompt}. ${userStylePrompt}`;
 
 	const runtimeEnv = env as unknown as {
@@ -185,23 +212,25 @@ export const POST: APIRoute = async ({ request }) => {
 
 	const ai = runtimeEnv?.AI;
 	if (ai && typeof ai.run === "function") {
-		// Fetch 512x512 Sanity headshot bytes for img2img or vision conditioning
+		// Fetch 768x768 Sanity headshot bytes for FLUX.2 multi-reference image editing
+		let sourceBuffer: ArrayBuffer | null = null;
 		let sourceBytes: Uint8Array | null = null;
 		let visionDescription = "";
 
 		try {
-			const imgRes = await fetch(toSanity512Url(headshotUrl));
+			const imgRes = await fetch(toSanity768Url(headshotUrl));
 			if (imgRes.ok) {
-				sourceBytes = new Uint8Array(await imgRes.arrayBuffer());
+				sourceBuffer = await imgRes.arrayBuffer();
+				sourceBytes = new Uint8Array(sourceBuffer);
 			}
 		} catch {
 			// continue without sourceBytes if fetch fails
 		}
 
-		// Optional vision conditioning with open LLaVA 1.5 7B model on Workers AI
+		// Optional vision conditioning if user selects text-to-image FLUX.1 Schnell
 		if (
 			sourceBytes &&
-			requestedModel !== "@cf/runwayml/stable-diffusion-v1-5-img2img"
+			requestedModel === "@cf/black-forest-labs/flux-1-schnell"
 		) {
 			try {
 				const visionRes = (await ai.run("@cf/llava-hf/llava-1.5-7b-hf", {
@@ -230,50 +259,57 @@ export const POST: APIRoute = async ({ request }) => {
 		for (const modelName of candidateModels) {
 			try {
 				let rawResult: unknown = null;
+				const isFlux2ReferenceModel =
+					modelName === "@cf/black-forest-labs/flux-2-klein-4b" ||
+					modelName === "@cf/black-forest-labs/flux-2-dev";
 
-				if (
-					modelName === "@cf/runwayml/stable-diffusion-v1-5-img2img" &&
-					sourceBytes
-				) {
+				if (isFlux2ReferenceModel && sourceBuffer) {
+					const form = new FormData();
+					form.append("prompt", flux2EditPrompt);
+					form.append(
+						"input_image_0",
+						new Blob([sourceBuffer], { type: "image/jpeg" }),
+						"reference.jpg",
+					);
+					form.append("width", "768");
+					form.append("height", "768");
+					const formResponse = new Response(form);
 					rawResult = await ai.run(modelName, {
-						prompt: conditionedPrompt,
-						negative_prompt: negativePrompt,
-						image: Array.from(sourceBytes),
-						strength: 0.38,
-						num_steps: 20,
-						guidance: 8.5,
+						multipart: {
+							body: formResponse.body,
+							contentType:
+								formResponse.headers.get("content-type") ||
+								"multipart/form-data",
+						},
 					});
 				} else if (modelName === "@cf/black-forest-labs/flux-1-schnell") {
 					rawResult = await ai.run(modelName, {
 						prompt: conditionedPrompt,
 						steps: 4,
 					});
-				} else if (
-					modelName === "@cf/bytedance/stable-diffusion-xl-lightning"
-				) {
-					rawResult = await ai.run(modelName, {
-						prompt: conditionedPrompt,
-						negative_prompt: negativePrompt,
-						num_steps: 4,
-					});
 				}
 
 				const dataUrl = await aiResultToDataUrl(rawResult);
 				if (dataUrl) {
+					const promptReported = isFlux2ReferenceModel
+						? flux2EditPrompt
+						: conditionedPrompt;
 					return new Response(
 						JSON.stringify({
 							ok: true,
 							mode: "workers-ai-live",
 							model: modelName,
 							stylePreset,
-							promptUsed: conditionedPrompt,
+							promptUsed: promptReported,
 							sourceHeadshotUrl: headshotUrl,
 							previewDataUrl: dataUrl,
-							message: `Generated live on Cloudflare Workers AI using open model ${modelName}${
-								visionDescription
-									? " (conditioned on Sanity headshot via @cf/llava-hf/llava-1.5-7b-hf)"
-									: ""
-							}.`,
+							message: isFlux2ReferenceModel
+								? `Generated live on Cloudflare Workers AI using ${modelName} with your actual Sanity headshot passed as input_image_0.`
+								: `Generated live on Cloudflare Workers AI using ${modelName}${
+										visionDescription
+											? " (conditioned on Sanity headshot via @cf/llava-hf/llava-1.5-7b-hf)"
+											: ""
+									}.`,
 							generatedAt: new Date().toISOString(),
 						}),
 						{

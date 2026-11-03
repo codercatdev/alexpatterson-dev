@@ -22,41 +22,40 @@ const REMIX_PRESETS = [
 		id: "Cyberpunk Keynote",
 		label: "Cyberpunk Keynote",
 		prompt:
-			"Neon-lit cyberpunk conference keynote stage portrait with royal violet and emerald holographic rim lighting, dark background, sharp editorial photography.",
+			"Change the background and lighting to a neon-lit cyberpunk conference keynote stage with royal violet and emerald spotlight rim lighting and shallow depth of field while keeping the subject in the foreground unchanged",
 	},
 	{
 		id: "8-Bit Retro",
 		label: "8-Bit Retro",
 		prompt:
-			"Crisp 16-bit/8-bit retro pixel art developer avatar with indigo and emerald palette suitable for a retro game conference badge.",
+			"Restyle this image into a crisp 16-bit retro pixel art illustration with an indigo, royal purple, and emerald palette while keeping the subject composition and details intact",
 	},
 	{
 		id: "Conference Sketch",
 		label: "Conference Sketch",
 		prompt:
-			"Editorial ink-and-charcoal technical illustration portrait on blueprint paper with subtle indigo grid lines.",
+			"Change the background and lighting to a hand-drawn dark chalkboard architectural diagram studio with glowing indigo and white sketch lines on the wall behind the subject while keeping the subject in the foreground unchanged",
 	},
 	{
 		id: "Synthwave",
-		label: "Synthwave",
+		label: "Stage Spotlights",
 		prompt:
-			"Synthwave outrun conference poster portrait with deep purple wireframe horizon and emerald laser accents.",
+			"Change the background and lighting to a dramatic conference stage with glowing purple and emerald studio spotlight beams and shallow depth of field while keeping the subject in the foreground unchanged",
 	},
 ] as const;
 
 const CLOUDFLARE_OPEN_MODELS = [
 	{
-		id: "@cf/runwayml/stable-diffusion-v1-5-img2img",
-		label:
-			"Stable Diffusion v1.5 (Direct Photo-to-Photo Img2Img - Recommended)",
+		id: "@cf/black-forest-labs/flux-2-klein-4b",
+		label: "FLUX.2 [klein] 4B (Reference Photo Editor - Recommended, Fast)",
+	},
+	{
+		id: "@cf/black-forest-labs/flux-2-dev",
+		label: "FLUX.2 [dev] (Reference Photo Editor - High Detail)",
 	},
 	{
 		id: "@cf/black-forest-labs/flux-1-schnell",
 		label: "FLUX.1 [schnell] + LLaVA Vision (Text-to-Image Concept)",
-	},
-	{
-		id: "@cf/bytedance/stable-diffusion-xl-lightning",
-		label: "SDXL-Lightning (Text-to-Image Concept)",
 	},
 ] as const;
 
