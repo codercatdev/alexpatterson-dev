@@ -4,12 +4,23 @@ import type { APIRoute } from "astro";
 export const prerender = false;
 
 export const OPEN_AI_MODELS = [
-	"@cf/black-forest-labs/flux-1-schnell",
 	"@cf/runwayml/stable-diffusion-v1-5-img2img",
+	"@cf/black-forest-labs/flux-1-schnell",
 	"@cf/bytedance/stable-diffusion-xl-lightning",
 ] as const;
 
 export type CloudflareImageModel = (typeof OPEN_AI_MODELS)[number];
+
+const HEADSHOT_URL_BY_ID: Record<string, string> = {
+	"headshot-studio-dark":
+		"https://cdn.sanity.io/images/hfh83o0w/production/b9482332eb891ac943625a18e0d6edfce9f06fe8-1024x1024.jpg",
+	"headshot-keynote-stage":
+		"https://cdn.sanity.io/images/hfh83o0w/production/31d1d120dbfa90ebd6e73315e44dea6fe704fd3b-1000x1000.jpg",
+	"headshot-studio-soundproof":
+		"https://cdn.sanity.io/images/hfh83o0w/production/52c6b886a0c8a719536b3d1f97b82330b29e0ec2-1000x1000.jpg",
+	"headshot-casual-outdoor":
+		"https://cdn.sanity.io/images/hfh83o0w/production/e4c3255612674b2f16f75c90b24a42f85ae98109-1000x1000.jpg",
+};
 
 interface RemixRequestBody {
 	headshotId?: string;
@@ -73,7 +84,7 @@ function toSanity512Url(url: string): string {
 		return url;
 	}
 	const base = url.split("?")[0];
-	return `${base}?w=512&h=512&fit=crop&crop=focalpoint&fm=jpg&q=85`;
+	return `${base}?w=512&h=512&fit=crop&fm=jpg&q=90`;
 }
 
 function buildStylizedPreviewSvg(
@@ -149,18 +160,21 @@ export const POST: APIRoute = async ({ request }) => {
 	const headshotTitle = body.headshotTitle?.trim() || "Studio Portrait";
 	const headshotUrl =
 		body.headshotUrl?.trim() ||
-		"https://cdn.sanity.io/images/hfh83o0w/production/b9482332eb891ac943625a18e0d6edfce9f06fe8-1024x1024.jpg";
+		(body.headshotId && HEADSHOT_URL_BY_ID[body.headshotId]) ||
+		HEADSHOT_URL_BY_ID["headshot-studio-dark"];
 	const requestedModel = (
 		OPEN_AI_MODELS.includes(body.model as CloudflareImageModel)
 			? body.model
-			: "@cf/black-forest-labs/flux-1-schnell"
+			: "@cf/runwayml/stable-diffusion-v1-5-img2img"
 	) as CloudflareImageModel;
 
 	const baseSubjectPrompt =
-		"Portrait of Alex Patterson, friendly male software engineer and conference keynote speaker with glasses and a short beard";
+		"Photorealistic portrait of Alex Patterson, mid-40s Caucasian male software architect and keynote speaker, short light-brown hair, blue-green eyes, trimmed salt-and-pepper beard, friendly smile, NO eyeglasses, black crew-neck t-shirt";
+	const negativePrompt =
+		"eyeglasses, glasses, spectacles, sunglasses, different person, deformed face, asymmetrical eyes, blurry, low quality, watermark";
 	const userStylePrompt =
 		body.prompt?.trim() ||
-		`Transform speaker headshot into ${stylePreset} aesthetic with deep zinc and royal purple lighting.`;
+		`Keep the subject's exact face and identity intact while applying ${stylePreset} lighting and color grading with deep zinc, royal purple, and emerald accents.`;
 	const fullPrompt = `${baseSubjectPrompt}. ${userStylePrompt}`;
 
 	const runtimeEnv = env as unknown as {
@@ -193,7 +207,7 @@ export const POST: APIRoute = async ({ request }) => {
 				const visionRes = (await ai.run("@cf/llava-hf/llava-1.5-7b-hf", {
 					image: Array.from(sourceBytes),
 					prompt:
-						"Describe this speaker headshot's framing, glasses, beard, expression, and lighting in one concise sentence.",
+						"Describe this speaker headshot's framing, hat or hair, beard, microphone, shirt, expression, and studio lighting in one concise sentence. Do not mention glasses unless visible.",
 					max_tokens: 60,
 				})) as { description?: string } | undefined;
 				if (visionRes?.description) {
@@ -223,10 +237,11 @@ export const POST: APIRoute = async ({ request }) => {
 				) {
 					rawResult = await ai.run(modelName, {
 						prompt: conditionedPrompt,
+						negative_prompt: negativePrompt,
 						image: Array.from(sourceBytes),
-						strength: 0.62,
+						strength: 0.38,
 						num_steps: 20,
-						guidance: 7.5,
+						guidance: 8.5,
 					});
 				} else if (modelName === "@cf/black-forest-labs/flux-1-schnell") {
 					rawResult = await ai.run(modelName, {
@@ -238,6 +253,7 @@ export const POST: APIRoute = async ({ request }) => {
 				) {
 					rawResult = await ai.run(modelName, {
 						prompt: conditionedPrompt,
+						negative_prompt: negativePrompt,
 						num_steps: 4,
 					});
 				}

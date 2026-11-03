@@ -46,16 +46,17 @@ const REMIX_PRESETS = [
 
 const CLOUDFLARE_OPEN_MODELS = [
 	{
-		id: "@cf/black-forest-labs/flux-1-schnell",
-		label: "FLUX.1 [schnell] + LLaVA Vision (Recommended)",
+		id: "@cf/runwayml/stable-diffusion-v1-5-img2img",
+		label:
+			"Stable Diffusion v1.5 (Direct Photo-to-Photo Img2Img - Recommended)",
 	},
 	{
-		id: "@cf/runwayml/stable-diffusion-v1-5-img2img",
-		label: "Stable Diffusion v1.5 (Direct Img2Img)",
+		id: "@cf/black-forest-labs/flux-1-schnell",
+		label: "FLUX.1 [schnell] + LLaVA Vision (Text-to-Image Concept)",
 	},
 	{
 		id: "@cf/bytedance/stable-diffusion-xl-lightning",
-		label: "SDXL-Lightning (Fast 4-Step Open Model)",
+		label: "SDXL-Lightning (Text-to-Image Concept)",
 	},
 ] as const;
 
