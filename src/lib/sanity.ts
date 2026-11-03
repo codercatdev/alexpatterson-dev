@@ -389,7 +389,8 @@ export const SEED_SPEAKER_PROFILE: SpeakerProfile = {
 		aws: "https://builder.aws.com/community/@codingcatdev",
 		gdeProfile: "https://developers.google.com/profile/u/codercatdev",
 	},
-	avatarUrl: "https://alexpatterson.dev/headshots/alex_studio_mic.jpg",
+	avatarUrl:
+		"https://cdn.sanity.io/images/hfh83o0w/production/b9482332eb891ac943625a18e0d6edfce9f06fe8-1024x1024.jpg",
 	bios: {
 		shortThird:
 			"Alex Patterson is a Senior Solutions Architect at Sanity.io, Founder and Host of CodingCat.dev, a Google Developer Expert (GDE), and an AWS Community Builder. Based in Grand Rapids, Michigan, he helps developer brands and enterprise teams tell authentic technical stories through keynotes, podcasts, and YouTube deep-dives.",
@@ -412,15 +413,15 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		_type: "headshot",
 		title: "Studio Portrait (Conference Default)",
 		caption:
-			"Broadcast studio portrait with Shure SM7B mic and purple/black acoustic backdrop—optimized for dark conference schedules, speaker grids, and social cards.",
+			"Broadcast studio portrait with Shure SM7B mic and purple/black acoustic backdrop, optimized for dark conference schedules, speaker grids, and social cards.",
 		primaryFocalTag: "Studio Dark",
-		alt: "Alex Patterson — Official Studio Dark Broadcast Portrait",
+		alt: "Alex Patterson: Official Studio Dark Broadcast Portrait",
 		sanityBaseUrl:
-			"https://cdn.sanity.io/images/hfh83o0w/production/f7dfae4f12674b2f16f75c90b24a42f85ae98109-1000x1000.jpg",
+			"https://cdn.sanity.io/images/hfh83o0w/production/b9482332eb891ac943625a18e0d6edfce9f06fe8-1024x1024.jpg",
 		fallbackLocalUrl: "/headshots/alex_studio_mic.webp",
-		assetId: "image-f7dfae4f12674b2f16f75c90b24a42f85ae98109-1000x1000-jpg",
+		assetId: "image-b9482332eb891ac943625a18e0d6edfce9f06fe8-1024x1024-jpg",
 		hotspot: { x: 0.5, y: 0.38, height: 0.85, width: 0.85 },
-		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },
+		dimensions: { width: 1024, height: 1024, aspectRatio: 1 },
 	},
 	{
 		_id: "headshot-keynote-stage",
@@ -429,11 +430,11 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		caption:
 			"Formal blazer portrait suited for keynote announcements, executive panels, and conference programs.",
 		primaryFocalTag: "Keynote Stage",
-		alt: "Alex Patterson — Executive Keynote Speaker Portrait",
+		alt: "Alex Patterson: Executive Keynote Speaker Portrait",
 		sanityBaseUrl:
-			"https://cdn.sanity.io/images/hfh83o0w/production/a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-1000x1000.jpg",
+			"https://cdn.sanity.io/images/hfh83o0w/production/31d1d120dbfa90ebd6e73315e44dea6fe704fd3b-1000x1000.jpg",
 		fallbackLocalUrl: "/headshots/alex_headshot_1.webp",
-		assetId: "image-a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-1000x1000-jpg",
+		assetId: "image-31d1d120dbfa90ebd6e73315e44dea6fe704fd3b-1000x1000-jpg",
 		hotspot: { x: 0.5, y: 0.42, height: 0.8, width: 0.8 },
 		dimensions: { width: 1000, height: 1000, aspectRatio: 1 },
 	},
@@ -442,9 +443,9 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		_type: "headshot",
 		title: "CodingCat.dev Studio Booth",
 		caption:
-			"In-studio shot with acoustic paneling—ideal for developer workshops, livestreams, and podcasts.",
+			"In-studio shot with acoustic paneling, ideal for developer workshops, livestreams, and podcasts.",
 		primaryFocalTag: "Studio Soundproof",
-		alt: "Alex Patterson — Recording Studio Headshot",
+		alt: "Alex Patterson: Recording Studio Headshot",
 		sanityBaseUrl:
 			"https://cdn.sanity.io/images/hfh83o0w/production/52c6b886a0c8a719536b3d1f97b82330b29e0ec2-1000x1000.jpg",
 		fallbackLocalUrl: "/headshots/alex_soundproof.webp",
@@ -457,9 +458,9 @@ export const SEED_HEADSHOTS: HeadshotItem[] = [
 		_type: "headshot",
 		title: "Warm Fireside & Casual Portrait",
 		caption:
-			"Warm ambient fireplace backdrop—great for fireside chats, community events, panels, and editorial profiles.",
+			"Warm ambient fireplace backdrop, great for fireside chats, community events, panels, and editorial profiles.",
 		primaryFocalTag: "Casual",
-		alt: "Alex Patterson — Warm Casual Fireside Headshot",
+		alt: "Alex Patterson: Warm Casual Fireside Headshot",
 		sanityBaseUrl:
 			"https://cdn.sanity.io/images/hfh83o0w/production/e4c3255612674b2f16f75c90b24a42f85ae98109-1000x1000.jpg",
 		fallbackLocalUrl: "/headshots/alex_fire.webp",
@@ -526,7 +527,7 @@ export const SEED_TALK_ABSTRACTS: TalkAbstract[] = [
 		status: "active",
 		tags: ["MCP", "Cloudflare Workers", "Cloudflare D1", "Sanity", "OAuth 2.1"],
 		abstract:
-			"Developer advocates and solutions engineers spend far too much time manually copying metrics, formatting syndication posts, and updating speaker kits across half a dozen dashboards. In this hands-on workshop, we build a production Model Context Protocol (MCP) server hosted on Cloudflare Workers and D1 (modeled after devrel.codingcat.dev) paired with Sanity event-driven Functions. Attendees will wire up OAuth 2.1 with PKCE, AES-256-GCM encrypted credential vaults in D1, and conversational Sanity MCP tools so a single prompt can log GDE/community impact, syndicate technical content, and update a live portfolio with zero CMS friction.",
+			"Developer advocates and solutions architects spend far too much time manually copying metrics, formatting syndication posts, and updating speaker kits across half a dozen dashboards. In this hands-on workshop, we build a production Model Context Protocol (MCP) server hosted on Cloudflare Workers and D1 (modeled after devrel.codingcat.dev) paired with Sanity event-driven Functions. Attendees will wire up OAuth 2.1 with PKCE, AES-256-GCM encrypted credential vaults in D1, and conversational Sanity MCP tools so a single prompt can log GDE/community impact, syndicate technical content, and update a live portfolio with zero CMS friction.",
 		takeaways: [
 			"Implementing Streamable HTTP MCP servers on Cloudflare Workers with D1 SQLite storage.",
 			"Securing multi-provider API credentials with Better Auth, OAuth 2.1, and Web Crypto AES-256-GCM.",
@@ -1068,7 +1069,15 @@ export async function getSpeakerKitData(
 			};
 
 	const headshots =
-		sanityHeadshots.length > 0 ? sanityHeadshots : SEED_HEADSHOTS;
+		sanityHeadshots.length > 0
+			? sanityHeadshots.map((h) => {
+					const seedMatch = SEED_HEADSHOTS.find((s) => s._id === h._id);
+					return {
+						...h,
+						fallbackLocalUrl: h.fallbackLocalUrl ?? seedMatch?.fallbackLocalUrl,
+					};
+				})
+			: SEED_HEADSHOTS;
 
 	const talks = sanityTalks.length > 0 ? sanityTalks : SEED_TALK_ABSTRACTS;
 

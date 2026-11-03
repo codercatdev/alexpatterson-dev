@@ -149,7 +149,7 @@ export const POST: APIRoute = async ({ request }) => {
 	const headshotTitle = body.headshotTitle?.trim() || "Studio Portrait";
 	const headshotUrl =
 		body.headshotUrl?.trim() ||
-		"https://cdn.sanity.io/images/hfh83o0w/production/a606dfaa381aab08ddbe16a33fe1d3e1fb37c927-400x400.jpg";
+		"https://cdn.sanity.io/images/hfh83o0w/production/b9482332eb891ac943625a18e0d6edfce9f06fe8-1024x1024.jpg";
 	const requestedModel = (
 		OPEN_AI_MODELS.includes(body.model as CloudflareImageModel)
 			? body.model

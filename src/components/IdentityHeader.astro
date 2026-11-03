@@ -26,8 +26,13 @@ interface Props {
 
 const { profile } = Astro.props;
 
-// Use optimized WebP portrait (32 KB @ 640w, 73 KB @ 1000w) for ultra-fast LCP
-const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
+// Serve hero portrait directly from the Sanity CDN (WebP @ 640w / 1000w)
+const sanityHeroBase =
+	profile.avatarUrl && profile.avatarUrl.includes("cdn.sanity.io/")
+		? profile.avatarUrl.split("?")[0]
+		: "https://cdn.sanity.io/images/hfh83o0w/production/b9482332eb891ac943625a18e0d6edfce9f06fe8-1024x1024.jpg";
+const heroPortraitSrc = `${sanityHeroBase}?w=640&h=640&fit=crop&crop=focalpoint&fp-x=0.50&fp-y=0.38&fm=webp&q=85`;
+const heroPortraitSrcSet = `${sanityHeroBase}?w=640&h=640&fit=crop&crop=focalpoint&fp-x=0.50&fp-y=0.38&fm=webp&q=85 640w, ${sanityHeroBase}?w=1000&h=1000&fit=crop&crop=focalpoint&fp-x=0.50&fp-y=0.38&fm=webp&q=85 1000w`;
 ---
 
 <!-- Sticky Glassmorphic Executive Top Navigation -->
@@ -303,9 +308,9 @@ const heroPortraitSrc = "/headshots/alex_studio_mic-640.webp";
 					<div class="relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-700/80 bg-slate-100 dark:bg-[#151820] shadow-md aspect-square">
 						<img
 							src={heroPortraitSrc}
-							srcset="/headshots/alex_studio_mic-640.webp 640w, /headshots/alex_studio_mic.webp 1000w"
+							srcset={heroPortraitSrcSet}
 							sizes="(max-width: 1024px) 100vw, 380px"
-							alt={`${profile.name} — Keynote Speaker, Podcast Host, and Founder of CodingCat.dev`}
+							alt={`${profile.name} - Keynote Speaker, Podcast Host, and Founder of CodingCat.dev`}
 							width="640"
 							height="640"
 							fetchpriority="high"
