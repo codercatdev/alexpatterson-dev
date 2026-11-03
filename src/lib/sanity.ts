@@ -218,7 +218,13 @@ export function buildSanityHeadshotUrl(
 	hotspot?: SanityImageHotspot,
 ): { fullUrl: string; queryString: string } {
 	const cleanBase = stegaClean(baseUrl).split("?")[0];
-	const dims = aspect === "1:1" ? { w: 1200, h: 1200 } : { w: 1920, h: 1080 };
+	if (aspect === "1:1") {
+		const queryString = `?fm=${format}`;
+		return {
+			fullUrl: `${cleanBase}${queryString}`,
+			queryString,
+		};
+	}
 	const fpParams =
 		hotspot &&
 		typeof hotspot.x === "number" &&
@@ -226,7 +232,7 @@ export function buildSanityHeadshotUrl(
 		(hotspot.x !== 0.5 || hotspot.y !== 0.5)
 			? `&fp-x=${hotspot.x.toFixed(2)}&fp-y=${hotspot.y.toFixed(2)}`
 			: "";
-	const queryString = `?w=${dims.w}&h=${dims.h}&fit=crop&crop=focalpoint${fpParams}&fm=${format}`;
+	const queryString = `?w=1920&h=1080&fit=crop&crop=focalpoint${fpParams}&fm=${format}`;
 	return {
 		fullUrl: `${cleanBase}${queryString}`,
 		queryString,

@@ -73,7 +73,7 @@ interface RemixResponse {
 
 export default function HeadshotGridIsland({ headshots }: Props) {
 	const [aspect, setAspect] = useState<AspectRatioOption>("1:1");
-	const [format, setFormat] = useState<FormatOption>("webp");
+	const [format, setFormat] = useState<FormatOption>("png");
 	const [copiedId, setCopiedId] = useState<string | null>(null);
 	const [fallbackActive, setFallbackActive] = useState<Record<string, boolean>>(
 		{},
@@ -102,37 +102,6 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 			setTimeout(() => setCopiedId(null), 2200);
 		} catch {
 			// ignore
-		}
-	};
-
-	const handleDownload = async (
-		item: HeadshotItem,
-		fullSanityUrl: string,
-		useLocalFallback: boolean,
-	) => {
-		const targetUrl =
-			useLocalFallback && item.fallbackLocalUrl
-				? item.fallbackLocalUrl
-				: fullSanityUrl;
-		const slug = item.title
-			.toLowerCase()
-			.replace(/[^a-z0-9]+/g, "-")
-			.replace(/(^-|-$)/g, "");
-		const filename = `alex-patterson-${slug}-${aspect === "1:1" ? "1200x1200" : "1920x1080"}.${format}`;
-
-		try {
-			const response = await fetch(targetUrl);
-			const blob = await response.blob();
-			const blobUrl = URL.createObjectURL(blob);
-			const link = document.createElement("a");
-			link.href = blobUrl;
-			link.download = filename;
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
-			URL.revokeObjectURL(blobUrl);
-		} catch {
-			window.open(targetUrl, "_blank", "noopener,noreferrer");
 		}
 	};
 
@@ -239,18 +208,6 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 					>
 						<button
 							type="button"
-							onClick={() => setFormat("webp")}
-							aria-pressed={format === "webp"}
-							className={`rounded-lg px-2.5 py-1.5 text-xs font-medium uppercase transition-all cursor-pointer ${
-								format === "webp"
-									? "bg-indigo-600 dark:bg-indigo-500 text-white"
-									: "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
-							}`}
-						>
-							WebP
-						</button>
-						<button
-							type="button"
 							onClick={() => setFormat("png")}
 							aria-pressed={format === "png"}
 							className={`rounded-lg px-2.5 py-1.5 text-xs font-medium uppercase transition-all cursor-pointer ${
@@ -260,6 +217,18 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 							}`}
 						>
 							PNG
+						</button>
+						<button
+							type="button"
+							onClick={() => setFormat("webp")}
+							aria-pressed={format === "webp"}
+							className={`rounded-lg px-2.5 py-1.5 text-xs font-medium uppercase transition-all cursor-pointer ${
+								format === "webp"
+									? "bg-indigo-600 dark:bg-indigo-500 text-white"
+									: "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+							}`}
+						>
+							WebP
 						</button>
 					</div>
 				</div>
@@ -274,11 +243,29 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 						format,
 						item.hotspot,
 					);
+					const { fullUrl: previewWebpUrl } = buildSanityHeadshotUrl(
+						item.sanityBaseUrl,
+						aspect,
+						"webp",
+						item.hotspot,
+					);
 					const useFallback = Boolean(fallbackActive[item._id]);
 					const displaySrc =
 						useFallback && item.fallbackLocalUrl
 							? item.fallbackLocalUrl
-							: fullUrl;
+							: previewWebpUrl;
+					const slug = item.title
+						.toLowerCase()
+						.replace(/[^a-z0-9]+/g, "-")
+						.replace(/(^-|-$)/g, "");
+					const downloadFilename = `alex-patterson-${slug}${aspect === "16:9" ? "-1920x1080" : ""}.${format}`;
+					const downloadUrl =
+						useFallback && item.fallbackLocalUrl
+							? item.fallbackLocalUrl
+							: `${fullUrl}&dl=${encodeURIComponent(downloadFilename)}`;
+					const squareLabel = item.dimensions?.width
+						? `${item.dimensions.width}×${item.dimensions.height}`
+						: "1000×1000";
 					const isCopied = copiedId === item._id;
 
 					return (
@@ -317,7 +304,7 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 									</div>
 									<div className="absolute bottom-2.5 right-2.5">
 										<span className="rounded-full bg-white/90 dark:bg-[#1b1e26]/90 backdrop-blur-sm border border-indigo-200 dark:border-indigo-500/30 px-2.5 py-0.5 text-[10px] font-semibold uppercase text-indigo-700 dark:text-indigo-300">
-											{aspect === "1:1" ? "1200×1200" : "1920×1080"} •{" "}
+											{aspect === "1:1" ? squareLabel : "1920×1080"} •{" "}
 											{format.toUpperCase()}
 										</span>
 									</div>
@@ -338,14 +325,14 @@ export default function HeadshotGridIsland({ headshots }: Props) {
 
 							{/* 1-Click Actions */}
 							<div className="px-4 pb-4 pt-1 flex flex-col gap-2">
-								<button
-									type="button"
-									onClick={() => handleDownload(item, fullUrl, useFallback)}
+								<a
+									href={downloadUrl}
+									download={downloadFilename}
 									className="w-full inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400 px-3 py-2 text-xs font-semibold text-white transition-colors cursor-pointer shadow-2xs"
 								>
 									<Download className="w-3.5 h-3.5" />
-									<span>Download High-Res</span>
-								</button>
+									<span>Download High-Res ({format.toUpperCase()})</span>
+								</a>
 
 								<button
 									type="button"
